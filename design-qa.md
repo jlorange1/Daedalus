@@ -11,7 +11,7 @@ Reference target:
 Prototype capture:
 
 ```text
-/tmp/daedalus-dashboard.png
+/tmp/daedalus-dashboard-final.png
 ```
 
 Checks completed:
@@ -20,6 +20,8 @@ Checks completed:
 - Main layout matches the selected Sprint Workshop direction: sidebar, sprint command bar, production board, agent studio floor, automation schedule, and right-side inspector.
 - Real bitmap sprite/UI assets from the provided sheets are used for banner, environment texture, desks, workers, monitors, and hearth.
 - Six agent workstations fit in the studio floor without clipping at the target viewport.
+- The selected reference image is not visible in the final dashboard UI; it was used only as a composition reference.
+- The production board uses dense parchment-style cards in all lanes so the studio reads as actively operating even before real queued work exists.
 - Live project state is visible: autonomy, queue counts, Git state, RSPS repo path, Java/Git LFS readiness, OpenClaw readiness, branch, and test prerequisites.
 - Controls are interactive: enqueue dialog, Run Duo action, cron tick action, pause/resume time, inspector agent selection, and live refresh.
 

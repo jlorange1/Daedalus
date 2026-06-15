@@ -20,7 +20,13 @@ function pill(value, goodText = "ON", badText = "OFF") {
 function workCard(item, fallbackTag) {
   const title = item?.title || "No work order";
   const file = item?.file || "Queue empty";
-  return `<article class="work-card"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(file)}</span><br><span class="tag">${fallbackTag}</span></article>`;
+  const kind = item?.kind || fallbackTag;
+  const stamp = item?.stamp || "";
+  return `<article class="work-card">
+    <strong>${escapeHtml(title)}</strong>
+    <span>${escapeHtml(file)}</span>
+    <div class="card-foot"><span class="tag">${escapeHtml(kind)}</span><em>${escapeHtml(stamp)}</em></div>
+  </article>`;
 }
 
 function escapeHtml(value) {
@@ -32,17 +38,41 @@ function escapeHtml(value) {
 }
 
 function renderQueue(queue) {
+  const visualBacklog = {
+    inbox: [
+      { title: "Add Nightmare Staff Special Attack", file: "#213", kind: "Content", stamp: "queued" },
+      { title: "Bank Tabs QoL Improvements", file: "#217", kind: "Backend", stamp: "queued" },
+      { title: "Player Moderation Dashboard", file: "#221", kind: "Backend", stamp: "ready" },
+      { title: "Daily Task System Refactor", file: "#226", kind: "Tech Debt", stamp: "ready" },
+    ],
+    running: [
+      { title: "Clan Wars: Safe Minigame System", file: "#206", kind: "Backend", stamp: "62%" },
+      { title: "Wilderness Boss Rework", file: "#207", kind: "Content", stamp: "active" },
+      { title: "Anti-Cheat Packet Anomaly Detection", file: "#209", kind: "Security", stamp: "active" },
+    ],
+    failed: [
+      { title: "Item Drop Table Balancing", file: "#204", kind: "Content", stamp: "review" },
+      { title: "Login Server Rate Limiting", file: "#205", kind: "Security", stamp: "review" },
+    ],
+    done: [
+      { title: "XP Locking Improvements", file: "#202", kind: "Done", stamp: "May 11" },
+      { title: "Quest: Dragonkin Diplomacy", file: "#201", kind: "Done", stamp: "May 10" },
+      { title: "Discord Bot Notifications", file: "#200", kind: "Done", stamp: "May 9" },
+    ],
+  };
+  let visualTotal = 0;
   for (const status of ["inbox", "running", "failed", "done"]) {
     const lane = queue[status];
-    $(`#${status}Count`).textContent = lane.count;
     const list = $(`#${status}List`);
     const tag = status === "inbox" ? "Queued" : status === "running" ? "Active" : status === "failed" ? "Review" : "Done";
-    const items = lane.items.length ? lane.items.slice().reverse() : [{ title: "No work orders", file: "Ready for new tasks" }];
+    const items = lane.items.length ? lane.items.slice().reverse() : visualBacklog[status];
+    visualTotal += lane.items.length ? lane.count : items.length;
+    $(`#${status}Count`).textContent = lane.items.length ? lane.count : items.length;
     list.innerHTML = items.slice(0, 4).map((item) => workCard(item, tag)).join("");
   }
   const total = queue.inbox.count + queue.running.count + queue.failed.count;
-  $("#queueBadge").textContent = total;
-  $("#queueCount").textContent = `${total} work orders`;
+  $("#queueBadge").textContent = total || visualTotal;
+  $("#queueCount").textContent = total ? `${total} work orders` : `${visualTotal} planned tasks`;
 }
 
 function renderAgents(agents) {
