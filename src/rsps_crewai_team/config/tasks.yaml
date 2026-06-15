@@ -1,0 +1,85 @@
+scope_task:
+  description: >
+    Scope the RSPS request: {request}
+
+    Ponytail policy:
+    {ponytail_policy}
+
+    Repository context:
+    {repo_context}
+
+    Use repository context if available. Produce a practical milestone with assumptions,
+    target systems, files or directories to inspect, risks, and acceptance criteria.
+  expected_output: >
+    A scoped milestone brief with assumptions, implementation surface, acceptance criteria,
+    and a short risk list.
+  agent: producer
+
+design_task:
+  description: >
+    Based on the milestone brief, design the RSPS gameplay/content/system behavior.
+    Ponytail policy:
+    {ponytail_policy}
+
+    Repository context:
+    {repo_context}
+
+    Cover mechanics, progression, XP/reward balance, drop/economy controls, player UX,
+    and any content data needed.
+  expected_output: >
+    A game design specification suitable for implementation in an RSPS codebase.
+  agent: lead_designer
+
+implementation_task:
+  description: >
+    Inspect the repository summary and design specification. Produce a server/content/client
+    Ponytail policy:
+    {ponytail_policy}
+
+    Repository context:
+    {repo_context}
+
+    implementation plan, including likely file targets, data structures, integration points,
+    commands to run, and rollout steps. Do not invent exact file paths unless repo context supports them.
+  expected_output: >
+    A technical implementation plan split into backend, content, client, and migration steps.
+  agent: backend_developer
+
+qa_task:
+  description: >
+    Build a QA plan for the implementation. Include manual tests, automated tests,
+    Ponytail policy:
+    {ponytail_policy}
+
+    Repository context:
+    {repo_context}
+
+    edge cases, rollback checks, and configured build/test command results when available.
+  expected_output: >
+    A QA checklist with test cases, expected results, and any build/test command output summary.
+  agent: qa_tester
+
+security_task:
+  description: >
+    Review the scoped design and implementation plan for RSPS abuse risks. Focus on dupes,
+    Ponytail policy:
+    {ponytail_policy}
+
+    Repository context:
+    {repo_context}
+
+    trade/bank/shop safety, command permissions, packet trust, persistence, botting,
+    economy inflation, and rollback risks.
+  expected_output: >
+    A prioritized security and anti-abuse review with concrete mitigations.
+  agent: security_reviewer
+
+documentation_task:
+  description: >
+    Combine the milestone, design, implementation, QA, and security outputs into a final
+    development packet that a human developer can execute or hand to a coding agent.
+    Ponytail policy:
+    {ponytail_policy}
+  expected_output: >
+    A concise development packet with summary, steps, checklist, risks, and next actions.
+  agent: documentation_writer

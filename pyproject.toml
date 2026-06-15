@@ -1,0 +1,21 @@
+[project]
+name = "rsps-crewai-team"
+version = "0.1.0"
+description = "CrewAI workforce scaffold for RuneScape private server development."
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[litellm,tools]>=1.14.0",
+    "python-dotenv>=1.0.1",
+]
+
+[project.scripts]
+rsps-team = "rsps_crewai_team.main:run"
+rsps-worker = "rsps_crewai_team.worker:main"
+rsps-cron = "rsps_crewai_team.cron:main"
+rsps-git = "rsps_crewai_team.git_cli:main"
+rsps-ponytail = "rsps_crewai_team.ponytail_cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
