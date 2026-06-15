@@ -15,6 +15,7 @@ rsps-worker = "rsps_crewai_team.worker:main"
 rsps-cron = "rsps_crewai_team.cron:main"
 rsps-git = "rsps_crewai_team.git_cli:main"
 rsps-ponytail = "rsps_crewai_team.ponytail_cli:main"
+rsps-dashboard = "rsps_crewai_team.dashboard:main"
 
 [build-system]
 requires = ["hatchling"]

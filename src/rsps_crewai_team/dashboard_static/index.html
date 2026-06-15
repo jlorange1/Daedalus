@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daedalus RSPS Studio</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <aside class="sidebar">
+        <div class="banner">
+          <img src="/assets/banners.png" alt="" />
+          <span>Autonomous</span>
+          <strong>RSPS Studio</strong>
+        </div>
+        <nav class="nav" aria-label="Dashboard sections">
+          <button class="nav-item active" data-panel="studio">Studio</button>
+          <button class="nav-item" data-panel="queue">Queue <span id="queueBadge">0</span></button>
+          <button class="nav-item" data-panel="builds">Builds</button>
+          <button class="nav-item" data-panel="github">GitHub</button>
+          <button class="nav-item" data-panel="cron">Cron</button>
+          <button class="nav-item" data-panel="settings">Settings</button>
+        </nav>
+        <section class="status-card">
+          <h2>Studio Status</h2>
+          <dl>
+            <div><dt>Autonomy</dt><dd id="autonomyState">Loading</dd></div>
+            <div><dt>Agents Online</dt><dd id="agentsOnline">0 / 6</dd></div>
+            <div><dt>Build Status</dt><dd id="buildStatus">Checking</dd></div>
+            <div><dt>Queue</dt><dd id="queueCount">0 work orders</dd></div>
+            <div><dt>GitHub</dt><dd id="githubState">Checking</dd></div>
+            <div><dt>Environment</dt><dd id="envState">Checking</dd></div>
+          </dl>
+        </section>
+        <div class="version">Sprint Workshop<br />v0.1.0</div>
+      </aside>
+
+      <section class="topbar">
+        <div class="sprint-flag">
+          <small>Sprint 24</small>
+          <strong>2009scape Studio Buildout</strong>
+        </div>
+        <div class="sprint-goal">
+          <span>Sprint Goal</span>
+          <p>Prepare the AI workforce to build, test, review, and publish RSPS changes over time.</p>
+        </div>
+        <button id="enqueueOpen" class="command">Enqueue Work</button>
+        <button id="runBuild" class="command">Build / Test</button>
+        <button id="pushBranch" class="command">Push Branch</button>
+        <button id="runDuo" class="command primary">Run Duo</button>
+      </section>
+
+      <section class="board">
+        <div class="lane" data-status="inbox">
+          <h2>Backlog <span id="inboxCount">0</span></h2>
+          <div id="inboxList" class="cards"></div>
+        </div>
+        <div class="lane" data-status="running">
+          <h2>In Progress <span id="runningCount">0</span></h2>
+          <div id="runningList" class="cards"></div>
+        </div>
+        <div class="lane" data-status="failed">
+          <h2>Review <span id="failedCount">0</span></h2>
+          <div id="failedList" class="cards"></div>
+        </div>
+        <div class="lane" data-status="done">
+          <h2>Done <span id="doneCount">0</span></h2>
+          <div id="doneList" class="cards"></div>
+        </div>
+      </section>
+
+      <section class="studio-floor">
+        <img class="hearth" src="/assets/fireplace.png" alt="" />
+        <div id="agentGrid" class="agent-grid"></div>
+      </section>
+
+      <section class="schedule">
+        <div class="day-cycle">
+          <div class="window"></div>
+          <strong>Day 18</strong>
+          <span id="clock">10:30</span>
+          <button id="pauseTime">Pause Time</button>
+        </div>
+        <div class="timeline">
+          <h2>Schedule & Automation</h2>
+          <div class="track"><span>Build & Test</span><b style="--start: 7%; --width: 39%"></b><b style="--start: 78%; --width: 11%"></b></div>
+          <div class="track blue"><span>Security Scan</span><b style="--start: 8%; --width: 31%"></b><b style="--start: 52%; --width: 22%"></b></div>
+          <div class="track gold"><span>Planning Packet</span><b style="--start: 16%; --width: 70%"></b></div>
+          <div class="track teal"><span>GitHub Sync</span><b style="--start: 21%; --width: 76%"></b></div>
+        </div>
+        <div class="events">
+          <h2>Next Events</h2>
+          <p>11:00 Build & Test</p>
+          <p>12:00 Security Scan</p>
+          <p>16:00 Standup Summary</p>
+          <button id="cronTick">Open Cron View</button>
+        </div>
+      </section>
+
+      <aside class="inspector">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Agent Inspector</h2>
+            <button id="closeInspector">x</button>
+          </div>
+          <div id="agentInspector"></div>
+        </div>
+        <div class="panel">
+          <h2>Code Diff Summary</h2>
+          <pre id="diffSummary">Waiting for project state...</pre>
+        </div>
+        <div class="panel">
+          <h2>Tests</h2>
+          <div id="testList"></div>
+        </div>
+        <div class="panel">
+          <h2>Branch</h2>
+          <p id="branchState">Checking...</p>
+        </div>
+      </aside>
+    </main>
+
+    <dialog id="enqueueDialog">
+      <form method="dialog" id="enqueueForm">
+        <h2>Enqueue Work Order</h2>
+        <label>Title <input id="workTitle" required value="Add starter studio readiness task" /></label>
+        <label>Body <textarea id="workBody" required>Inspect the 2009scape source and propose the smallest safe first implementation task after Java 11 and Git LFS are installed.</textarea></label>
+        <menu>
+          <button value="cancel">Cancel</button>
+          <button id="enqueueSubmit" value="default">Add to Queue</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

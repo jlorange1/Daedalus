@@ -204,6 +204,22 @@ uv run rsps-cron install
 
 The cron tick runs the OpenClaw duo every 30 minutes when `RSPS_DUO_MODE=true`, but only when `RSPS_ALLOW_AUTONOMOUS=true`.
 
+## Studio Dashboard
+
+Run the retro RSPS studio dashboard:
+
+```bash
+uv run rsps-dashboard
+```
+
+Open:
+
+```text
+http://127.0.0.1:8765
+```
+
+The dashboard shows queue state, agent roles, readiness checks, Git status, cron schedule, and OpenClaw duo controls. Enqueue is safe to use immediately. Worker execution still respects `RSPS_ALLOW_AUTONOMOUS=false`.
+
 ## Files
 
 - `src/rsps_crewai_team/config/agents.yaml`: agent roles.
@@ -213,3 +229,4 @@ The cron tick runs the OpenClaw duo every 30 minutes when `RSPS_DUO_MODE=true`, 
 - `docs/WORKFLOW.md`: operating model and recommended guardrails.
 - `docs/PONYTAIL.md`: Ponytail minimalism layer.
 - `docs/RSPS_SOURCE.md`: selected RSPS source recommendation and setup notes.
+- `design-qa.md`: visual QA notes for the Studio Dashboard.
