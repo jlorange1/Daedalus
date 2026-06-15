@@ -212,3 +212,4 @@ The cron tick runs the OpenClaw duo every 30 minutes when `RSPS_DUO_MODE=true`, 
 - `src/rsps_crewai_team/tools/repo_tools.py`: repo scan/build/test tools.
 - `docs/WORKFLOW.md`: operating model and recommended guardrails.
 - `docs/PONYTAIL.md`: Ponytail minimalism layer.
+- `docs/RSPS_SOURCE.md`: selected RSPS source recommendation and setup notes.
