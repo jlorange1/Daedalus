@@ -1909,6 +1909,22 @@ pre {
   position: relative;
 }
 
+.timeline::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  bottom: 7px;
+  left: calc(126px + 47%);
+  width: 3px;
+  background: #f2c66b;
+  box-shadow:
+    -2px 0 0 rgba(34, 18, 7, .9),
+    2px 0 0 rgba(34, 18, 7, .9),
+    0 0 12px rgba(242, 198, 107, .52);
+  animation: timelineCursor 2.4s steps(4) infinite;
+  pointer-events: none;
+}
+
 .timeline::before {
   content: "6:00     9:00     12:00     15:00     18:00     21:00     0:00     3:00     6:00";
   display: block;
@@ -1974,6 +1990,11 @@ pre {
   to { background-position: 36px 0, 0 0; }
 }
 
+@keyframes timelineCursor {
+  0%, 100% { opacity: .62; }
+  50% { opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -2002,6 +2023,63 @@ pre {
 .footer-hud span:nth-child(3)::after {
   content: "original fantasy studio art";
   font-size: 11px;
+}
+
+.guild-log {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #5a3719;
+}
+
+.guild-log h3 {
+  margin: 0 0 6px;
+  color: #ffd36a;
+  font-size: 11px;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: 8px 43px minmax(0, 1fr);
+  gap: 7px;
+  margin: 0 0 5px;
+  padding: 5px 6px;
+  border: 1px solid #5a3719;
+  background: rgba(16, 10, 5, .72);
+}
+
+.log-row::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-top: 3px;
+  background: #72d94f;
+  box-shadow: 0 0 0 2px #201207;
+}
+
+.log-row.warn::before {
+  background: #d49a35;
+}
+
+.log-row.empty::before {
+  background: #85704a;
+}
+
+.log-row span {
+  color: #ffd36a;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.log-row b {
+  min-width: 0;
+  color: #e8d4a7;
+  font-size: 11px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .lane h2 {
@@ -2226,7 +2304,7 @@ body {
 
 .inspector {
   gap: 7px;
-  grid-template-rows: 282px minmax(230px, 1fr) 164px 96px;
+  grid-template-rows: 282px minmax(150px, 1fr) 152px 196px;
   padding: 0;
   background:
     linear-gradient(rgba(10, 7, 5, .18), rgba(10, 7, 5, .18)),

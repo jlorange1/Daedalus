@@ -131,6 +131,35 @@ function renderInspector(status) {
     ? rsps.detail
     : "+ ForgeBoard scene assets validated\n+ Worker queue ready for next patch\n+ Review packet will appear after the next run";
   $("#branchState").innerHTML = `<span class="state-chip good">${escapeHtml(rsps.branch || "main")}</span><span>${rsps.clean ? "ready" : "changes waiting"}</span>`;
+  renderActivityLog(status, agent);
+}
+
+function renderActivityLog(status, selectedAgent) {
+  const buildReady = status.readiness.java && status.readiness.git_lfs && status.readiness.rsps_repo;
+  const rsps = status.git.rsps;
+  const entries = [
+    {
+      tone: selectedAgent.status === "working" ? "good" : "warn",
+      label: selectedAgent.status === "working" ? "Work" : "Queue",
+      text: `${selectedAgent.name} is on ${selectedAgent.task}`,
+    },
+    {
+      tone: buildReady ? "good" : "warn",
+      label: "Gate",
+      text: buildReady ? "Build/test gate is ready" : "Install Java 11 and Git LFS to unlock builds",
+    },
+    {
+      tone: rsps.clean ? "good" : "warn",
+      label: "Branch",
+      text: `${rsps.branch || "main"} ${rsps.clean ? "is clean" : "has local changes"}`,
+    },
+  ];
+  $("#activityLog").innerHTML = entries.map((entry) => `
+    <p class="log-row ${entry.tone}">
+      <span>${escapeHtml(entry.label)}</span>
+      <b>${escapeHtml(entry.text)}</b>
+    </p>
+  `).join("");
 }
 
 function renderReadiness(status) {
