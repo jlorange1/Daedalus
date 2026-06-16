@@ -76,17 +76,12 @@ function renderQueue(queue) {
 }
 
 function renderAgents(agents) {
+  const roles = ["producer", "backend", "content", "qa", "security", "docs"];
   const grid = $("#agentGrid");
   grid.innerHTML = agents.map((agent, index) => `
     <article class="agent-desk role-${index}" data-agent="${index}">
-      <div class="station-scene ${agent.status === "working" ? "working" : ""}">
-        <img class="rug-art" src="/assets/rug-clean.png" alt="" />
-        <img class="desk-art" src="/assets/desk-clean.png" alt="" />
-        <img class="monitor-art" src="/assets/monitor-clean.png" alt="" />
-        <img class="worker-art" src="/assets/worker-clean.png" alt="" />
-      </div>
-      <p class="task-line">${escapeHtml(agent.task)}</p>
-      <div class="agent-plate">
+      <span class="agent-hitbox ${agent.status === "working" ? "working" : ""}"></span>
+      <div class="agent-plate" aria-hidden="true">
         <h3>${escapeHtml(agent.role)}</h3>
         <p>${escapeHtml(agent.name)} - ${escapeHtml(agent.status)}</p>
         <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
@@ -105,9 +100,11 @@ function renderAgents(agents) {
 function renderInspector(status) {
   if (!status) return;
   const agent = status.agents[state.selectedAgent] || status.agents[0];
+  const roles = ["producer", "backend", "content", "qa", "security", "docs"];
+  const roleKey = roles[state.selectedAgent] || roles[0];
   $("#agentInspector").innerHTML = `
     <div class="agent-hero">
-      <span class="agent-medallion"><img src="/assets/worker-clean.png" alt="" /></span>
+      <span class="agent-medallion"><img src="/assets/role-portrait-${roleKey}.png" alt="" /></span>
       <div>
         <strong>${escapeHtml(agent.role)}</strong>
         <p>${escapeHtml(agent.name)} is ${escapeHtml(agent.status)}.</p>

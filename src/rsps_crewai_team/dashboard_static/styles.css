@@ -1376,3 +1376,194 @@ menu button {
   max-width: 70%;
   padding: 2px 7px;
 }
+
+/* Role-sheet rebuild pass. */
+.board {
+  height: 318px;
+  padding: 14px 20px 12px;
+  background:
+    linear-gradient(90deg, rgba(34, 18, 8, .64), rgba(65, 37, 14, .82), rgba(34, 18, 8, .64)),
+    url("/assets/wood-floor.png");
+  background-size: auto, 170px 170px;
+}
+
+.board::before {
+  content: "";
+  position: absolute;
+}
+
+.studio-floor {
+  min-height: 319px;
+  padding: 0 10px;
+  background:
+    url("/assets/prototype-studio-floor-full.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.studio-floor::after {
+  display: none;
+}
+
+.studio-floor .hearth,
+.studio-floor .room-prop {
+  display: none;
+}
+
+.room-shelves {
+  left: auto;
+  right: 4px;
+  top: 17px;
+  width: 130px;
+  opacity: .9;
+}
+
+.room-bulletin {
+  right: auto;
+  left: 18px;
+  top: 18px;
+  width: 42px;
+}
+
+.room-crates {
+  left: 8px;
+  bottom: 22px;
+  width: 72px;
+}
+
+.room-plant-a {
+  right: 100px;
+  bottom: 20px;
+  width: 40px;
+}
+
+.room-plant-b {
+  left: auto;
+  right: 8px;
+  bottom: 18px;
+  width: 76px;
+}
+
+.hearth {
+  left: 62px;
+  right: auto;
+  top: 2px;
+  width: 100px;
+}
+
+.agent-desk {
+  width: 29%;
+  min-height: 128px;
+}
+
+.agent-desk:nth-child(1) { left: 3%; top: 16%; }
+.agent-desk:nth-child(2) { left: 35.5%; top: 16%; }
+.agent-desk:nth-child(3) { left: 67%; top: 16%; }
+.agent-desk:nth-child(4) { left: 3%; top: 57%; }
+.agent-desk:nth-child(5) { left: 35.5%; top: 57%; }
+.agent-desk:nth-child(6) { left: 67%; top: 57%; }
+
+.station-scene {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.station-scene.working {
+  animation: bob 1.2s steps(2) infinite;
+}
+
+.speech-bubble {
+  position: absolute;
+  z-index: 3;
+  left: 40%;
+  top: -2px;
+  max-width: 42%;
+  min-height: 22px;
+  padding: 4px 7px;
+  color: #24441f;
+  background: #f1ddb0;
+  border: 3px solid #8b6330;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .46);
+  font-size: 9px;
+  line-height: 1.05;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  bottom: -9px;
+  border-width: 8px 6px 0;
+  border-style: solid;
+  border-color: #8b6330 transparent transparent;
+}
+
+.agent-plate {
+  display: none;
+}
+
+.agent-plate h3 {
+  font-size: 10px;
+}
+
+.agent-plate p {
+  font-size: 9px;
+}
+
+.role-2 .agent-plate,
+.role-5 .agent-plate {
+  left: 24%;
+  right: 4%;
+}
+
+.agent-medallion {
+  width: 72px;
+  height: 72px;
+  border-radius: 0;
+  border-color: #9d692c;
+  background: rgba(10, 7, 5, .84);
+}
+
+.agent-medallion img {
+  width: 68px;
+  height: 68px;
+}
+
+#agentInspector strong {
+  color: #76ef57;
+}
+
+/* Final panel skin: live DOM with the prototype-quality studio floor. */
+.sidebar {
+  background: linear-gradient(180deg, #20170f, #11100d);
+}
+
+.topbar {
+  background:
+    linear-gradient(180deg, rgba(108, 67, 29, .92), rgba(64, 37, 17, .96)),
+    url("/assets/wood-floor.png");
+  background-size: auto, 170px 170px;
+}
+
+.board {
+  background:
+    linear-gradient(90deg, rgba(34, 18, 8, .64), rgba(65, 37, 14, .82), rgba(34, 18, 8, .64)),
+    url("/assets/wood-floor.png");
+  background-size: auto, 170px 170px;
+}
+
+.schedule {
+  background:
+    linear-gradient(rgba(24, 16, 10, .92), rgba(18, 12, 8, .96)),
+    url("/assets/dark-panel.png");
+  background-size: auto, cover;
+}
+
+.inspector {
+  background: none;
+}
