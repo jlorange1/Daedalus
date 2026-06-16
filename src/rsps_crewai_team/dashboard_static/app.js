@@ -1,6 +1,8 @@
 const state = {
   paused: false,
   selectedAgent: 1,
+  activePanel: "studio",
+  inspectorClosed: false,
   lastStatus: null,
 };
 
@@ -11,6 +13,26 @@ function toast(message) {
   box.textContent = message;
   box.classList.add("show");
   window.setTimeout(() => box.classList.remove("show"), 4200);
+}
+
+function setActivePanel(panelName) {
+  state.activePanel = panelName;
+  document.querySelectorAll(".nav-item").forEach((button) => {
+    const active = button.dataset.panel === panelName;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  document.body.dataset.panel = panelName;
+  const target = {
+    studio: ".studio-floor",
+    queue: ".board",
+    builds: ".schedule",
+    github: ".inspector",
+    cron: ".schedule",
+    settings: ".sidebar",
+  }[panelName] || ".studio-floor";
+  document.querySelector(target)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+  toast(`${panelName[0].toUpperCase()}${panelName.slice(1)} panel focused.`);
 }
 
 function pill(value, goodText = "ON", badText = "OFF") {
@@ -70,6 +92,7 @@ function renderQueue(queue) {
   const total = queue.inbox.count + queue.running.count + queue.failed.count;
   $("#queueBadge").textContent = total;
   $("#queueCount").textContent = `${total} work orders`;
+  document.documentElement.style.setProperty("--live-work-count", String(total));
 }
 
 function renderAgents(agents) {
@@ -165,6 +188,16 @@ function renderActivityLog(status, selectedAgent) {
   `).join("");
 }
 
+function setInspectorClosed(closed) {
+  state.inspectorClosed = closed;
+  $(".inspector")?.classList.toggle("inspector-closed", closed);
+  $("#closeInspector").textContent = closed ? "+" : "x";
+  $("#closeInspector").setAttribute("aria-expanded", String(!closed));
+  if (closed) {
+    toast("Telemetry collapsed.");
+  }
+}
+
 function renderReadiness(status) {
   const ready = status.readiness;
   const buildReady = ready.java && ready.git_lfs && ready.rsps_repo;
@@ -205,6 +238,11 @@ async function post(path, payload) {
 }
 
 function wireControls() {
+  document.querySelectorAll(".nav-item").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.classList.contains("active")));
+    button.addEventListener("click", () => setActivePanel(button.dataset.panel || "studio"));
+  });
+  $("#closeInspector").addEventListener("click", () => setInspectorClosed(!state.inspectorClosed));
   $("#enqueueOpen").addEventListener("click", () => $("#enqueueDialog").showModal());
   $("#enqueueSubmit").addEventListener("click", async (event) => {
     event.preventDefault();
@@ -228,8 +266,15 @@ function wireControls() {
       toast(error.message);
     }
   });
-  $("#runBuild").addEventListener("click", () => toast("Build/Test command is configured. Install Java 11 and Git LFS before running the gate."));
-  $("#pushBranch").addEventListener("click", () => toast("GitHub push is handled after successful worker runs when enabled."));
+  $("#runBuild").addEventListener("click", () => {
+    const ready = state.lastStatus?.readiness;
+    const gateReady = ready?.java && ready?.git_lfs && ready?.rsps_repo;
+    toast(gateReady ? "Build/Test gate is ready. Queue a work order or run the coding duo to execute guarded work." : "Build/Test is blocked until Java, Git LFS, and the server source are ready.");
+  });
+  $("#pushBranch").addEventListener("click", () => {
+    const clean = state.lastStatus?.git?.daedalus?.clean;
+    toast(clean ? "GitHub is clean. New code is pushed after successful reviewed worker runs." : "Local changes detected. Review and commit before pushing.");
+  });
   $("#cronTick").addEventListener("click", async () => {
     try {
       const result = await post("/api/action", { action: "cron-tick" });

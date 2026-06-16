@@ -4022,3 +4022,565 @@ pre {
     grid-template-columns: 1fr;
   }
 }
+
+/* Fable reference skin: dense benchmark-board quality, purple headers, working controls. */
+:root {
+  --fable-bg: #070c14;
+  --fable-panel: #101923;
+  --fable-panel-2: #0b131d;
+  --fable-line: rgba(148, 168, 190, .22);
+  --fable-purple: #6f55d8;
+  --fable-purple-2: #382b78;
+  --fable-blue: #a9c9f5;
+  --fable-green: #75f29a;
+  --fable-gold: #ffc247;
+  --fable-text: #eef5ff;
+  --fable-muted: #b6c3d2;
+}
+
+body {
+  color: var(--fable-text);
+  background:
+    radial-gradient(circle at 50% -10%, rgba(119, 88, 216, .22), transparent 34%),
+    radial-gradient(circle at 8% 18%, rgba(80, 140, 190, .12), transparent 30%),
+    linear-gradient(180deg, #090f17, #050910 60%, #05080d) !important;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+body::before {
+  opacity: .18;
+  z-index: 4;
+}
+
+button,
+.command,
+.nav-item,
+.window-grip,
+.day-cycle button,
+.events button,
+.panel-head button,
+menu button {
+  position: relative;
+  z-index: 12;
+  cursor: pointer;
+}
+
+button:active,
+.command:active,
+.nav-item:active,
+.day-cycle button:active,
+.events button:active,
+menu button:active {
+  transform: translateY(1px);
+}
+
+button:focus-visible,
+.command:focus-visible,
+.nav-item:focus-visible {
+  outline: 2px solid var(--fable-green);
+  outline-offset: 2px;
+}
+
+.shell {
+  grid-template-columns: 176px minmax(790px, 1fr) 326px;
+  grid-template-rows: 118px 292px minmax(282px, 1fr) 230px 24px;
+  gap: 8px;
+  padding: 8px;
+  background: transparent !important;
+}
+
+.sidebar,
+.topbar,
+.board,
+.studio-floor,
+.schedule,
+.inspector .panel,
+.status-card,
+.version {
+  border: 1px solid var(--fable-line);
+  border-radius: 4px;
+  background:
+    linear-gradient(180deg, rgba(24, 35, 47, .96), rgba(11, 18, 28, .98)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .04),
+    0 12px 32px rgba(0, 0, 0, .22);
+}
+
+.module-window::before,
+.module-window::after {
+  display: none;
+}
+
+.window-grip {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 4px 4px 0 0;
+  background:
+    linear-gradient(90deg, var(--fable-purple-2), var(--fable-purple)) !important;
+  color: #f4f1ff;
+  font-size: 11px;
+  letter-spacing: .9px;
+  text-shadow: none;
+}
+
+.window-grip b {
+  border-color: rgba(255, 255, 255, .16);
+  background: rgba(2, 5, 10, .34);
+}
+
+.topbar {
+  position: relative;
+  grid-template-columns: 220px minmax(300px, 1fr) repeat(5, minmax(96px, 126px));
+  align-items: end;
+  padding: 42px 10px 10px;
+  background:
+    linear-gradient(180deg, rgba(12, 18, 28, .98), rgba(9, 15, 24, .98)) !important;
+}
+
+.topbar::before {
+  content: "FABLE-CLASS DAEDALUS AGENT STUDIO";
+  position: absolute;
+  inset: 7px 12px auto;
+  color: var(--fable-text);
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: .8px;
+  text-align: center;
+}
+
+.topbar::after {
+  content: "Long-horizon autonomous RSPS development, live validation, and guarded execution control";
+  position: absolute;
+  inset: 34px 12px auto;
+  color: var(--fable-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.sprint-flag,
+.sprint-goal,
+.command,
+.top-module,
+.duo-tile {
+  min-height: 48px;
+  border: 1px solid var(--fable-line);
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(24, 35, 48, .9), rgba(11, 17, 26, .94)) !important;
+  box-shadow: none;
+}
+
+.sprint-flag small {
+  color: #b592ff;
+  font-size: 25px;
+  text-shadow: none;
+}
+
+.sprint-flag strong {
+  color: var(--fable-text);
+  font-size: 16px;
+}
+
+.sprint-goal span {
+  color: var(--fable-green);
+}
+
+.sprint-goal p {
+  color: var(--fable-muted);
+  font-size: 12px;
+}
+
+.command,
+.duo-tile {
+  color: var(--fable-text);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.command:hover,
+.duo-tile:hover,
+.top-module:hover {
+  border-color: rgba(181, 146, 255, .72);
+  background:
+    linear-gradient(180deg, rgba(65, 48, 132, .92), rgba(18, 24, 38, .96)) !important;
+}
+
+.command.primary,
+.duo-tile {
+  background:
+    linear-gradient(180deg, rgba(91, 69, 182, .96), rgba(39, 30, 86, .96)) !important;
+}
+
+.sidebar {
+  padding: 8px;
+}
+
+.banner {
+  min-height: 122px;
+  padding: 10px;
+  align-content: center;
+  border-color: var(--fable-line);
+  border-radius: 4px;
+  background:
+    linear-gradient(180deg, rgba(16, 25, 37, .96), rgba(9, 14, 23, .98)) !important;
+}
+
+.banner span {
+  color: var(--fable-green);
+  font-size: 11px;
+}
+
+.banner strong {
+  max-width: none;
+  color: var(--fable-text);
+  font-size: 24px;
+  line-height: .95;
+}
+
+.nav {
+  margin-top: 12px;
+}
+
+.nav-item {
+  min-height: 39px;
+  border-color: rgba(255, 255, 255, .07);
+  border-radius: 3px;
+  color: #dfe8f5;
+  background: rgba(13, 21, 32, .9) !important;
+}
+
+.nav-item.active {
+  border-color: rgba(117, 242, 154, .42);
+  color: var(--fable-text);
+  background:
+    linear-gradient(90deg, rgba(91, 69, 182, .44), rgba(20, 30, 42, .94)) !important;
+}
+
+.nav-item::after {
+  background: rgba(122, 145, 170, .62);
+  box-shadow: none;
+}
+
+.nav-item.active::after {
+  background: var(--fable-green);
+  box-shadow: 0 0 10px rgba(117, 242, 154, .55);
+}
+
+.status-card,
+.version {
+  background:
+    linear-gradient(180deg, rgba(15, 24, 36, .96), rgba(8, 13, 21, .98)) !important;
+}
+
+.status-card h2,
+.panel h2,
+.timeline h2,
+.events h2 {
+  color: var(--fable-blue);
+  text-shadow: none;
+}
+
+.status-card dd,
+.mini-stats dd,
+#agentInspector strong {
+  color: var(--fable-green);
+}
+
+.board {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 6px;
+  padding: 38px 10px 10px;
+  background:
+    linear-gradient(180deg, rgba(14, 23, 34, .98), rgba(8, 13, 21, .98)) !important;
+}
+
+.lane {
+  min-width: 0;
+  padding: 6px;
+  border-color: rgba(255, 255, 255, .08);
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(14, 24, 36, .96), rgba(8, 13, 22, .98)) !important;
+}
+
+.lane h2 {
+  width: auto;
+  min-width: 0;
+  min-height: 33px;
+  margin: 0 0 8px;
+  border-color: rgba(255, 255, 255, .1);
+  border-radius: 2px;
+  color: var(--fable-blue);
+  background:
+    linear-gradient(180deg, rgba(35, 46, 58, .9), rgba(14, 21, 30, .96)) !important;
+}
+
+.lane h2 span {
+  color: var(--fable-green);
+}
+
+.empty-card {
+  min-height: 164px;
+  grid-template-columns: 1fr;
+  justify-items: start;
+  align-content: space-between;
+  border-color: rgba(255, 255, 255, .08);
+  border-radius: 3px;
+  background:
+    radial-gradient(circle at 75% 25%, rgba(111, 85, 216, .18), transparent 36%),
+    linear-gradient(180deg, rgba(10, 18, 28, .98), rgba(5, 10, 17, .98)) !important;
+}
+
+.empty-card::before {
+  content: "✓";
+  position: absolute;
+  right: 11px;
+  top: 9px;
+  color: var(--fable-green);
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.empty-orbit {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(117, 242, 154, .24);
+  background:
+    radial-gradient(circle, rgba(117, 242, 154, .9) 0 4px, transparent 5px),
+    radial-gradient(circle, rgba(111, 85, 216, .26), transparent 65%) !important;
+}
+
+.empty-card strong {
+  color: var(--fable-text);
+  font-size: 13px;
+}
+
+.empty-card span {
+  max-width: 120px;
+  color: var(--fable-muted);
+}
+
+.empty-card em {
+  display: inline-grid;
+  min-width: 62px;
+  min-height: 20px;
+  place-items: center;
+  padding: 0 7px;
+  border-radius: 2px;
+  color: #0a111a;
+  background: var(--fable-green);
+  letter-spacing: .6px;
+}
+
+.studio-floor {
+  padding: 38px 10px 10px;
+  background:
+    linear-gradient(180deg, rgba(14, 23, 34, .98), rgba(8, 13, 21, .98)) !important;
+}
+
+.agent-grid {
+  gap: 6px;
+}
+
+.agent-desk,
+.agent-desk:nth-child(n) {
+  grid-template-rows: 66px auto;
+  min-height: 116px;
+  border-color: rgba(255, 255, 255, .08);
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(11, 19, 29, .98), rgba(5, 10, 18, .98)) !important;
+}
+
+.agent-desk.selected {
+  border-color: rgba(181, 146, 255, .82);
+  background:
+    linear-gradient(180deg, rgba(30, 24, 64, .98), rgba(8, 12, 22, .98)) !important;
+}
+
+.agent-desk.selected::after {
+  content: "FABLE";
+  display: grid;
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  width: auto;
+  height: 18px;
+  padding: 0 7px;
+  border-radius: 2px;
+  color: white;
+  background: var(--fable-purple);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .8px;
+}
+
+.agent-hitbox,
+.agent-hitbox.working {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .12),
+    0 0 26px rgba(111, 85, 216, .34),
+    inset 0 0 24px rgba(255, 255, 255, .12);
+}
+
+.agent-plate {
+  border-color: rgba(255, 255, 255, .08);
+  border-radius: 2px;
+  background: rgba(4, 8, 14, .72) !important;
+}
+
+.agent-plate h3 {
+  color: var(--fable-text);
+  text-shadow: none;
+}
+
+.agent-plate p,
+.agent-taskline {
+  color: var(--fable-muted);
+}
+
+.agent-taskline::before {
+  content: "✓ ";
+  color: var(--fable-green);
+}
+
+.agent-taskline {
+  display: none;
+}
+
+.inspector {
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.inspector.inspector-closed {
+  opacity: .56;
+  transform: none;
+}
+
+.inspector.inspector-closed .panel:not(:first-child) {
+  opacity: .24;
+}
+
+.inspector.inspector-closed .panel:first-child {
+  border-color: rgba(181, 146, 255, .54);
+}
+
+.inspector .panel {
+  border-radius: 4px;
+  background:
+    linear-gradient(180deg, rgba(14, 23, 34, .98), rgba(8, 13, 21, .98)) !important;
+}
+
+.panel-head button {
+  width: 28px;
+  height: 28px;
+  border-color: rgba(255, 255, 255, .16);
+  border-radius: 2px;
+  color: var(--fable-text);
+  background: var(--fable-purple);
+}
+
+.agent-hero,
+.inspector-task,
+.mini-stats div,
+#branchState,
+.log-row,
+.day-cycle,
+.events {
+  border-color: rgba(255, 255, 255, .08);
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(11, 19, 29, .96), rgba(5, 10, 18, .98)) !important;
+}
+
+.agent-medallion {
+  border-color: rgba(181, 146, 255, .55);
+}
+
+pre {
+  border-color: rgba(255, 255, 255, .08);
+  border-radius: 3px;
+  color: #b7f5c4;
+  background:
+    linear-gradient(180deg, rgba(5, 10, 17, .98), rgba(2, 5, 9, .98)) !important;
+}
+
+#testList p::before,
+.events p::before {
+  content: "✓";
+  color: var(--fable-green);
+  font-weight: 900;
+}
+
+.state-chip,
+.tag {
+  border-radius: 2px;
+  color: #0a111a;
+  background: var(--fable-green);
+}
+
+.schedule {
+  padding: 38px 10px 10px;
+  background:
+    linear-gradient(180deg, rgba(14, 23, 34, .98), rgba(8, 13, 21, .98)) !important;
+}
+
+.timeline::after {
+  background: var(--fable-purple);
+  box-shadow: 0 0 16px rgba(181, 146, 255, .6);
+}
+
+.track b,
+.track.blue b,
+.track.gold b,
+.track.teal b {
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(90deg, rgba(89, 189, 240, .62), rgba(117, 242, 154, .95)) !important;
+}
+
+.events button,
+.day-cycle button,
+menu button {
+  border: 1px solid rgba(181, 146, 255, .46);
+  border-radius: 3px;
+  color: var(--fable-text);
+  background:
+    linear-gradient(180deg, rgba(91, 69, 182, .82), rgba(37, 30, 76, .94)) !important;
+}
+
+.day-cycle button {
+  transform: none;
+}
+
+.footer-hud {
+  border-color: var(--fable-line);
+  border-radius: 3px;
+  color: var(--fable-muted);
+  background: rgba(9, 14, 22, .94) !important;
+}
+
+dialog {
+  max-width: 620px;
+  border: 1px solid rgba(181, 146, 255, .52);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(20, 28, 40, .98), rgba(8, 13, 21, .98)) !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .6);
+}
+
+dialog::backdrop {
+  background: rgba(1, 3, 8, .72);
+}
+
+#toast {
+  z-index: 80;
+  border-color: rgba(117, 242, 154, .52);
+  border-radius: 4px;
+  background:
+    linear-gradient(180deg, rgba(17, 31, 28, .98), rgba(8, 13, 21, .98)) !important;
+}
