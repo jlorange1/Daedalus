@@ -1,0 +1,24 @@
+[
+  {
+    "name": "wood_panel_large",
+    "file": "/assets/sliced/panels/wood_panel_large.png",
+    "type": "nine_slice",
+    "left": 18,
+    "right": 18,
+    "top": 18,
+    "bottom": 18,
+    "repeat_center": true,
+    "usage": "Resizable warm wood panel frame"
+  },
+  {
+    "name": "dark_panel_base",
+    "file": "/assets/sliced/panels/dark_panel_base.png",
+    "type": "nine_slice",
+    "left": 16,
+    "right": 16,
+    "top": 16,
+    "bottom": 16,
+    "repeat_center": true,
+    "usage": "Dark stone/wood inset panel"
+  }
+]

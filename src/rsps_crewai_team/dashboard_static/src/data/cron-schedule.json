@@ -1,0 +1,37 @@
+{
+  "schema": "daedalus.cron_schedule.v1",
+  "generated_at": "2026-06-16T09:00:00-04:00",
+  "timezone": "America/New_York",
+  "schedules": [
+    {
+      "id": "cron-queue-refresh",
+      "label": "ForgeBoard queue refresh",
+      "enabled": true,
+      "cadence": "*/10 * * * *",
+      "next_run_at": "2026-06-16T09:10:00-04:00",
+      "last_run_at": "2026-06-16T09:00:00-04:00",
+      "last_status": "passed",
+      "owner_agent_id": "agent-producer"
+    },
+    {
+      "id": "cron-build-gate",
+      "label": "Build gate check",
+      "enabled": true,
+      "cadence": "0 */2 * * *",
+      "next_run_at": "2026-06-16T10:00:00-04:00",
+      "last_run_at": "2026-06-16T08:00:00-04:00",
+      "last_status": "warning",
+      "owner_agent_id": "agent-qa"
+    },
+    {
+      "id": "cron-digest",
+      "label": "Studio status digest",
+      "enabled": true,
+      "cadence": "30 16 * * 1-5",
+      "next_run_at": "2026-06-16T16:30:00-04:00",
+      "last_run_at": "2026-06-15T16:30:00-04:00",
+      "last_status": "passed",
+      "owner_agent_id": "agent-docs"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "agent_typing_strip",
+    "file": "/assets/animations/agents/agent_typing_strip.png",
+    "frame_width": 178,
+    "frame_height": 189,
+    "frames": 6,
+    "fps": 6,
+    "loop": true,
+    "anchor": "bottom_center",
+    "usage": "Six vertical role typing scenes",
+    "sheet_size": {
+      "width": 178,
+      "height": 1134
+    }
+  },
+  {
+    "name": "agent_idle_blink_strip",
+    "file": "/assets/animations/agents/agent_idle_blink_strip.png",
+    "frame_width": 170,
+    "frame_height": 189,
+    "frames": 6,
+    "fps": 3,
+    "loop": true,
+    "anchor": "bottom_center",
+    "usage": "Six role idle/blink references",
+    "sheet_size": {
+      "width": 170,
+      "height": 1134
+    }
+  },
+  {
+    "name": "lamp_fire_flicker_strip",
+    "file": "/assets/animations/ambient/lamp_fire_flicker_strip.png",
+    "frame_width": 90,
+    "frame_height": 120,
+    "frames": 4,
+    "fps": 8,
+    "loop": true,
+    "anchor": "bottom_center",
+    "usage": "Ambient lantern/fire flicker references",
+    "sheet_size": {
+      "width": 360,
+      "height": 120
+    }
+  },
+  {
+    "name": "progress_status_modules",
+    "file": "/assets/animations/status/progress_status_modules.png",
+    "frame_width": 215,
+    "frame_height": 53,
+    "frames": 5,
+    "fps": 8,
+    "loop": true,
+    "anchor": "bottom_center",
+    "usage": "Progress/status module strip",
+    "sheet_size": {
+      "width": 215,
+      "height": 265
+    }
+  }
+]

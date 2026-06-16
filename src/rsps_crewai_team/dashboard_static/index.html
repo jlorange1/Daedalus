@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Daedalus RSPS Studio</title>
+    <title>Daedalus Studio</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -12,7 +12,7 @@
         <div class="banner">
           <img src="/assets/banners.png" alt="" />
           <span>Autonomous</span>
-          <strong>RSPS Studio</strong>
+          <strong>GuildOps Studio</strong>
         </div>
         <nav class="nav" aria-label="Dashboard sections">
           <button class="nav-item active nav-studio" data-panel="studio">Studio</button>
@@ -39,11 +39,11 @@
       <section class="topbar">
         <div class="sprint-flag">
           <small>Sprint 24</small>
-          <strong>2009scape Studio Buildout</strong>
+          <strong>ForgeBoard Buildout</strong>
         </div>
         <div class="sprint-goal">
           <span>Sprint Goal</span>
-          <p>Prepare the AI workforce to build, test, review, and publish RSPS changes over time.</p>
+          <p>Prepare the AI workforce to build, test, review, and publish open-source server changes over time.</p>
         </div>
         <button id="enqueueOpen" class="command command-enqueue">Enqueue Work</button>
         <button id="runBuild" class="command command-build">Build / Test</button>
@@ -124,13 +124,18 @@
           <p id="branchState">Checking...</p>
         </div>
       </aside>
+      <footer class="footer-hud">
+        <span>Daedalus Studio</span>
+        <span>Original generated fantasy GUI assets</span>
+        <span>No official third-party affiliation</span>
+      </footer>
     </main>
 
     <dialog id="enqueueDialog">
       <form method="dialog" id="enqueueForm">
         <h2>Enqueue Work Order</h2>
         <label>Title <input id="workTitle" required value="Add starter studio readiness task" /></label>
-        <label>Body <textarea id="workBody" required>Inspect the 2009scape source and propose the smallest safe first implementation task after Java 11 and Git LFS are installed.</textarea></label>
+        <label>Body <textarea id="workBody" required>Inspect the configured open-source server source and propose the smallest safe first implementation task after Java 11 and Git LFS are installed.</textarea></label>
         <menu>
           <button value="cancel">Cancel</button>
           <button id="enqueueSubmit" value="default">Add to Queue</button>

@@ -1,0 +1,121 @@
+{
+  "schema": "daedalus.queue_timeline_events.v1",
+  "generated_at": "2026-06-16T09:00:00-04:00",
+  "queue": {
+    "lanes": [
+      {
+        "id": "inbox",
+        "label": "Inbox",
+        "count": 3,
+        "items": [
+          {
+            "id": "work-301",
+            "title": "Add workshop intake filters",
+            "task_id": "task-104",
+            "kind": "operations",
+            "priority": "medium",
+            "stamp": "queued"
+          },
+          {
+            "id": "work-302",
+            "title": "Draft release note shell",
+            "task_id": null,
+            "kind": "documentation",
+            "priority": "low",
+            "stamp": "queued"
+          },
+          {
+            "id": "work-303",
+            "title": "Review legal-safe dashboard copy",
+            "task_id": null,
+            "kind": "review",
+            "priority": "high",
+            "stamp": "ready"
+          }
+        ]
+      },
+      {
+        "id": "running",
+        "label": "Running",
+        "count": 2,
+        "items": [
+          {
+            "id": "work-201",
+            "title": "Model ForgeBoard data contracts",
+            "task_id": "task-101",
+            "kind": "data",
+            "priority": "high",
+            "stamp": "68%"
+          },
+          {
+            "id": "work-202",
+            "title": "Expose build gate summary",
+            "task_id": "task-102",
+            "kind": "quality",
+            "priority": "high",
+            "stamp": "54%"
+          }
+        ]
+      },
+      {
+        "id": "review",
+        "label": "Review",
+        "count": 1,
+        "items": [
+          {
+            "id": "work-151",
+            "title": "Document studio states",
+            "task_id": "task-105",
+            "kind": "documentation",
+            "priority": "low",
+            "stamp": "done"
+          }
+        ]
+      },
+      {
+        "id": "blocked",
+        "label": "Blocked",
+        "count": 1,
+        "items": [
+          {
+            "id": "work-121",
+            "title": "Prepare branch review packet",
+            "task_id": "task-103",
+            "kind": "review",
+            "priority": "medium",
+            "stamp": "blocked"
+          }
+        ]
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "id": "event-501",
+      "occurred_at": "2026-06-16T08:58:00-04:00",
+      "actor_agent_id": "agent-producer",
+      "type": "task_update",
+      "severity": "info",
+      "title": "Data contract pass started",
+      "body": "Sprint Workshop data domains moved into structured mock files."
+    },
+    {
+      "id": "event-502",
+      "occurred_at": "2026-06-16T08:52:41-04:00",
+      "actor_agent_id": "agent-qa",
+      "type": "build_update",
+      "severity": "watch",
+      "title": "Build gate completed with warning",
+      "body": "Event feed snapshot coverage is pending."
+    },
+    {
+      "id": "event-503",
+      "occurred_at": "2026-06-16T08:10:00-04:00",
+      "actor_agent_id": "agent-docs",
+      "type": "documentation",
+      "severity": "success",
+      "title": "Studio state reference finished",
+      "body": "State names, labels, and tones are ready for ForgeBoard consumers."
+    }
+  ]
+}

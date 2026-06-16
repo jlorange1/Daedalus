@@ -1,0 +1,23 @@
+:root {
+  --guild-ink: #24180e;
+  --guild-shadow: #130d08;
+  --guild-stone: #14100c;
+  --guild-wood: #4b2d14;
+  --guild-wood-dark: #2f1e14;
+  --guild-parchment: #d5b47a;
+  --guild-paper: #ead5a0;
+  --guild-brass: #c9943f;
+  --guild-green: #66b84a;
+  --guild-blue: #3f6d8f;
+  --guild-warning: #d49a35;
+  --guild-danger: #a54a2f;
+  --guild-border: #8a5724;
+  --anim-fast: 120ms;
+  --anim-medium: 1.6s;
+  --anim-slow: 3.8s;
+}
+
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}

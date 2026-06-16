@@ -1,0 +1,59 @@
+{
+  "schema": "daedalus.components.v1",
+  "components": [
+    {
+      "name": "AppShell",
+      "selector": ".shell",
+      "assets": ["wood_panel_large", "dark_panel_base"],
+      "states": ["default", "loading", "error"]
+    },
+    {
+      "name": "LeftSidebar",
+      "selector": ".sidebar",
+      "assets": ["green_banner_large", "status_bar_green"],
+      "states": ["default", "selected", "warning"]
+    },
+    {
+      "name": "TopSprintHeader",
+      "selector": ".topbar",
+      "assets": ["green_banner_large", "button_primary_default"],
+      "states": ["default", "busy", "ready"]
+    },
+    {
+      "name": "KanbanBoard",
+      "selector": ".board",
+      "assets": ["wood_panel_large", "task_card_default", "task_card_review", "task_card_done"],
+      "states": ["default", "empty", "loading", "error"]
+    },
+    {
+      "name": "TaskCard",
+      "selector": ".work-card",
+      "assets": ["task_card_default", "task_card_review", "task_card_done"],
+      "states": ["default", "hover", "dragging", "review", "done", "blocked", "priority_pulse"]
+    },
+    {
+      "name": "AgentGrid",
+      "selector": ".studio-floor",
+      "assets": ["prototype_studio_floor_full", "agent_typing_strip", "agent_idle_blink_strip"],
+      "states": ["default", "selected", "working", "offline", "error"]
+    },
+    {
+      "name": "AgentInspector",
+      "selector": ".inspector",
+      "assets": ["dark_panel_base", "status_bar_green"],
+      "states": ["open", "closed", "focused", "loading", "empty", "error"]
+    },
+    {
+      "name": "ScheduleTimeline",
+      "selector": ".schedule",
+      "assets": ["day_cycle_panel", "schedule_timeline_frame", "progress_status_modules"],
+      "states": ["default", "paused", "warning", "error"]
+    },
+    {
+      "name": "FooterHud",
+      "selector": ".footer-hud",
+      "assets": ["dark_panel_base"],
+      "states": ["default"]
+    }
+  ]
+}

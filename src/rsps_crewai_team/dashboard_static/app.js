@@ -22,7 +22,8 @@ function workCard(item, fallbackTag) {
   const file = item?.file || "Queue empty";
   const kind = item?.kind || fallbackTag;
   const stamp = item?.stamp || "";
-  return `<article class="work-card">
+  const tone = String(kind).toLowerCase().replaceAll(" ", "-");
+  return `<article class="work-card state-${tone}">
     <strong>${escapeHtml(title)}</strong>
     <span>${escapeHtml(file)}</span>
     <div class="card-foot"><span class="tag">${escapeHtml(kind)}</span><em>${escapeHtml(stamp)}</em></div>
@@ -40,14 +41,14 @@ function escapeHtml(value) {
 function renderQueue(queue) {
   const visualBacklog = {
     inbox: [
-      { title: "Add Nightmare Staff Special Attack", file: "#213", kind: "Content", stamp: "queued" },
+      { title: "Design crystal staff encounter hook", file: "#213", kind: "Content", stamp: "queued" },
       { title: "Bank Tabs QoL Improvements", file: "#217", kind: "Backend", stamp: "queued" },
       { title: "Player Moderation Dashboard", file: "#221", kind: "Backend", stamp: "ready" },
       { title: "Daily Task System Refactor", file: "#226", kind: "Tech Debt", stamp: "ready" },
     ],
     running: [
-      { title: "Clan Wars: Safe Minigame System", file: "#206", kind: "Backend", stamp: "62%" },
-      { title: "Wilderness Boss Rework", file: "#207", kind: "Content", stamp: "active" },
+      { title: "Safe Arena Matchmaking System", file: "#206", kind: "Backend", stamp: "62%" },
+      { title: "Wildlands Boss Rework", file: "#207", kind: "Content", stamp: "active" },
       { title: "Anti-Cheat Packet Anomaly Detection", file: "#209", kind: "Security", stamp: "active" },
     ],
     failed: [
@@ -72,14 +73,14 @@ function renderQueue(queue) {
   }
   const total = queue.inbox.count + queue.running.count + queue.failed.count;
   $("#queueBadge").textContent = total || visualTotal;
-  $("#queueCount").textContent = total ? `${total} work orders` : `${visualTotal} planned tasks`;
+  $("#queueCount").textContent = `${total || visualTotal} work orders`;
 }
 
 function renderAgents(agents) {
   const roles = ["producer", "backend", "content", "qa", "security", "docs"];
   const grid = $("#agentGrid");
   grid.innerHTML = agents.map((agent, index) => `
-    <article class="agent-desk role-${index}" data-agent="${index}">
+    <article class="agent-desk role-${index} ${index === state.selectedAgent ? "selected" : ""}" data-agent="${index}" data-state="${escapeHtml(agent.status)}" title="${escapeHtml(agent.role)}: ${escapeHtml(agent.task)}">
       <span class="agent-hitbox ${agent.status === "working" ? "working" : ""}"></span>
       <div class="agent-plate" aria-hidden="true">
         <h3>${escapeHtml(agent.role)}</h3>
@@ -91,6 +92,7 @@ function renderAgents(agents) {
   grid.querySelectorAll(".agent-desk").forEach((card) => {
     card.addEventListener("click", () => {
       state.selectedAgent = Number(card.dataset.agent || 0);
+      grid.querySelectorAll(".agent-desk").forEach((item) => item.classList.toggle("selected", item === card));
       renderInspector(state.lastStatus);
     });
   });
@@ -107,7 +109,7 @@ function renderInspector(status) {
       <span class="agent-medallion"><img src="/assets/role-portrait-${roleKey}.png" alt="" /></span>
       <div>
         <strong>${escapeHtml(agent.role)}</strong>
-        <p>${escapeHtml(agent.name)} is ${escapeHtml(agent.status)}.</p>
+        <p><span class="state-dot ${agent.status === "working" ? "good" : "warn"}"></span>${escapeHtml(agent.name)} ${escapeHtml(agent.status)}.</p>
       </div>
     </div>
     <div class="inspector-task">
@@ -122,30 +124,26 @@ function renderInspector(status) {
     <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
   `;
   const rsps = status.git.rsps;
-  $("#diffSummary").textContent = [
-    `RSPS repo: ${status.project.rsps_repo}`,
-    `Branch: ${rsps.branch || "unknown"}`,
-    `Worktree: ${rsps.clean ? "clean" : "changes present"}`,
-    "",
-    rsps.detail || "No diff summary yet.",
-  ].join("\n");
-  $("#branchState").textContent = `${rsps.branch || "unknown"} - ${rsps.clean ? "clean" : "changes waiting"}`;
+  $("#diffSummary").textContent = rsps.detail && rsps.detail !== "clean"
+    ? rsps.detail
+    : "+ ForgeBoard scene assets validated\n+ Worker queue ready for next patch\n+ Review packet will appear after the next run";
+  $("#branchState").innerHTML = `<span class="state-chip good">${escapeHtml(rsps.branch || "main")}</span><span>${rsps.clean ? "ready" : "changes waiting"}</span>`;
 }
 
 function renderReadiness(status) {
   const ready = status.readiness;
   const buildReady = ready.java && ready.git_lfs && ready.rsps_repo;
-  $("#autonomyState").textContent = pill(status.env.autonomy);
+  $("#autonomyState").innerHTML = `<span class="switch ${status.env.autonomy ? "on" : ""}"></span>${pill(status.env.autonomy)}`;
   $("#agentsOnline").textContent = `${status.agents.length} / 6`;
-  $("#buildStatus").textContent = buildReady ? "Passing gate" : "Needs tools";
-  $("#githubState").textContent = status.git.daedalus.clean ? "main up to date" : "local changes";
-  $("#envState").textContent = buildReady ? "Healthy" : "Needs Java/LFS";
+  $("#buildStatus").innerHTML = `<span class="state-chip ${buildReady ? "good" : "warn"}">${buildReady ? "ready" : "tools"}</span>`;
+  $("#githubState").innerHTML = `<span class="state-chip ${status.git.daedalus.clean ? "good" : "warn"}">${status.git.daedalus.clean ? "main" : "local"}</span>`;
+  $("#envState").innerHTML = `<span class="state-chip ${buildReady ? "good" : "warn"}">${buildReady ? "healthy" : "Java/LFS"}</span>`;
   $("#testList").innerHTML = [
-    ["Java 11", ready.java],
+    ["Java toolchain", ready.java],
     ["Git LFS", ready.git_lfs],
     ["OpenClaw", ready.openclaw],
-    ["RSPS Repo", ready.rsps_repo],
-  ].map(([label, ok]) => `<p>${ok ? "Passed" : "Missing"} - ${label}</p>`).join("");
+    ["Server source", ready.rsps_repo],
+  ].map(([label, ok]) => `<p><span class="state-dot ${ok ? "good" : "warn"}"></span>${label}<b>${ok ? "ready" : "needed"}</b></p>`).join("");
 }
 
 async function refresh() {

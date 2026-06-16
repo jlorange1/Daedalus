@@ -1,0 +1,73 @@
+{
+  "schema": "daedalus.mock_data_manifest.v1",
+  "generated_at": "2026-06-16T09:00:00-04:00",
+  "brand_terms": ["Daedalus Studio", "Sprint Workshop", "ForgeBoard"],
+  "datasets": [
+    {
+      "id": "sprint",
+      "path": "/src/data/sprint.json",
+      "schema": "daedalus.sprint.v1",
+      "top_level": ["schema", "generated_at", "sprint"]
+    },
+    {
+      "id": "tasks",
+      "path": "/src/data/tasks.json",
+      "schema": "daedalus.tasks.v1",
+      "top_level": ["schema", "generated_at", "tasks"]
+    },
+    {
+      "id": "agents",
+      "path": "/src/data/agents.json",
+      "schema": "daedalus.agents.v1",
+      "top_level": ["schema", "generated_at", "agents"]
+    },
+    {
+      "id": "build-status",
+      "path": "/src/data/build-status.json",
+      "schema": "daedalus.build_status.v1",
+      "top_level": ["schema", "generated_at", "build"]
+    },
+    {
+      "id": "branch-pr",
+      "path": "/src/data/branch-pr.json",
+      "schema": "daedalus.branch_pr.v1",
+      "top_level": ["schema", "generated_at", "branch", "review_request"]
+    },
+    {
+      "id": "cron-schedule",
+      "path": "/src/data/cron-schedule.json",
+      "schema": "daedalus.cron_schedule.v1",
+      "top_level": ["schema", "generated_at", "timezone", "schedules"]
+    },
+    {
+      "id": "tests",
+      "path": "/src/data/tests.json",
+      "schema": "daedalus.tests.v1",
+      "top_level": ["schema", "generated_at", "summary", "suites"]
+    },
+    {
+      "id": "code-diff",
+      "path": "/src/data/code-diff.json",
+      "schema": "daedalus.code_diff.v1",
+      "top_level": ["schema", "generated_at", "diff"]
+    },
+    {
+      "id": "studio-status",
+      "path": "/src/data/studio-status.json",
+      "schema": "daedalus.studio_status.v1",
+      "top_level": ["schema", "generated_at", "studio"]
+    },
+    {
+      "id": "queue-timeline-events",
+      "path": "/src/data/queue-timeline-events.json",
+      "schema": "daedalus.queue_timeline_events.v1",
+      "top_level": ["schema", "generated_at", "queue", "timeline"]
+    },
+    {
+      "id": "states",
+      "path": "/src/data/states.json",
+      "schema": "daedalus.states.v1",
+      "top_level": ["schema", "generated_at", "states"]
+    }
+  ]
+}

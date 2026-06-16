@@ -1,0 +1,39 @@
+{
+  "app_shell": [
+    "wood_panel_large",
+    "dark_panel_base"
+  ],
+  "left_sidebar": [
+    "green_banner_large",
+    "status_bar_green"
+  ],
+  "top_sprint_header": [
+    "green_banner_large",
+    "button_primary_default"
+  ],
+  "kanban_board": [
+    "wood_panel_large",
+    "task_card_default",
+    "task_card_review",
+    "task_card_done"
+  ],
+  "agent_grid": [
+    "prototype_studio_floor_full",
+    "agent_typing_strip",
+    "agent_idle_blink_strip"
+  ],
+  "agent_inspector": [
+    "dark_panel_base",
+    "status_bar_green"
+  ],
+  "schedule_timeline": [
+    "day_cycle_panel",
+    "schedule_timeline_frame",
+    "progress_status_modules"
+  ],
+  "ambient_layer": [
+    "lantern",
+    "server_lights",
+    "lamp_fire_flicker_strip"
+  ]
+}

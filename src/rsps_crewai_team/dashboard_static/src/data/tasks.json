@@ -1,0 +1,98 @@
+{
+  "schema": "daedalus.tasks.v1",
+  "generated_at": "2026-06-16T09:00:00-04:00",
+  "tasks": [
+    {
+      "id": "task-101",
+      "title": "Model ForgeBoard data contracts",
+      "type": "data",
+      "status": "in_progress",
+      "priority": "high",
+      "points": 5,
+      "assignee_agent_id": "agent-producer",
+      "sprint_id": "sprint-2026-06-workshop-12",
+      "tags": ["mock-data", "contract"],
+      "created_at": "2026-06-15T10:15:00-04:00",
+      "updated_at": "2026-06-16T08:35:00-04:00",
+      "acceptance": [
+        "All dashboard domains have legal-safe mock data.",
+        "Each dataset exposes a schema version.",
+        "IDs are stable and cross-referenceable."
+      ]
+    },
+    {
+      "id": "task-102",
+      "title": "Expose build gate summary",
+      "type": "quality",
+      "status": "ready",
+      "priority": "high",
+      "points": 8,
+      "assignee_agent_id": "agent-qa",
+      "sprint_id": "sprint-2026-06-workshop-12",
+      "tags": ["build", "tests"],
+      "created_at": "2026-06-15T11:20:00-04:00",
+      "updated_at": "2026-06-16T08:00:00-04:00",
+      "acceptance": [
+        "Build status includes current result, duration, and blocker list.",
+        "Test status links failing checks to owner agents.",
+        "Readiness can be rendered without provider-specific names."
+      ]
+    },
+    {
+      "id": "task-103",
+      "title": "Prepare branch review packet",
+      "type": "review",
+      "status": "blocked",
+      "priority": "medium",
+      "points": 3,
+      "assignee_agent_id": "agent-backend",
+      "sprint_id": "sprint-2026-06-workshop-12",
+      "tags": ["branch", "review-request"],
+      "created_at": "2026-06-15T13:05:00-04:00",
+      "updated_at": "2026-06-16T08:50:00-04:00",
+      "blocked_by": ["task-102"],
+      "acceptance": [
+        "Branch metadata shows clean or dirty state.",
+        "Review request state is visible.",
+        "Diff summary highlights risk by area."
+      ]
+    },
+    {
+      "id": "task-104",
+      "title": "Tune studio queue event feed",
+      "type": "operations",
+      "status": "todo",
+      "priority": "medium",
+      "points": 5,
+      "assignee_agent_id": "agent-content",
+      "sprint_id": "sprint-2026-06-workshop-12",
+      "tags": ["queue", "timeline"],
+      "created_at": "2026-06-16T07:45:00-04:00",
+      "updated_at": "2026-06-16T07:45:00-04:00",
+      "acceptance": [
+        "Queue lanes include counts and visible cards.",
+        "Timeline events include actor, timestamp, and severity.",
+        "Events avoid protected brand copy."
+      ]
+    },
+    {
+      "id": "task-105",
+      "title": "Document studio states",
+      "type": "documentation",
+      "status": "done",
+      "priority": "low",
+      "points": 2,
+      "assignee_agent_id": "agent-docs",
+      "sprint_id": "sprint-2026-06-workshop-12",
+      "tags": ["states", "docs"],
+      "created_at": "2026-06-15T09:40:00-04:00",
+      "updated_at": "2026-06-16T08:10:00-04:00",
+      "completed_at": "2026-06-16T08:10:00-04:00",
+      "acceptance": [
+        "State keys are documented.",
+        "Every state has a display label, tone, and description.",
+        "Deprecated labels are excluded."
+      ]
+    }
+  ]
+}

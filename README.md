@@ -1,6 +1,6 @@
-# RSPS CrewAI Team
+# Daedalus Studio
 
-CrewAI workforce scaffold for RuneScape private server development. It is designed to coordinate specialized agents for planning, implementation guidance, code review, content design, QA, and security analysis.
+Autonomous fantasy software-studio dashboard and CrewAI workforce scaffold for open-source 2009-era MMORPG server development. It coordinates specialized agents for planning, implementation guidance, code review, content design, QA, and security analysis.
 
 ## Setup
 
@@ -206,7 +206,7 @@ The cron tick runs the OpenClaw duo every 30 minutes when `RSPS_DUO_MODE=true`, 
 
 ## Studio Dashboard
 
-Run the retro RSPS studio dashboard:
+Run the retro Sprint Workshop dashboard:
 
 ```bash
 uv run rsps-dashboard
@@ -217,6 +217,18 @@ Open:
 ```text
 http://127.0.0.1:8765
 ```
+
+## Dashboard Asset Pipeline
+
+Dashboard pixel-art assets are managed by `scripts/dashboard_assets.py`. The script copies generated source sheets into `src/rsps_crewai_team/dashboard_static/assets/source_sheets/`, slices UI-ready PNGs into `assets/sliced/` and `assets/animations/`, then writes JSON manifests under `assets/manifests/`.
+
+Run the pipeline after replacing or adding source sheets:
+
+```bash
+uv run python scripts/dashboard_assets.py
+```
+
+Keep source sheet names, slice names, and manifest entries legal-safe and project-owned. Do not use official RuneScape/Jagex logos, sprites, screenshots, or trade dress as dashboard assets. See [ASSET_INVENTORY.md](docs/ASSET_INVENTORY.md) for the current source sheets, outputs, animation strips, state gaps, and naming rules.
 
 The dashboard shows queue state, agent roles, readiness checks, Git status, cron schedule, and OpenClaw duo controls. Enqueue is safe to use immediately. Worker execution still respects `RSPS_ALLOW_AUTONOMOUS=false`.
 

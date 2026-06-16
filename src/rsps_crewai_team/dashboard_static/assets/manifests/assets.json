@@ -1,0 +1,223 @@
+[
+  {
+    "name": "task_card_default",
+    "file": "/assets/sliced/cards/task_card_default.png",
+    "type": "card",
+    "usage": "Default parchment task card",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "task_card_default",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 245,
+      "height": 132
+    }
+  },
+  {
+    "name": "task_card_review",
+    "file": "/assets/sliced/cards/task_card_review.png",
+    "type": "card",
+    "usage": "Review-state parchment task card",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "task_card_review",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 245,
+      "height": 132
+    }
+  },
+  {
+    "name": "task_card_done",
+    "file": "/assets/sliced/cards/task_card_done.png",
+    "type": "card",
+    "usage": "Done-state parchment task card",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "task_card_done",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 240,
+      "height": 132
+    }
+  },
+  {
+    "name": "wood_panel_large",
+    "file": "/assets/sliced/panels/wood_panel_large.png",
+    "type": "panel",
+    "usage": "Resizable wood panel base",
+    "source": "/assets/source_sheets/frame_kit.png",
+    "legal_safe_name": "wood_panel_large",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 285,
+      "height": 178
+    }
+  },
+  {
+    "name": "dark_panel_base",
+    "file": "/assets/sliced/panels/dark_panel_base.png",
+    "type": "panel",
+    "usage": "Dark inset panel base",
+    "source": "/assets/source_sheets/frame_kit.png",
+    "legal_safe_name": "dark_panel_base",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 565,
+      "height": 130
+    }
+  },
+  {
+    "name": "green_banner_large",
+    "file": "/assets/sliced/ui/green_banner_large.png",
+    "type": "ui",
+    "usage": "Large green cloth banner",
+    "source": "/assets/source_sheets/ui_kit_overview.png",
+    "legal_safe_name": "green_banner_large",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 268,
+      "height": 135
+    }
+  },
+  {
+    "name": "button_primary_default",
+    "file": "/assets/sliced/ui/button_primary_default.png",
+    "type": "ui",
+    "usage": "Primary wood action button",
+    "source": "/assets/source_sheets/ui_kit_overview.png",
+    "legal_safe_name": "button_primary_default",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 176,
+      "height": 117
+    }
+  },
+  {
+    "name": "status_bar_green",
+    "file": "/assets/sliced/status/status_bar_green.png",
+    "type": "status",
+    "usage": "Green status meter",
+    "source": "/assets/source_sheets/ui_kit_overview.png",
+    "legal_safe_name": "status_bar_green",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 225,
+      "height": 75
+    }
+  },
+  {
+    "name": "bubble_code",
+    "file": "/assets/sliced/widgets/bubble_code.png",
+    "type": "widget",
+    "usage": "Code speech bubble",
+    "source": "/assets/source_sheets/portrait_status_sheet.png",
+    "legal_safe_name": "bubble_code",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 76,
+      "height": 65
+    }
+  },
+  {
+    "name": "bubble_bug",
+    "file": "/assets/sliced/widgets/bubble_bug.png",
+    "type": "widget",
+    "usage": "Bug speech bubble",
+    "source": "/assets/source_sheets/portrait_status_sheet.png",
+    "legal_safe_name": "bubble_bug",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 76,
+      "height": 65
+    }
+  },
+  {
+    "name": "bubble_docs",
+    "file": "/assets/sliced/widgets/bubble_docs.png",
+    "type": "widget",
+    "usage": "Docs speech bubble",
+    "source": "/assets/source_sheets/portrait_status_sheet.png",
+    "legal_safe_name": "bubble_docs",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 76,
+      "height": 65
+    }
+  },
+  {
+    "name": "bubble_shield",
+    "file": "/assets/sliced/widgets/bubble_shield.png",
+    "type": "widget",
+    "usage": "Security speech bubble",
+    "source": "/assets/source_sheets/portrait_status_sheet.png",
+    "legal_safe_name": "bubble_shield",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 76,
+      "height": 65
+    }
+  },
+  {
+    "name": "lantern",
+    "file": "/assets/sliced/ambient/lantern.png",
+    "type": "ambient",
+    "usage": "Hanging lantern prop",
+    "source": "/assets/source_sheets/ambient_props_sheet.png",
+    "legal_safe_name": "lantern",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 78,
+      "height": 143
+    }
+  },
+  {
+    "name": "server_lights",
+    "file": "/assets/sliced/ambient/server_lights.png",
+    "type": "ambient",
+    "usage": "Server rack light prop",
+    "source": "/assets/source_sheets/ambient_props_sheet.png",
+    "legal_safe_name": "server_lights",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 175,
+      "height": 115
+    }
+  },
+  {
+    "name": "day_cycle_panel",
+    "file": "/assets/sliced/widgets/day_cycle_panel.png",
+    "type": "widget",
+    "usage": "Day cycle panel base",
+    "source": "/assets/source_sheets/timeline_widgets_sheet.png",
+    "legal_safe_name": "day_cycle_panel",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 302,
+      "height": 304
+    }
+  },
+  {
+    "name": "schedule_timeline_frame",
+    "file": "/assets/sliced/widgets/schedule_timeline_frame.png",
+    "type": "widget",
+    "usage": "Schedule timeline frame",
+    "source": "/assets/source_sheets/timeline_widgets_sheet.png",
+    "legal_safe_name": "schedule_timeline_frame",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 875,
+      "height": 205
+    }
+  },
+  {
+    "name": "prototype_studio_floor_full",
+    "file": "/assets/sliced/agents/prototype_studio_floor_full.png",
+    "type": "agent_scene",
+    "usage": "Full composed studio floor with six agent desks",
+    "source": "/assets/source_sheets/prototype_scene.png",
+    "legal_safe_name": "prototype_studio_floor_full",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 902,
+      "height": 396
+    }
+  }
+]
