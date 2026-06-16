@@ -5,7 +5,7 @@ CrewAI workforce scaffold for RuneScape private server development. It is design
 ## Setup
 
 ```bash
-cd /var/home/Scaar/rsps-crewai-team
+cd /var/home/Scaar/Desktop/game project/Daedalus
 cp .env.example .env
 # edit .env with OPENROUTER_API_KEY and RSPS_REPO_PATH
 uv sync

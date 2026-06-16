@@ -4,8 +4,8 @@ SHELL=/bin/bash
 PATH=/var/home/Scaar/.local/bin:/usr/local/bin:/usr/bin:/bin
 
 # Runs the OpenClaw coding duo every 30 minutes. It will only modify the RSPS
-# repo when RSPS_ALLOW_AUTONOMOUS=true is set in /var/home/Scaar/rsps-crewai-team/.env.
-*/30 * * * * cd /var/home/Scaar/rsps-crewai-team && /var/home/Scaar/.local/bin/uv run rsps-cron tick >> /var/home/Scaar/rsps-crewai-team/logs/cron.log 2>&1
+# repo when RSPS_ALLOW_AUTONOMOUS=true is set in /var/home/Scaar/Desktop/game project/Daedalus/.env.
+*/30 * * * * cd '/var/home/Scaar/Desktop/game project/Daedalus' && /var/home/Scaar/.local/bin/uv run rsps-cron tick >> '/var/home/Scaar/Desktop/game project/Daedalus/logs/cron.log' 2>&1
 
 # Daily planning packet refresh. This is read-only unless the worker is invoked separately.
-15 3 * * * cd /var/home/Scaar/rsps-crewai-team && /var/home/Scaar/.local/bin/uv run rsps-team "Review current RSPS development status and propose the next 3 work orders." >> /var/home/Scaar/rsps-crewai-team/logs/daily-planning.log 2>&1
+15 3 * * * cd '/var/home/Scaar/Desktop/game project/Daedalus' && /var/home/Scaar/.local/bin/uv run rsps-team "Review current RSPS development status and propose the next 3 work orders." >> '/var/home/Scaar/Desktop/game project/Daedalus/logs/daily-planning.log' 2>&1

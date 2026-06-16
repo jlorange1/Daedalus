@@ -3,7 +3,7 @@
 Recommended source tree:
 
 ```text
-/var/home/Scaar/rsps-sources/2009scape
+/var/home/Scaar/Desktop/game project/2009scape
 ```
 
 Upstream:
@@ -29,7 +29,7 @@ https://gitlab.com/2009scape/2009scape
 Local `.env` is configured with:
 
 ```text
-RSPS_REPO_PATH=/var/home/Scaar/rsps-sources/2009scape
+RSPS_REPO_PATH=/var/home/Scaar/Desktop/game project/2009scape
 RSPS_BUILD_COMMAND=cd Server && ./mvnw clean package -DskipTests
 RSPS_TEST_COMMAND=cd Server && ./mvnw test
 RSPS_ALLOW_AUTONOMOUS=false

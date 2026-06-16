@@ -76,21 +76,24 @@ function renderQueue(queue) {
 }
 
 function renderAgents(agents) {
+  const stationImages = [
+    "station-producer.png",
+    "station-backend.png",
+    "station-content.png",
+    "station-qa.png",
+    "station-security.png",
+    "station-docs.png",
+  ];
   const grid = $("#agentGrid");
   grid.innerHTML = agents.map((agent, index) => `
     <article class="agent-desk" data-agent="${index}">
-      <div class="desk-art">
-        <img class="desk-base" src="/assets/desk.png" alt="" />
-        <img class="worker-sprite ${agent.status === "working" ? "working" : ""}" src="/assets/worker.png" alt="" />
-        <img class="monitor-sprite" src="/assets/monitor.png" alt="" />
-      </div>
+      <img class="station-art ${agent.status === "working" ? "working" : ""}" src="/assets/${stationImages[index] || stationImages[0]}" alt="" />
+      <p class="task-line">${escapeHtml(agent.task)}</p>
       <div class="agent-plate">
         <h3>${escapeHtml(agent.role)}</h3>
         <p>${escapeHtml(agent.name)} - ${escapeHtml(agent.status)}</p>
         <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
       </div>
-      <p class="task-line">${escapeHtml(agent.task)}</p>
-      <p class="model-line">${escapeHtml(agent.model)}</p>
     </article>
   `).join("");
   grid.querySelectorAll(".agent-desk").forEach((card) => {
@@ -106,10 +109,22 @@ function renderInspector(status) {
   if (!status) return;
   const agent = status.agents[state.selectedAgent] || status.agents[0];
   $("#agentInspector").innerHTML = `
-    <strong>${escapeHtml(agent.role)}</strong>
-    <p>${escapeHtml(agent.name)} is ${escapeHtml(agent.status)}.</p>
-    <p>Current task: ${escapeHtml(agent.task)}</p>
-    <p>Model: ${escapeHtml(agent.model)}</p>
+    <div class="agent-hero">
+      <span class="agent-medallion">${escapeHtml(agent.name.slice(0, 1))}</span>
+      <div>
+        <strong>${escapeHtml(agent.role)}</strong>
+        <p>${escapeHtml(agent.name)} is ${escapeHtml(agent.status)}.</p>
+      </div>
+    </div>
+    <div class="inspector-task">
+      <span>Current Task</span>
+      <p>${escapeHtml(agent.task)}</p>
+    </div>
+    <dl class="mini-stats">
+      <div><dt>Progress</dt><dd>${agent.progress}%</dd></div>
+      <div><dt>Focus</dt><dd>${escapeHtml(agent.role.split(" ")[0])}</dd></div>
+      <div><dt>Model</dt><dd>${escapeHtml(agent.model.replace(":free", ""))}</dd></div>
+    </dl>
     <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
   `;
   const rsps = status.git.rsps;

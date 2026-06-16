@@ -103,14 +103,34 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 12px 0 42px;
   border: 0;
   border-bottom: 1px solid #4d3922;
   color: #e8d4a7;
   background: #16130f;
   text-align: left;
   cursor: pointer;
+  position: relative;
 }
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+.nav-studio::before { background-image: url("/assets/icon-home.png"); }
+.nav-queue::before { background-image: url("/assets/icon-queue.png"); }
+.nav-builds::before { background-image: url("/assets/icon-builds.png"); }
+.nav-github::before { background-image: url("/assets/icon-github.png"); }
+.nav-cron::before { background-image: url("/assets/icon-cron.png"); }
+.nav-settings::before { background-image: url("/assets/icon-settings.png"); }
 
 .nav-item.active,
 .nav-item:hover {
@@ -227,12 +247,33 @@ dd {
 
 .command {
   height: 76px;
+  position: relative;
+  padding-top: 34px;
   border: 3px solid #7b542c;
   background: linear-gradient(180deg, #342316, #17100b);
   color: #f7dfaa;
   text-transform: uppercase;
   cursor: pointer;
 }
+
+.command::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  transform: translateX(-50%);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+.command-enqueue::before { background-image: url("/assets/icon-plus.png"); }
+.command-build::before { background-image: url("/assets/icon-build.png"); }
+.command-push::before { background-image: url("/assets/icon-push.png"); }
+.command-duo::before { background-image: url("/assets/icon-robot.png"); width: 38px; }
 
 .command:hover {
   border-color: var(--gold);
@@ -343,7 +384,7 @@ dd {
 }
 
 .agent-desk {
-  min-height: 132px;
+  min-height: 138px;
   position: relative;
   padding: 0;
   border: 0;
@@ -351,52 +392,16 @@ dd {
   cursor: pointer;
 }
 
-.desk-art {
-  position: relative;
-  height: 74px;
+.station-art {
+  display: block;
+  width: min(98%, 235px);
   margin: 0 auto;
-}
-
-.desk-base {
-  position: absolute;
-  left: 50%;
-  bottom: -4px;
-  width: min(86%, 200px);
-  transform: translateX(-50%);
   image-rendering: pixelated;
-  filter: drop-shadow(0 7px 0 rgba(0, 0, 0, .45));
+  filter: drop-shadow(0 7px 0 rgba(0, 0, 0, .48));
 }
 
-.worker-sprite {
-  position: absolute;
-  left: calc(50% - 104px);
-  bottom: 7px;
-  width: 54px;
-  image-rendering: pixelated;
-  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .5));
-}
-
-.agent-desk:nth-child(2) .worker-sprite,
-.agent-desk:nth-child(5) .worker-sprite {
-  filter: hue-rotate(35deg) drop-shadow(0 3px 0 rgba(0, 0, 0, .5));
-}
-
-.agent-desk:nth-child(3) .worker-sprite,
-.agent-desk:nth-child(6) .worker-sprite {
-  filter: hue-rotate(95deg) drop-shadow(0 3px 0 rgba(0, 0, 0, .5));
-}
-
-.worker-sprite.working {
+.station-art.working {
   animation: bob 1.2s steps(2) infinite;
-}
-
-.monitor-sprite {
-  position: absolute;
-  right: calc(50% - 108px);
-  bottom: 23px;
-  width: 56px;
-  image-rendering: pixelated;
-  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .48));
 }
 
 @keyframes bob {
@@ -426,8 +431,7 @@ dd {
   text-align: center;
 }
 
-.task-line,
-.model-line {
+.task-line {
   position: absolute;
   left: 18px;
   right: 18px;
@@ -441,11 +445,6 @@ dd {
 
 .task-line {
   top: 5px;
-}
-
-.model-line {
-  top: 29px;
-  color: #b6dca0 !important;
 }
 
 .meter {
@@ -585,6 +584,71 @@ dd {
 #branchState {
   color: #e8d4a7;
   font-size: 13px;
+}
+
+.agent-hero {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.agent-medallion {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 4px solid #8c642d;
+  border-radius: 50%;
+  color: #ffd36a;
+  background: radial-gradient(circle at 35% 25%, #5d3b1e, #0d0a07);
+  box-shadow: inset 0 0 0 2px #130b05, 0 3px 0 #050302;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.inspector-task {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #60431f;
+  background: rgba(234, 213, 160, .08);
+}
+
+.inspector-task span {
+  display: block;
+  margin-bottom: 5px;
+  color: #ffd36a;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.mini-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.mini-stats div {
+  min-width: 0;
+  padding: 7px;
+  border: 1px solid #473016;
+  background: rgba(0, 0, 0, .24);
+}
+
+.mini-stats dt {
+  color: #c59d52;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.mini-stats dd {
+  margin: 2px 0 0;
+  color: #a8f06b;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 pre {
@@ -797,48 +861,33 @@ body {
 .agent-grid {
   height: 100%;
   align-content: center;
-  gap: 4px 28px;
-  padding: 0 12px;
+  gap: 7px 28px;
+  padding: 2px 16px;
 }
 
 .agent-desk {
-  min-height: 138px;
+  min-height: 135px;
+  display: grid;
+  align-content: end;
 }
 
-.desk-art {
-  display: block;
-  height: 78px;
-}
-
-.desk-base {
-  width: min(92%, 212px);
-}
-
-.worker-sprite {
-  left: calc(50% - 108px);
-  bottom: 7px;
-  width: 57px;
-}
-
-.monitor-sprite {
-  right: calc(50% - 112px);
-  bottom: 24px;
-  width: 59px;
+.station-art {
+  width: min(96%, 206px);
 }
 
 .task-line {
   display: block;
-  background: rgba(11, 8, 5, .86);
-}
-
-.model-line {
-  display: none;
+  background: rgba(234, 213, 160, .96);
 }
 
 .agent-plate {
-  min-height: 45px;
-  margin: 0 18px;
-  padding: 5px 10px;
+  position: absolute;
+  left: 34px;
+  right: 34px;
+  bottom: 5px;
+  min-height: 38px;
+  margin: 0;
+  padding: 4px 8px 5px;
   background: rgba(11, 8, 5, .94);
   border-color: #805425;
 }
@@ -846,19 +895,19 @@ body {
 .agent-plate h3 {
   color: #76ee57;
   text-shadow: 0 2px 0 #091506;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .agent-plate p {
   color: #f0d89f;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .task-line {
-  left: 28px;
+  left: 32px;
   right: auto;
-  top: 10px;
-  max-width: 210px;
+  top: 8px;
+  max-width: 176px;
   border-color: #d9bd7a;
   background: #ead5a0;
   color: #21421f !important;

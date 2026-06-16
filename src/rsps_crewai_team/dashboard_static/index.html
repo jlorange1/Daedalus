@@ -15,12 +15,12 @@
           <strong>RSPS Studio</strong>
         </div>
         <nav class="nav" aria-label="Dashboard sections">
-          <button class="nav-item active" data-panel="studio">Studio</button>
-          <button class="nav-item" data-panel="queue">Queue <span id="queueBadge">0</span></button>
-          <button class="nav-item" data-panel="builds">Builds</button>
-          <button class="nav-item" data-panel="github">GitHub</button>
-          <button class="nav-item" data-panel="cron">Cron</button>
-          <button class="nav-item" data-panel="settings">Settings</button>
+          <button class="nav-item active nav-studio" data-panel="studio">Studio</button>
+          <button class="nav-item nav-queue" data-panel="queue">Queue <span id="queueBadge">0</span></button>
+          <button class="nav-item nav-builds" data-panel="builds">Builds</button>
+          <button class="nav-item nav-github" data-panel="github">GitHub</button>
+          <button class="nav-item nav-cron" data-panel="cron">Cron</button>
+          <button class="nav-item nav-settings" data-panel="settings">Settings</button>
         </nav>
         <section class="status-card">
           <h2>Studio Status</h2>
@@ -45,10 +45,10 @@
           <span>Sprint Goal</span>
           <p>Prepare the AI workforce to build, test, review, and publish RSPS changes over time.</p>
         </div>
-        <button id="enqueueOpen" class="command">Enqueue Work</button>
-        <button id="runBuild" class="command">Build / Test</button>
-        <button id="pushBranch" class="command">Push Branch</button>
-        <button id="runDuo" class="command primary">Run Duo</button>
+        <button id="enqueueOpen" class="command command-enqueue">Enqueue Work</button>
+        <button id="runBuild" class="command command-build">Build / Test</button>
+        <button id="pushBranch" class="command command-push">Push Branch</button>
+        <button id="runDuo" class="command primary command-duo">Run Duo</button>
       </section>
 
       <section class="board">
