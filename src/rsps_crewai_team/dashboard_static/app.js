@@ -250,12 +250,14 @@ function wireModuleWindows() {
     const grip = document.createElement("button");
     grip.type = "button";
     grip.className = "window-grip";
-    grip.textContent = panel.dataset.moduleTitle || `Module ${index + 1}`;
-    grip.setAttribute("aria-label", `Move ${grip.textContent}`);
+    const title = panel.dataset.moduleTitle || `Module ${index + 1}`;
+    grip.innerHTML = `<span>${escapeHtml(title)}</span><b aria-hidden="true"><i></i><i></i></b>`;
+    grip.setAttribute("aria-label", `Move ${title}`);
     panel.prepend(grip);
 
     let drag = null;
     grip.addEventListener("pointerdown", (event) => {
+      if (event.clientX > grip.getBoundingClientRect().right - 46) return;
       drag = {
         id: event.pointerId,
         startX: event.clientX,
@@ -282,6 +284,14 @@ function wireModuleWindows() {
       panel.dataset.x = "0";
       panel.dataset.y = "0";
       panel.style.transform = "";
+    });
+    grip.addEventListener("click", (event) => {
+      if (event.clientX <= grip.getBoundingClientRect().right - 46) return;
+      panel.classList.toggle("module-minimized");
+    });
+    grip.querySelector("b").addEventListener("click", (event) => {
+      event.stopPropagation();
+      panel.classList.toggle("module-minimized");
     });
   });
 }

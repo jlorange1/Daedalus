@@ -3202,3 +3202,226 @@ textarea {
   0%, 100% { transform: rotate(0deg) scale(1); filter: hue-rotate(0deg) brightness(1); }
   50% { transform: rotate(-5deg) scale(1.05); filter: hue-rotate(24deg) brightness(1.28); }
 }
+
+/* Hard sci-fi cleanup: remove old fantasy/sprite artifacts from the active skin. */
+body,
+.shell,
+.sidebar,
+.topbar,
+.board,
+.studio-floor,
+.schedule,
+.inspector,
+.inspector .panel,
+.day-cycle,
+.events,
+.status-card,
+.version,
+.command,
+.top-module,
+.duo-tile,
+.sprint-flag,
+.sprint-goal,
+.lane,
+.work-card,
+.work-card.state-content,
+.work-card.state-backend,
+.work-card.state-tech-debt,
+.work-card.state-security,
+.work-card.state-review,
+.work-card.state-done,
+.work-card.state-active,
+.work-card.state-queued {
+  image-rendering: auto;
+}
+
+body {
+  background:
+    radial-gradient(circle at 50% -10%, rgba(72, 217, 255, .18), transparent 35%),
+    radial-gradient(circle at 84% 18%, rgba(157, 124, 255, .14), transparent 28%),
+    linear-gradient(90deg, rgba(72, 217, 255, .035) 1px, transparent 1px),
+    linear-gradient(rgba(72, 217, 255, .035) 1px, transparent 1px),
+    #020812 !important;
+  background-size: auto, auto, 24px 24px, 24px 24px !important;
+}
+
+.shell {
+  background:
+    linear-gradient(90deg, rgba(72, 217, 255, .045), transparent 20%, transparent 80%, rgba(157, 124, 255, .045)) !important;
+  background-size: auto !important;
+}
+
+.sidebar,
+.topbar,
+.board,
+.studio-floor,
+.schedule,
+.inspector .panel,
+.status-card,
+.version,
+.command,
+.top-module,
+.duo-tile,
+.sprint-flag,
+.sprint-goal,
+.day-cycle,
+.events,
+.lane,
+.work-card,
+.inspector-task,
+.mini-stats div,
+#branchState,
+.log-row {
+  background-image: none !important;
+}
+
+.nav-item::before,
+.command::before,
+.command::after,
+.duo-tile::before,
+.duo-tile i,
+.banner::before {
+  display: none !important;
+  background-image: none !important;
+}
+
+.nav-item {
+  padding-left: 14px;
+}
+
+.nav-item::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: rgba(72, 217, 255, .52);
+  box-shadow: 0 0 10px rgba(72, 217, 255, .32);
+}
+
+.nav-item.active::after {
+  background: var(--green);
+  box-shadow: 0 0 12px rgba(93, 255, 176, .72);
+}
+
+.command,
+.duo-tile,
+.top-module {
+  display: grid;
+  place-items: center;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.command {
+  font-size: 14px;
+  letter-spacing: .4px;
+}
+
+.duo-tile {
+  grid-template-columns: 1fr;
+}
+
+.duo-tile span {
+  position: static;
+}
+
+.window-grip {
+  justify-content: space-between;
+  padding-right: 8px;
+}
+
+.window-grip span {
+  pointer-events: none;
+}
+
+.window-grip b {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 18px;
+  border: 1px solid rgba(72, 217, 255, .28);
+  background: rgba(2, 8, 16, .62);
+  cursor: pointer;
+}
+
+.window-grip b i {
+  width: 8px;
+  height: 8px;
+  display: block;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px rgba(93, 255, 176, .55);
+}
+
+.window-grip b i:last-child {
+  background: var(--amber);
+  box-shadow: 0 0 10px rgba(255, 211, 106, .45);
+}
+
+.module-window.module-minimized {
+  min-height: 31px !important;
+  height: 31px !important;
+  overflow: hidden !important;
+}
+
+.module-window.module-minimized > :not(.window-grip) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.work-card {
+  border-radius: 0;
+  background:
+    linear-gradient(90deg, rgba(72, 217, 255, .12), rgba(157, 124, 255, .08)),
+    rgba(5, 16, 31, .92) !important;
+}
+
+.work-card:hover {
+  border-color: rgba(93, 255, 176, .72);
+  box-shadow:
+    inset 3px 0 0 rgba(93, 255, 176, .82),
+    0 0 16px rgba(93, 255, 176, .16);
+}
+
+.agent-desk:hover {
+  border-color: rgba(72, 217, 255, .62);
+  box-shadow: 0 0 18px rgba(72, 217, 255, .16);
+}
+
+.agent-desk:hover .agent-hitbox {
+  filter: brightness(1.24);
+}
+
+.agent-medallion,
+.neural-core,
+.agent-hitbox {
+  image-rendering: auto !important;
+}
+
+.agent-hitbox::before,
+.agent-hitbox::after,
+.neural-core::before,
+.neural-core::after {
+  border-color: rgba(223, 249, 255, .38);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.sprint-flag small {
+  font-size: 23px;
+}
+
+.sprint-flag strong,
+.version {
+  color: #e6f8ff;
+}
+
+.version {
+  place-items: center;
+  font-size: 15px;
+  letter-spacing: .4px;
+  box-shadow: inset 0 0 24px rgba(72, 217, 255, .08);
+}
