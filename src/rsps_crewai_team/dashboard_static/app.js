@@ -77,14 +77,17 @@ function renderQueue(queue) {
 }
 
 function renderAgents(agents) {
-  const roles = ["producer", "backend", "content", "qa", "security", "docs"];
+  const departments = ["Command", "Server", "Content", "QA", "Security", "Docs"];
+  const coreTypes = ["neural", "tesseract", "liquid", "reactor", "lattice", "prism"];
   const grid = $("#agentGrid");
   grid.innerHTML = agents.map((agent, index) => `
-    <article class="agent-desk role-${index} ${index === state.selectedAgent ? "selected" : ""}" data-agent="${index}" data-state="${escapeHtml(agent.status)}" title="${escapeHtml(agent.role)}: ${escapeHtml(agent.task)}">
-      <span class="agent-hitbox ${agent.status === "working" ? "working" : ""}"></span>
+    <article class="agent-desk role-${index} core-${coreTypes[index] || "neural"} ${index === state.selectedAgent ? "selected" : ""}" data-agent="${index}" data-state="${escapeHtml(agent.status)}" title="${escapeHtml(agent.role)}: ${escapeHtml(agent.task)}">
+      <span class="agent-hitbox ${agent.status === "working" ? "working" : ""}">
+        <i></i><i></i><i></i><i></i>
+      </span>
       <div class="agent-plate" aria-hidden="true">
-        <h3>${escapeHtml(agent.role)}</h3>
-        <p>${escapeHtml(agent.name)} - ${escapeHtml(agent.status)}</p>
+        <h3>${escapeHtml(departments[index] || agent.role)}</h3>
+        <p>${escapeHtml(agent.name)} / ${escapeHtml(agent.status)}</p>
         <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
       </div>
     </article>
@@ -102,11 +105,11 @@ function renderAgents(agents) {
 function renderInspector(status) {
   if (!status) return;
   const agent = status.agents[state.selectedAgent] || status.agents[0];
-  const roles = ["producer", "backend", "content", "qa", "security", "docs"];
-  const roleKey = roles[state.selectedAgent] || roles[0];
+  const coreTypes = ["neural", "tesseract", "liquid", "reactor", "lattice", "prism"];
+  const coreType = coreTypes[state.selectedAgent] || "neural";
   $("#agentInspector").innerHTML = `
     <div class="agent-hero">
-      <span class="agent-medallion"><img src="/assets/role-portrait-${roleKey}.png" alt="" /></span>
+      <span class="agent-medallion neural-core core-${coreType}" aria-hidden="true"><i></i><i></i><i></i></span>
       <div>
         <strong>${escapeHtml(agent.role)}</strong>
         <p><span class="state-dot ${agent.status === "working" ? "good" : "warn"}"></span>${escapeHtml(agent.name)} ${escapeHtml(agent.status)}.</p>
@@ -241,6 +244,48 @@ function wireControls() {
   });
 }
 
+function wireModuleWindows() {
+  document.querySelectorAll(".module-window").forEach((panel, index) => {
+    if (panel.querySelector(":scope > .window-grip")) return;
+    const grip = document.createElement("button");
+    grip.type = "button";
+    grip.className = "window-grip";
+    grip.textContent = panel.dataset.moduleTitle || `Module ${index + 1}`;
+    grip.setAttribute("aria-label", `Move ${grip.textContent}`);
+    panel.prepend(grip);
+
+    let drag = null;
+    grip.addEventListener("pointerdown", (event) => {
+      drag = {
+        id: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        x: Number(panel.dataset.x || 0),
+        y: Number(panel.dataset.y || 0),
+      };
+      grip.setPointerCapture(event.pointerId);
+      panel.classList.add("dragging");
+    });
+    grip.addEventListener("pointermove", (event) => {
+      if (!drag || event.pointerId !== drag.id) return;
+      const x = drag.x + event.clientX - drag.startX;
+      const y = drag.y + event.clientY - drag.startY;
+      panel.dataset.x = String(x);
+      panel.dataset.y = String(y);
+      panel.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    grip.addEventListener("pointerup", () => {
+      drag = null;
+      panel.classList.remove("dragging");
+    });
+    grip.addEventListener("dblclick", () => {
+      panel.dataset.x = "0";
+      panel.dataset.y = "0";
+      panel.style.transform = "";
+    });
+  });
+}
+
 function tickClock() {
   if (!state.paused) {
     const now = new Date();
@@ -249,6 +294,7 @@ function tickClock() {
 }
 
 wireControls();
+wireModuleWindows();
 refresh().catch((error) => toast(error.message));
 window.setInterval(() => refresh().catch(() => {}), 5000);
 window.setInterval(tickClock, 1000);

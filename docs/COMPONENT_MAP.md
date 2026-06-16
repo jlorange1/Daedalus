@@ -14,7 +14,7 @@
 | Sidebar | `.sidebar` | Navigation, status summary, version | `/api/status` |
 | Topbar | `.topbar` | Sprint context and primary commands | static plus POST actions |
 | Board | `.board` | Work-order lanes | `status.queue` |
-| Studio floor | `.studio-floor`, `#agentGrid` | Six agent workstations | `status.agents` |
+| Agent mesh | `.studio-floor`, `#agentGrid` | Six autonomous department cores | `status.agents` |
 | Schedule | `.schedule` | clock, timeline, cron shortcut | client clock plus static schedule |
 | Inspector | `.inspector` | selected agent, diff, tests, branch | `status.agents`, `status.git`, `status.readiness` |
 | Enqueue dialog | `#enqueueDialog` | create work order | `POST /api/enqueue` |
@@ -45,16 +45,30 @@ Future panel routing should use existing `data-panel` attributes. Do not remove 
 ## Agent Floor
 
 - `renderAgents(agents)` builds six `.agent-desk` elements.
-- Role order is fixed by the client and inspector:
-  1. producer
-  2. backend
-  3. content
-  4. qa
-  5. security
-  6. docs
+- Role order is fixed by the client and inspector, but the visible labels use department names:
+  1. Command
+  2. Server
+  3. Content
+  4. QA
+  5. Security
+  6. Docs
+- Agent core types map to the same order:
+  1. neural mesh
+  2. tesseract field
+  3. liquid metal orb
+  4. reactor core
+  5. shield lattice
+  6. archival prism
 - The selected agent index is stored in `state.selectedAgent`; clicking a desk updates the inspector.
 - Required agent fields: `role`, `name`, `task`, `model`, `status`, `progress`.
 - Working state is `agent.status === "working"`.
+
+## Module Windows
+
+- `.module-window` marks movable dashboard sections.
+- `wireModuleWindows()` injects `.window-grip` buttons for Work Queue, Agent Mesh, Automation Timeline, and System Telemetry.
+- Dragging uses pointer events and inline `transform`; double-clicking a grip resets that module to its original grid position.
+- Movement is intentionally local-only for now. Persist positions later with local storage or server profile settings.
 
 ## Inspector
 
@@ -74,4 +88,3 @@ Future panel routing should use existing `data-panel` attributes. Do not remove 
 | Push Branch | `#pushBranch` | toast only; pushing remains worker/env controlled |
 | Open Cron View | `#cronTick` | `POST /api/action` with `cron-tick` |
 | Pause Time | `#pauseTime` | toggles local clock updates |
-

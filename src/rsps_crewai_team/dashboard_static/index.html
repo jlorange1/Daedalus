@@ -12,7 +12,7 @@
         <div class="banner">
           <img src="/assets/banners.png" alt="" />
           <span>Autonomous</span>
-          <strong>GuildOps Studio</strong>
+          <strong>Daedalus Control</strong>
         </div>
         <nav class="nav" aria-label="Dashboard sections">
           <button class="nav-item active nav-studio" data-panel="studio">Studio</button>
@@ -33,17 +33,17 @@
             <div><dt>Environment</dt><dd id="envState">Checking</dd></div>
           </dl>
         </section>
-        <div class="version">Sprint Workshop<br />v0.1.0</div>
+        <div class="version">Daedalus Node<br />v0.2.0</div>
       </aside>
 
       <section class="topbar">
         <div class="sprint-flag">
           <small>Sprint 24</small>
-          <strong>ForgeBoard Buildout</strong>
+          <strong>RSPS Control Mesh</strong>
         </div>
         <div class="sprint-goal">
           <span>Sprint Goal</span>
-          <p>Prepare the AI workforce to build, test, review, and publish open-source server changes over time.</p>
+          <p>Coordinate independent AI departments for server engineering, content, QA, security, documentation, and release control.</p>
         </div>
         <button id="enqueueOpen" class="command command-enqueue">Enqueue Work</button>
         <button id="runBuild" class="command command-build">Build / Test</button>
@@ -58,7 +58,7 @@
         </button>
       </section>
 
-      <section class="board">
+      <section class="board module-window" data-module-title="Work Queue">
         <div class="lane" data-status="inbox">
           <h2>Backlog <span id="inboxCount">0</span></h2>
           <div id="inboxList" class="cards"></div>
@@ -77,7 +77,7 @@
         </div>
       </section>
 
-      <section class="studio-floor">
+      <section class="studio-floor module-window" data-module-title="Agent Mesh">
         <img class="hearth" src="/assets/fireplace.png" alt="" />
         <img class="room-prop room-shelves" src="/assets/prop-wall-shelf.png" alt="" />
         <img class="room-prop room-plant-a" src="/assets/prop-plant.png" alt="" />
@@ -87,7 +87,7 @@
         <div id="agentGrid" class="agent-grid"></div>
       </section>
 
-      <section class="schedule">
+      <section class="schedule module-window" data-module-title="Automation Timeline">
         <div class="day-cycle">
           <div class="window"></div>
           <strong>Day 18</strong>
@@ -110,7 +110,7 @@
         </div>
       </section>
 
-      <aside class="inspector">
+      <aside class="inspector module-window" data-module-title="System Telemetry">
         <div class="panel">
           <div class="panel-head">
             <h2>Agent Inspector</h2>
@@ -130,15 +130,15 @@
           <h2>Branch</h2>
           <p id="branchState">Checking...</p>
           <div class="guild-log" aria-label="Studio activity log">
-            <h3>Guild Log</h3>
+            <h3>Ops Log</h3>
             <div id="activityLog"></div>
           </div>
         </div>
       </aside>
       <footer class="footer-hud">
-        <span>Daedalus Studio</span>
-        <span>Original generated fantasy GUI assets</span>
-        <span>No official third-party affiliation</span>
+        <span>Daedalus Control</span>
+        <span>Modular AI game-development studio</span>
+        <span>RSPS operations panel</span>
       </footer>
     </main>
 
