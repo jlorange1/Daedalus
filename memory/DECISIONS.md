@@ -11,7 +11,7 @@
 
 - Date: 2026-06-16
 - Decision: Initialize Markdown memory and orchestration docs before deeper implementation.
-- Why: User requested Fable/Mythos-style long-horizon orchestration with persistent memory and specialist agents.
+- Why: User requested Mythos-class long-horizon orchestration with persistent memory and specialist agents.
 - Alternatives considered: Jump directly to implementation.
 - Risk: Docs may drift if not maintained.
 - Rollback plan: Remove or revise docs/memory files before orchestration code depends on them.

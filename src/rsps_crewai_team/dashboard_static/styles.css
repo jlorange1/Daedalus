@@ -4023,23 +4023,23 @@ pre {
   }
 }
 
-/* Fable reference skin: dense benchmark-board quality, purple headers, working controls. */
+/* Mythos reference skin: dense benchmark-board quality, purple headers, working controls. */
 :root {
-  --fable-bg: #070c14;
-  --fable-panel: #101923;
-  --fable-panel-2: #0b131d;
-  --fable-line: rgba(148, 168, 190, .22);
-  --fable-purple: #6f55d8;
-  --fable-purple-2: #382b78;
-  --fable-blue: #a9c9f5;
-  --fable-green: #75f29a;
-  --fable-gold: #ffc247;
-  --fable-text: #eef5ff;
-  --fable-muted: #b6c3d2;
+  --mythos-bg: #070c14;
+  --mythos-panel: #101923;
+  --mythos-panel-2: #0b131d;
+  --mythos-line: rgba(148, 168, 190, .22);
+  --mythos-purple: #6f55d8;
+  --mythos-purple-2: #382b78;
+  --mythos-blue: #a9c9f5;
+  --mythos-green: #75f29a;
+  --mythos-gold: #ffc247;
+  --mythos-text: #eef5ff;
+  --mythos-muted: #b6c3d2;
 }
 
 body {
-  color: var(--fable-text);
+  color: var(--mythos-text);
   background:
     radial-gradient(circle at 50% -10%, rgba(119, 88, 216, .22), transparent 34%),
     radial-gradient(circle at 8% 18%, rgba(80, 140, 190, .12), transparent 30%),
@@ -4077,7 +4077,7 @@ menu button:active {
 button:focus-visible,
 .command:focus-visible,
 .nav-item:focus-visible {
-  outline: 2px solid var(--fable-green);
+  outline: 2px solid var(--mythos-green);
   outline-offset: 2px;
 }
 
@@ -4097,7 +4097,7 @@ button:focus-visible,
 .inspector .panel,
 .status-card,
 .version {
-  border: 1px solid var(--fable-line);
+  border: 1px solid var(--mythos-line);
   border-radius: 4px;
   background:
     linear-gradient(180deg, rgba(24, 35, 47, .96), rgba(11, 18, 28, .98)) !important;
@@ -4118,7 +4118,7 @@ button:focus-visible,
   border-bottom: 1px solid rgba(255, 255, 255, .08);
   border-radius: 4px 4px 0 0;
   background:
-    linear-gradient(90deg, var(--fable-purple-2), var(--fable-purple)) !important;
+    linear-gradient(90deg, var(--mythos-purple-2), var(--mythos-purple)) !important;
   color: #f4f1ff;
   font-size: 11px;
   letter-spacing: .9px;
@@ -4140,10 +4140,10 @@ button:focus-visible,
 }
 
 .topbar::before {
-  content: "FABLE-CLASS DAEDALUS AGENT STUDIO";
+  content: "DAEDALUS AGENT STUDIO";
   position: absolute;
   inset: 7px 12px auto;
-  color: var(--fable-text);
+  color: var(--mythos-text);
   font-size: 26px;
   font-weight: 900;
   letter-spacing: .8px;
@@ -4154,7 +4154,7 @@ button:focus-visible,
   content: "Long-horizon autonomous RSPS development, live validation, and guarded execution control";
   position: absolute;
   inset: 34px 12px auto;
-  color: var(--fable-muted);
+  color: var(--mythos-muted);
   font-size: 12px;
   text-align: center;
 }
@@ -4165,7 +4165,7 @@ button:focus-visible,
 .top-module,
 .duo-tile {
   min-height: 48px;
-  border: 1px solid var(--fable-line);
+  border: 1px solid var(--mythos-line);
   border-radius: 3px;
   background:
     linear-gradient(180deg, rgba(24, 35, 48, .9), rgba(11, 17, 26, .94)) !important;
@@ -4179,22 +4179,22 @@ button:focus-visible,
 }
 
 .sprint-flag strong {
-  color: var(--fable-text);
+  color: var(--mythos-text);
   font-size: 16px;
 }
 
 .sprint-goal span {
-  color: var(--fable-green);
+  color: var(--mythos-green);
 }
 
 .sprint-goal p {
-  color: var(--fable-muted);
+  color: var(--mythos-muted);
   font-size: 12px;
 }
 
 .command,
 .duo-tile {
-  color: var(--fable-text);
+  color: var(--mythos-text);
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -4221,20 +4221,20 @@ button:focus-visible,
   min-height: 122px;
   padding: 10px;
   align-content: center;
-  border-color: var(--fable-line);
+  border-color: var(--mythos-line);
   border-radius: 4px;
   background:
     linear-gradient(180deg, rgba(16, 25, 37, .96), rgba(9, 14, 23, .98)) !important;
 }
 
 .banner span {
-  color: var(--fable-green);
+  color: var(--mythos-green);
   font-size: 11px;
 }
 
 .banner strong {
   max-width: none;
-  color: var(--fable-text);
+  color: var(--mythos-text);
   font-size: 24px;
   line-height: .95;
 }
@@ -4253,7 +4253,7 @@ button:focus-visible,
 
 .nav-item.active {
   border-color: rgba(117, 242, 154, .42);
-  color: var(--fable-text);
+  color: var(--mythos-text);
   background:
     linear-gradient(90deg, rgba(91, 69, 182, .44), rgba(20, 30, 42, .94)) !important;
 }
@@ -4264,7 +4264,7 @@ button:focus-visible,
 }
 
 .nav-item.active::after {
-  background: var(--fable-green);
+  background: var(--mythos-green);
   box-shadow: 0 0 10px rgba(117, 242, 154, .55);
 }
 
@@ -4278,14 +4278,14 @@ button:focus-visible,
 .panel h2,
 .timeline h2,
 .events h2 {
-  color: var(--fable-blue);
+  color: var(--mythos-blue);
   text-shadow: none;
 }
 
 .status-card dd,
 .mini-stats dd,
 #agentInspector strong {
-  color: var(--fable-green);
+  color: var(--mythos-green);
 }
 
 .board {
@@ -4313,13 +4313,13 @@ button:focus-visible,
   margin: 0 0 8px;
   border-color: rgba(255, 255, 255, .1);
   border-radius: 2px;
-  color: var(--fable-blue);
+  color: var(--mythos-blue);
   background:
     linear-gradient(180deg, rgba(35, 46, 58, .9), rgba(14, 21, 30, .96)) !important;
 }
 
 .lane h2 span {
-  color: var(--fable-green);
+  color: var(--mythos-green);
 }
 
 .empty-card {
@@ -4339,7 +4339,7 @@ button:focus-visible,
   position: absolute;
   right: 11px;
   top: 9px;
-  color: var(--fable-green);
+  color: var(--mythos-green);
   font-size: 16px;
   font-weight: 900;
 }
@@ -4354,13 +4354,13 @@ button:focus-visible,
 }
 
 .empty-card strong {
-  color: var(--fable-text);
+  color: var(--mythos-text);
   font-size: 13px;
 }
 
 .empty-card span {
   max-width: 120px;
-  color: var(--fable-muted);
+  color: var(--mythos-muted);
 }
 
 .empty-card em {
@@ -4371,7 +4371,7 @@ button:focus-visible,
   padding: 0 7px;
   border-radius: 2px;
   color: #0a111a;
-  background: var(--fable-green);
+  background: var(--mythos-green);
   letter-spacing: .6px;
 }
 
@@ -4402,7 +4402,7 @@ button:focus-visible,
 }
 
 .agent-desk.selected::after {
-  content: "FABLE";
+  content: "PRIME";
   display: grid;
   position: absolute;
   right: 7px;
@@ -4412,7 +4412,7 @@ button:focus-visible,
   padding: 0 7px;
   border-radius: 2px;
   color: white;
-  background: var(--fable-purple);
+  background: var(--mythos-purple);
   font-size: 10px;
   font-weight: 900;
   letter-spacing: .8px;
@@ -4433,18 +4433,18 @@ button:focus-visible,
 }
 
 .agent-plate h3 {
-  color: var(--fable-text);
+  color: var(--mythos-text);
   text-shadow: none;
 }
 
 .agent-plate p,
 .agent-taskline {
-  color: var(--fable-muted);
+  color: var(--mythos-muted);
 }
 
 .agent-taskline::before {
   content: "✓ ";
-  color: var(--fable-green);
+  color: var(--mythos-green);
 }
 
 .agent-taskline {
@@ -4479,8 +4479,8 @@ button:focus-visible,
   height: 28px;
   border-color: rgba(255, 255, 255, .16);
   border-radius: 2px;
-  color: var(--fable-text);
-  background: var(--fable-purple);
+  color: var(--mythos-text);
+  background: var(--mythos-purple);
 }
 
 .agent-hero,
@@ -4511,7 +4511,7 @@ pre {
 #testList p::before,
 .events p::before {
   content: "✓";
-  color: var(--fable-green);
+  color: var(--mythos-green);
   font-weight: 900;
 }
 
@@ -4519,7 +4519,7 @@ pre {
 .tag {
   border-radius: 2px;
   color: #0a111a;
-  background: var(--fable-green);
+  background: var(--mythos-green);
 }
 
 .schedule {
@@ -4529,7 +4529,7 @@ pre {
 }
 
 .timeline::after {
-  background: var(--fable-purple);
+  background: var(--mythos-purple);
   box-shadow: 0 0 16px rgba(181, 146, 255, .6);
 }
 
@@ -4548,7 +4548,7 @@ pre {
 menu button {
   border: 1px solid rgba(181, 146, 255, .46);
   border-radius: 3px;
-  color: var(--fable-text);
+  color: var(--mythos-text);
   background:
     linear-gradient(180deg, rgba(91, 69, 182, .82), rgba(37, 30, 76, .94)) !important;
 }
@@ -4558,9 +4558,9 @@ menu button {
 }
 
 .footer-hud {
-  border-color: var(--fable-line);
+  border-color: var(--mythos-line);
   border-radius: 3px;
-  color: var(--fable-muted);
+  color: var(--mythos-muted);
   background: rgba(9, 14, 22, .94) !important;
 }
 
@@ -4583,4 +4583,194 @@ dialog::backdrop {
   border-radius: 4px;
   background:
     linear-gradient(180deg, rgba(17, 31, 28, .98), rgba(8, 13, 21, .98)) !important;
+}
+
+/* Daedalus cinematic pass: original neural-field imagery and stronger depth. */
+body {
+  background:
+    radial-gradient(circle at 50% -8%, rgba(100, 80, 220, .32), transparent 30%),
+    radial-gradient(circle at 78% 16%, rgba(76, 202, 255, .18), transparent 26%),
+    linear-gradient(180deg, #060a12, #03060b 70%) !important;
+}
+
+.topbar {
+  overflow: hidden;
+}
+
+.topbar::before {
+  color: #f8fbff;
+  font-size: 28px;
+  text-shadow:
+    0 0 20px rgba(117, 242, 154, .18),
+    0 0 34px rgba(119, 90, 255, .32);
+}
+
+.topbar::after {
+  color: rgba(214, 229, 255, .78);
+}
+
+.topbar > * {
+  position: relative;
+  z-index: 2;
+}
+
+.topbar .duo-tile {
+  box-shadow:
+    inset 0 0 34px rgba(181, 146, 255, .2),
+    0 0 28px rgba(111, 85, 216, .18);
+}
+
+.studio-floor {
+  position: relative;
+  overflow: hidden;
+}
+
+.studio-floor::before {
+  content: "";
+  display: block !important;
+  position: absolute;
+  inset: 28px 24px 18px;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 14, .1), rgba(5, 8, 14, .34)),
+    url("/assets/daedalus-neural-field.png") center / cover no-repeat;
+  opacity: .78;
+  filter: saturate(1.18) contrast(1.08);
+  border: 1px solid rgba(181, 146, 255, .16);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 80px rgba(0, 0, 0, .38),
+    0 0 44px rgba(111, 85, 216, .18);
+}
+
+.studio-floor::after {
+  content: "";
+  display: block !important;
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 360px;
+  height: 180px;
+  z-index: 0;
+  pointer-events: none;
+  border: 1px solid rgba(117, 242, 154, .28);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-9deg);
+  box-shadow:
+    0 0 36px rgba(117, 242, 154, .12),
+    inset 0 0 30px rgba(80, 190, 255, .1);
+}
+
+.agent-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.agent-desk,
+.agent-desk:nth-child(n) {
+  background:
+    linear-gradient(180deg, rgba(11, 19, 29, .78), rgba(5, 10, 18, .88)) !important;
+  backdrop-filter: blur(2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .04),
+    0 14px 34px rgba(0, 0, 0, .24);
+}
+
+.agent-desk:hover {
+  border-color: rgba(117, 242, 154, .56);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .06),
+    0 18px 42px rgba(0, 0, 0, .3),
+    0 0 28px rgba(117, 242, 154, .12);
+}
+
+.agent-hitbox,
+.agent-hitbox.working,
+.agent-medallion,
+.neural-core {
+  filter: saturate(1.28) contrast(1.06);
+}
+
+.core-tesseract .agent-hitbox,
+.neural-core.core-tesseract {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .16),
+    0 0 34px rgba(181, 146, 255, .54),
+    0 0 90px rgba(111, 85, 216, .18),
+    inset 0 0 30px rgba(255, 255, 255, .14);
+}
+
+.core-reactor .agent-hitbox,
+.neural-core.core-reactor {
+  box-shadow:
+    0 0 34px rgba(117, 242, 154, .64),
+    0 0 95px rgba(117, 242, 154, .18),
+    inset 0 0 26px rgba(255, 255, 255, .18);
+}
+
+.board,
+.schedule,
+.inspector .panel {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .045),
+    inset 0 -28px 80px rgba(111, 85, 216, .035),
+    0 14px 34px rgba(0, 0, 0, .26);
+}
+
+.empty-card,
+.agent-hero,
+pre,
+.day-cycle,
+.events {
+  box-shadow:
+    inset 0 0 34px rgba(111, 85, 216, .055),
+    0 8px 20px rgba(0, 0, 0, .18);
+}
+
+/* Final Daedalus visual correction: keep branding clean and imagery prominent. */
+.topbar {
+  padding-top: 46px;
+}
+
+.topbar::before {
+  inset: 8px 12px auto;
+  font-size: 26px;
+}
+
+.topbar::after {
+  inset: 35px 12px auto;
+  font-size: 11px;
+}
+
+.sprint-flag,
+.sprint-goal,
+.command,
+.top-module,
+.duo-tile {
+  min-height: 0;
+  height: 58px;
+}
+
+.studio-floor::before {
+  inset: 24px 18px 14px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .08), transparent 38%),
+    url("/assets/daedalus-neural-field.png") center / cover no-repeat;
+  opacity: 1;
+  filter: saturate(1.55) contrast(1.18) brightness(1.34);
+  mix-blend-mode: screen;
+}
+
+.studio-floor::after {
+  border-color: rgba(117, 242, 154, .42);
+}
+
+.agent-desk,
+.agent-desk:nth-child(n) {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(111, 85, 216, .16), transparent 38%),
+    linear-gradient(180deg, rgba(11, 19, 29, .58), rgba(5, 10, 18, .78)) !important;
+  backdrop-filter: blur(1px);
 }

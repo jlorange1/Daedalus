@@ -2,7 +2,7 @@
 
 ## Active Goal
 
-Build a Fable/Mythos-inspired, safe orchestration scaffold for Daedalus using parallel specialist agents, Markdown memory, skills, evals, defensive review, and operator controls.
+Build a Mythos-class inspired, safe orchestration scaffold for Daedalus using parallel specialist agents, Markdown memory, skills, evals, defensive review, and operator controls.
 
 ## Planning Notes
 
