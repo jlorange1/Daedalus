@@ -76,18 +76,15 @@ function renderQueue(queue) {
 }
 
 function renderAgents(agents) {
-  const stationImages = [
-    "station-producer.png",
-    "station-backend.png",
-    "station-content.png",
-    "station-qa.png",
-    "station-security.png",
-    "station-docs.png",
-  ];
   const grid = $("#agentGrid");
   grid.innerHTML = agents.map((agent, index) => `
-    <article class="agent-desk" data-agent="${index}">
-      <img class="station-art ${agent.status === "working" ? "working" : ""}" src="/assets/${stationImages[index] || stationImages[0]}" alt="" />
+    <article class="agent-desk role-${index}" data-agent="${index}">
+      <div class="station-scene ${agent.status === "working" ? "working" : ""}">
+        <img class="rug-art" src="/assets/rug-clean.png" alt="" />
+        <img class="desk-art" src="/assets/desk-clean.png" alt="" />
+        <img class="monitor-art" src="/assets/monitor-clean.png" alt="" />
+        <img class="worker-art" src="/assets/worker-clean.png" alt="" />
+      </div>
       <p class="task-line">${escapeHtml(agent.task)}</p>
       <div class="agent-plate">
         <h3>${escapeHtml(agent.role)}</h3>
@@ -110,7 +107,7 @@ function renderInspector(status) {
   const agent = status.agents[state.selectedAgent] || status.agents[0];
   $("#agentInspector").innerHTML = `
     <div class="agent-hero">
-      <span class="agent-medallion">${escapeHtml(agent.name.slice(0, 1))}</span>
+      <span class="agent-medallion"><img src="/assets/worker-clean.png" alt="" /></span>
       <div>
         <strong>${escapeHtml(agent.role)}</strong>
         <p>${escapeHtml(agent.name)} is ${escapeHtml(agent.status)}.</p>

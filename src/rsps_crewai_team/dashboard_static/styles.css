@@ -343,7 +343,7 @@ dd {
 .studio-floor {
   grid-column: 2;
   position: relative;
-  padding: 8px 16px;
+  padding: 0;
   background:
     linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
     linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
@@ -366,26 +366,62 @@ dd {
 
 .hearth {
   position: absolute;
-  right: 12px;
-  top: 4px;
-  width: 150px;
+  right: 0;
+  top: -10px;
+  width: 132px;
   height: auto;
   opacity: .82;
   image-rendering: pixelated;
   pointer-events: none;
 }
 
+.room-prop {
+  position: absolute;
+  z-index: 1;
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: .86;
+  display: none;
+}
+
+.room-shelves {
+  left: 10px;
+  top: 12px;
+  width: 185px;
+  opacity: .36;
+}
+
+.room-plants {
+  right: 118px;
+  bottom: 14px;
+  width: 132px;
+  opacity: .72;
+}
+
+.room-crates {
+  left: 6px;
+  bottom: 8px;
+  width: 146px;
+  opacity: .56;
+}
+
+.room-bulletin {
+  right: 10px;
+  top: 74px;
+  width: 92px;
+  opacity: .66;
+}
+
 .agent-grid {
   position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px 15px;
+  z-index: 2;
+  height: 100%;
 }
 
 .agent-desk {
-  min-height: 138px;
-  position: relative;
+  position: absolute;
+  width: 29%;
+  min-height: 112px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -394,7 +430,7 @@ dd {
 
 .station-art {
   display: block;
-  width: min(98%, 235px);
+  width: 100%;
   margin: 0 auto;
   image-rendering: pixelated;
   filter: drop-shadow(0 7px 0 rgba(0, 0, 0, .48));
@@ -860,19 +896,37 @@ body {
 
 .agent-grid {
   height: 100%;
-  align-content: center;
-  gap: 7px 28px;
-  padding: 2px 16px;
+  display: block;
+  padding: 0;
 }
 
 .agent-desk {
-  min-height: 135px;
-  display: grid;
-  align-content: end;
+  min-height: 112px;
+}
+
+.agent-desk:nth-child(1) { left: 5%; top: 8%; }
+.agent-desk:nth-child(2) { left: 35.5%; top: 8%; }
+.agent-desk:nth-child(3) { left: 66%; top: 8%; }
+.agent-desk:nth-child(4) { left: 5%; top: 51%; }
+.agent-desk:nth-child(5) { left: 35.5%; top: 51%; }
+.agent-desk:nth-child(6) { left: 66%; top: 51%; }
+
+.agent-desk:nth-child(1),
+.agent-desk:nth-child(4) {
+  transform: translateY(-2px);
+}
+
+.agent-desk:nth-child(3),
+.agent-desk:nth-child(6) {
+  transform: translateY(2px);
 }
 
 .station-art {
-  width: min(96%, 206px);
+  width: 100%;
+  max-height: 112px;
+  object-fit: contain;
+  background: rgba(5, 12, 16, .34);
+  border: 1px solid rgba(116, 75, 31, .22);
 }
 
 .task-line {
@@ -882,32 +936,32 @@ body {
 
 .agent-plate {
   position: absolute;
-  left: 34px;
-  right: 34px;
-  bottom: 5px;
-  min-height: 38px;
+  left: 16%;
+  right: 16%;
+  bottom: -22px;
+  min-height: 30px;
   margin: 0;
-  padding: 4px 8px 5px;
-  background: rgba(11, 8, 5, .94);
+  padding: 3px 7px 4px;
+  background: rgba(11, 8, 5, .82);
   border-color: #805425;
 }
 
 .agent-plate h3 {
   color: #76ee57;
   text-shadow: 0 2px 0 #091506;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .agent-plate p {
   color: #f0d89f;
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .task-line {
-  left: 32px;
+  left: 11%;
   right: auto;
-  top: 8px;
-  max-width: 176px;
+  top: -7px;
+  max-width: 78%;
   border-color: #d9bd7a;
   background: #ead5a0;
   color: #21421f !important;
@@ -950,4 +1004,375 @@ body {
 
 pre {
   background: rgba(2, 12, 5, .90);
+}
+
+/* Stardew-style polish pass: game room first, operational dashboard second. */
+body {
+  color: #ffe5ab;
+  background:
+    linear-gradient(rgba(4, 3, 2, .18), rgba(4, 3, 2, .18)),
+    url("/assets/stone-wall.png");
+  background-size: auto, 188px 124px;
+}
+
+.shell {
+  gap: 8px;
+  padding: 12px;
+  background:
+    linear-gradient(rgba(18, 10, 5, .42), rgba(18, 10, 5, .42)),
+    url("/assets/wood-floor.png");
+  background-size: auto, 170px 170px;
+}
+
+.sidebar,
+.topbar,
+.board,
+.studio-floor,
+.schedule,
+.inspector .panel {
+  border-width: 4px;
+  border-color: #9b672b;
+  box-shadow:
+    inset 0 0 0 2px #2a1608,
+    inset 0 0 0 4px rgba(255, 214, 116, .08),
+    0 5px 0 #070402;
+}
+
+.sidebar,
+.inspector .panel,
+.schedule {
+  background:
+    linear-gradient(rgba(23, 15, 9, .86), rgba(14, 10, 7, .94)),
+    url("/assets/dark-panel.png");
+  background-size: auto, cover;
+}
+
+.banner,
+.sprint-flag {
+  background:
+    linear-gradient(180deg, rgba(32, 91, 49, .96), rgba(15, 59, 35, .96)),
+    url("/assets/dark-panel.png");
+  border-color: #b47a32;
+  box-shadow: inset 0 0 0 2px #12341f;
+}
+
+.topbar {
+  background:
+    linear-gradient(180deg, rgba(108, 67, 29, .92), rgba(64, 37, 17, .96)),
+    url("/assets/wood-floor.png");
+  background-size: auto, 170px 170px;
+}
+
+.sprint-goal,
+.lane h2,
+.work-card,
+.task-line {
+  background:
+    linear-gradient(rgba(249, 224, 166, .9), rgba(222, 184, 111, .96)),
+    url("/assets/sample-card.png");
+  background-size: 100% 100%;
+}
+
+.command {
+  border-color: #b4782e;
+  background:
+    linear-gradient(180deg, rgba(74, 44, 22, .9), rgba(31, 18, 9, .98)),
+    url("/assets/dark-panel.png");
+  color: #ffd36a;
+}
+
+.command.primary {
+  background:
+    linear-gradient(180deg, rgba(39, 99, 49, .92), rgba(22, 49, 27, .98)),
+    url("/assets/dark-panel.png");
+}
+
+.board {
+  padding: 12px 14px;
+  background:
+    linear-gradient(rgba(95, 56, 22, .86), rgba(62, 33, 14, .92)),
+    url("/assets/wood-floor.png");
+  background-size: auto, 170px 170px;
+}
+
+.lane {
+  padding: 0 9px 6px;
+  border-left-color: #ba7a2d;
+  border-right-color: #38200d;
+  background: linear-gradient(180deg, rgba(49, 25, 10, .48), rgba(25, 14, 8, .64));
+}
+
+.work-card {
+  border-color: #a8702e;
+  box-shadow: 0 3px 0 rgba(28, 13, 5, .78);
+}
+
+.studio-floor {
+  padding: 0 18px 8px;
+  background:
+    linear-gradient(180deg, rgba(58, 34, 17, .18) 0 22%, transparent 22%),
+    linear-gradient(rgba(58, 35, 18, .18), rgba(34, 20, 10, .22)),
+    url("/assets/wood-floor.png");
+  background-size: auto, auto, 170px 170px;
+}
+
+.studio-floor::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 86px;
+  background:
+    linear-gradient(rgba(12, 9, 6, .16), rgba(12, 9, 6, .42)),
+    url("/assets/stone-wall.png");
+  background-size: auto, 188px 124px;
+  border-bottom: 4px solid rgba(125, 78, 31, .74);
+  pointer-events: none;
+}
+
+.hearth {
+  z-index: 1;
+  right: 9px;
+  top: 0;
+  width: 116px;
+  opacity: .9;
+}
+
+.agent-grid {
+  z-index: 2;
+}
+
+.agent-desk {
+  width: 28%;
+  min-height: 126px;
+}
+
+.agent-desk::after {
+  content: "";
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  bottom: 9px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(6, 3, 1, .42);
+  filter: blur(1px);
+  z-index: -1;
+}
+
+.agent-desk:nth-child(1) { left: 4.5%; top: 11%; }
+.agent-desk:nth-child(2) { left: 36%; top: 11%; }
+.agent-desk:nth-child(3) { left: 67%; top: 11%; }
+.agent-desk:nth-child(4) { left: 4.5%; top: 55%; }
+.agent-desk:nth-child(5) { left: 36%; top: 55%; }
+.agent-desk:nth-child(6) { left: 67%; top: 55%; }
+
+.station-art {
+  width: 92%;
+  max-height: 102px;
+  object-fit: contain;
+  background: transparent;
+  border: 0;
+  filter: drop-shadow(0 8px 0 rgba(7, 4, 2, .44));
+}
+
+.agent-plate {
+  left: 17%;
+  right: 17%;
+  bottom: -9px;
+  min-height: 31px;
+  border-color: #a36a2b;
+  background:
+    linear-gradient(rgba(17, 11, 7, .84), rgba(9, 6, 4, .92)),
+    url("/assets/dark-panel.png");
+  background-size: auto, cover;
+}
+
+.task-line {
+  top: -3px;
+  left: 12%;
+  max-width: 76%;
+  border: 2px solid #b9863b;
+  color: #21421f !important;
+}
+
+.meter {
+  border-color: #2d1708;
+  background: #160d07;
+}
+
+.meter b {
+  background: linear-gradient(90deg, #2c8b32, #b9ef72);
+}
+
+.day-cycle,
+.events {
+  border-color: #a56b2b;
+  background: rgba(28, 16, 8, .66);
+}
+
+.window {
+  border-color: #9b672b;
+  background:
+    linear-gradient(#87c8e6 0 46%, #d1e189 46% 49%, #7ab655 49% 100%);
+}
+
+.panel-head button,
+.day-cycle button,
+.events button,
+menu button {
+  border-color: #b4782e;
+  background: #4a2d16;
+  color: #ffd36a;
+}
+
+.station-scene {
+  position: relative;
+  width: 100%;
+  height: 116px;
+  image-rendering: pixelated;
+}
+
+.station-scene.working {
+  animation: bob 1.2s steps(2) infinite;
+}
+
+.rug-art,
+.desk-art,
+.monitor-art,
+.worker-art {
+  position: absolute;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.rug-art {
+  left: 8%;
+  right: 8%;
+  bottom: 0;
+  width: 84%;
+  opacity: .88;
+}
+
+.desk-art {
+  left: 6%;
+  bottom: 8px;
+  width: 88%;
+  filter: drop-shadow(0 6px 0 rgba(4, 2, 1, .38));
+}
+
+.monitor-art {
+  left: 37%;
+  top: 0;
+  width: 34%;
+  filter: drop-shadow(0 4px 0 rgba(4, 2, 1, .34));
+}
+
+.worker-art {
+  left: 5%;
+  bottom: 6px;
+  width: 25%;
+  filter: drop-shadow(0 5px 0 rgba(4, 2, 1, .36));
+}
+
+.role-0 .monitor-art,
+.role-2 .monitor-art,
+.role-5 .monitor-art {
+  width: 26%;
+  left: 42%;
+  top: 5px;
+}
+
+.role-1 .monitor-art,
+.role-3 .monitor-art,
+.role-4 .monitor-art {
+  width: 36%;
+}
+
+.role-2 .worker-art,
+.role-5 .worker-art {
+  left: 70%;
+}
+
+.role-3 .worker-art,
+.role-4 .worker-art {
+  left: 8%;
+  width: 24%;
+}
+
+.agent-medallion {
+  overflow: hidden;
+}
+
+.agent-medallion img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.room-prop {
+  display: block;
+  opacity: .9;
+}
+
+.room-shelves {
+  left: 118px;
+  top: 12px;
+  width: 150px;
+  opacity: .82;
+}
+
+.room-plant-a {
+  right: 118px;
+  bottom: 21px;
+  width: 42px;
+}
+
+.room-plant-b {
+  left: 50%;
+  bottom: 19px;
+  width: 76px;
+  opacity: .78;
+}
+
+.room-crates {
+  left: 8px;
+  bottom: 15px;
+  width: 60px;
+  opacity: .78;
+}
+
+.room-bulletin {
+  right: 132px;
+  top: 13px;
+  width: 42px;
+  opacity: .82;
+}
+
+.agent-desk {
+  width: 27.5%;
+}
+
+.agent-plate {
+  left: 20%;
+  right: 20%;
+  bottom: -4px;
+  min-height: 28px;
+}
+
+.agent-plate h3 {
+  font-size: 10px;
+}
+
+.agent-plate p {
+  font-size: 9px;
+}
+
+.task-line {
+  top: 3px;
+  left: 15%;
+  max-width: 70%;
+  padding: 2px 7px;
 }
