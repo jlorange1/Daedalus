@@ -32,15 +32,19 @@ function workCard(item, fallbackTag) {
 
 function emptyLane(status) {
   const labels = {
-    inbox: ["Queue clear", "No queued work orders"],
-    running: ["No active run", "Agents are standing by"],
-    failed: ["Review clear", "No failed work orders"],
-    done: ["No completions", "Completed work will appear here"],
+    inbox: ["Queue clear", "No queued work orders", "STANDBY"],
+    running: ["No active run", "Agents are standing by", "IDLE"],
+    failed: ["Review clear", "No failed work orders", "CLEAN"],
+    done: ["No completions", "Completed work will appear here", "OPEN"],
   };
-  const [title, body] = labels[status] || ["Empty", "No live data"];
+  const [title, body, stamp] = labels[status] || ["Empty", "No live data", "WAIT"];
   return `<article class="empty-card">
-    <strong>${escapeHtml(title)}</strong>
-    <span>${escapeHtml(body)}</span>
+    <div class="empty-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div>
+      <strong>${escapeHtml(title)}</strong>
+      <span>${escapeHtml(body)}</span>
+    </div>
+    <em>${escapeHtml(stamp)}</em>
   </article>`;
 }
 
@@ -71,15 +75,18 @@ function renderQueue(queue) {
 function renderAgents(agents) {
   const departments = ["Command", "Server", "Content", "QA", "Security", "Docs"];
   const coreTypes = ["neural", "tesseract", "liquid", "reactor", "lattice", "prism"];
+  const specializations = ["Planner", "Runtime", "Systems", "Validation", "Threat Model", "Release Notes"];
   const grid = $("#agentGrid");
   grid.innerHTML = agents.map((agent, index) => `
     <article class="agent-desk role-${index} core-${coreTypes[index] || "neural"} ${index === state.selectedAgent ? "selected" : ""}" data-agent="${index}" data-state="${escapeHtml(agent.status)}" title="${escapeHtml(agent.role)}: ${escapeHtml(agent.task)}">
+      <div class="agent-link-field" aria-hidden="true"><span></span><span></span><span></span></div>
       <span class="agent-hitbox ${agent.status === "working" ? "working" : ""}">
         <i></i><i></i><i></i><i></i>
       </span>
       <div class="agent-plate" aria-hidden="true">
         <h3>${escapeHtml(departments[index] || agent.role)}</h3>
-        <p>${escapeHtml(agent.name)} / ${escapeHtml(agent.status)}</p>
+        <p>${escapeHtml(agent.name)} / ${escapeHtml(specializations[index] || agent.status)}</p>
+        <span class="agent-taskline">${escapeHtml(agent.task)}</span>
         <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
       </div>
     </article>
