@@ -91,6 +91,201 @@
     }
   },
   {
+    "name": "button_wood_default",
+    "file": "/assets/sliced/ui/button_wood_default.png",
+    "type": "ui",
+    "usage": "Blank wood command button default state",
+    "source": "/assets/source_sheets/ui_icons_atlas.png",
+    "legal_safe_name": "button_wood_default",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 184,
+      "height": 56
+    }
+  },
+  {
+    "name": "button_wood_hover",
+    "file": "/assets/sliced/ui/button_wood_hover.png",
+    "type": "ui",
+    "usage": "Blank wood command button hover state",
+    "source": "/assets/source_sheets/ui_icons_atlas.png",
+    "legal_safe_name": "button_wood_hover",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 184,
+      "height": 56
+    }
+  },
+  {
+    "name": "button_wood_pressed",
+    "file": "/assets/sliced/ui/button_wood_pressed.png",
+    "type": "ui",
+    "usage": "Blank wood command button pressed state",
+    "source": "/assets/source_sheets/ui_icons_atlas.png",
+    "legal_safe_name": "button_wood_pressed",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 184,
+      "height": 56
+    }
+  },
+  {
+    "name": "button_wood_disabled",
+    "file": "/assets/sliced/ui/button_wood_disabled.png",
+    "type": "ui",
+    "usage": "Blank wood command button disabled state",
+    "source": "/assets/source_sheets/ui_icons_atlas.png",
+    "legal_safe_name": "button_wood_disabled",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 184,
+      "height": 56
+    }
+  },
+  {
+    "name": "mounted_board_column",
+    "file": "/assets/sliced/panels/mounted_board_column.png",
+    "type": "panel",
+    "usage": "Mounted board column module",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "mounted_board_column",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 138,
+      "height": 260
+    }
+  },
+  {
+    "name": "mounted_board_column_alt",
+    "file": "/assets/sliced/panels/mounted_board_column_alt.png",
+    "type": "panel",
+    "usage": "Alternate mounted board column module",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "mounted_board_column_alt",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 135,
+      "height": 260
+    }
+  },
+  {
+    "name": "mounted_board_background",
+    "file": "/assets/sliced/panels/mounted_board_background.png",
+    "type": "panel",
+    "usage": "Mounted kanban board background",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "mounted_board_background",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 275,
+      "height": 115
+    }
+  },
+  {
+    "name": "task_card_clean_default",
+    "file": "/assets/sliced/cards/task_card_clean_default.png",
+    "type": "card",
+    "usage": "Clean small parchment task card",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "task_card_clean_default",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 146,
+      "height": 102
+    }
+  },
+  {
+    "name": "task_card_clean_review",
+    "file": "/assets/sliced/cards/task_card_clean_review.png",
+    "type": "card",
+    "usage": "Clean review parchment task card",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "task_card_clean_review",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 146,
+      "height": 108
+    }
+  },
+  {
+    "name": "task_card_clean_done",
+    "file": "/assets/sliced/cards/task_card_clean_done.png",
+    "type": "card",
+    "usage": "Clean done parchment task card",
+    "source": "/assets/source_sheets/board_atlas.png",
+    "legal_safe_name": "task_card_clean_done",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 146,
+      "height": 108
+    }
+  },
+  {
+    "name": "sidebar_crest",
+    "file": "/assets/sliced/ui/sidebar_crest.png",
+    "type": "ui",
+    "usage": "Guild crest for sidebar banner",
+    "source": "/assets/source_sheets/environment_kit.png",
+    "legal_safe_name": "sidebar_crest",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 80,
+      "height": 85
+    }
+  },
+  {
+    "name": "inspector_cabinet_panel",
+    "file": "/assets/sliced/panels/inspector_cabinet_panel.png",
+    "type": "panel",
+    "usage": "Tall inspector cabinet panel",
+    "source": "/assets/source_sheets/frame_kit.png",
+    "legal_safe_name": "inspector_cabinet_panel",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 97,
+      "height": 130
+    }
+  },
+  {
+    "name": "inspector_portrait_frame",
+    "file": "/assets/sliced/panels/inspector_portrait_frame.png",
+    "type": "panel",
+    "usage": "Portrait frame for agent inspector",
+    "source": "/assets/source_sheets/portrait_status_sheet.png",
+    "legal_safe_name": "inspector_portrait_frame",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 192,
+      "height": 157
+    }
+  },
+  {
+    "name": "schedule_frame_full",
+    "file": "/assets/sliced/widgets/schedule_frame_full.png",
+    "type": "widget",
+    "usage": "Full schedule frame and bar system",
+    "source": "/assets/source_sheets/timeline_widgets_sheet.png",
+    "legal_safe_name": "schedule_frame_full",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 953,
+      "height": 363
+    }
+  },
+  {
+    "name": "next_events_panel",
+    "file": "/assets/sliced/widgets/next_events_panel.png",
+    "type": "widget",
+    "usage": "Next events widget panel",
+    "source": "/assets/source_sheets/timeline_widgets_sheet.png",
+    "legal_safe_name": "next_events_panel",
+    "license_status": "generated_original_project_art",
+    "recommended_size": {
+      "width": 230,
+      "height": 220
+    }
+  },
+  {
     "name": "status_bar_green",
     "file": "/assets/sliced/status/status_bar_green.png",
     "type": "status",

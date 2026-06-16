@@ -120,6 +120,9 @@ function renderInspector(status) {
       <div><dt>Progress</dt><dd>${agent.progress}%</dd></div>
       <div><dt>Focus</dt><dd>${escapeHtml(agent.role.split(" ")[0])}</dd></div>
       <div><dt>Model</dt><dd>${escapeHtml(agent.model.replace(":free", ""))}</dd></div>
+      <div><dt>ETA</dt><dd>${agent.status === "working" ? "1h 35m" : "queued"}</dd></div>
+      <div><dt>Commit</dt><dd>${status.git.daedalus.clean ? "ready" : "local"}</dd></div>
+      <div><dt>Signal</dt><dd>${agent.progress > 80 ? "green" : "watch"}</dd></div>
     </dl>
     <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
   `;
@@ -134,6 +137,7 @@ function renderReadiness(status) {
   const ready = status.readiness;
   const buildReady = ready.java && ready.git_lfs && ready.rsps_repo;
   $("#autonomyState").innerHTML = `<span class="switch ${status.env.autonomy ? "on" : ""}"></span>${pill(status.env.autonomy)}`;
+  $("#topAutonomyState").innerHTML = `<span class="switch ${status.env.autonomy ? "on" : ""}"></span>${pill(status.env.autonomy)}`;
   $("#agentsOnline").textContent = `${status.agents.length} / 6`;
   $("#buildStatus").innerHTML = `<span class="state-chip ${buildReady ? "good" : "warn"}">${buildReady ? "ready" : "tools"}</span>`;
   $("#githubState").innerHTML = `<span class="state-chip ${status.git.daedalus.clean ? "good" : "warn"}">${status.git.daedalus.clean ? "main" : "local"}</span>`;

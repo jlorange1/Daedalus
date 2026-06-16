@@ -5,17 +5,21 @@
   ],
   "left_sidebar": [
     "green_banner_large",
+    "sidebar_crest",
     "status_bar_green"
   ],
   "top_sprint_header": [
     "green_banner_large",
-    "button_primary_default"
+    "button_wood_default",
+    "button_wood_hover",
+    "button_wood_pressed"
   ],
   "kanban_board": [
-    "wood_panel_large",
-    "task_card_default",
-    "task_card_review",
-    "task_card_done"
+    "mounted_board_background",
+    "mounted_board_column",
+    "task_card_clean_default",
+    "task_card_clean_review",
+    "task_card_clean_done"
   ],
   "agent_grid": [
     "prototype_studio_floor_full",
@@ -23,12 +27,14 @@
     "agent_idle_blink_strip"
   ],
   "agent_inspector": [
-    "dark_panel_base",
+    "inspector_cabinet_panel",
+    "inspector_portrait_frame",
     "status_bar_green"
   ],
   "schedule_timeline": [
     "day_cycle_panel",
-    "schedule_timeline_frame",
+    "schedule_frame_full",
+    "next_events_panel",
     "progress_status_modules"
   ],
   "ambient_layer": [

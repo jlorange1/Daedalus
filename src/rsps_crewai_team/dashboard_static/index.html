@@ -48,7 +48,14 @@
         <button id="enqueueOpen" class="command command-enqueue">Enqueue Work</button>
         <button id="runBuild" class="command command-build">Build / Test</button>
         <button id="pushBranch" class="command command-push">Push Branch</button>
-        <button id="runDuo" class="command primary command-duo">Run Duo</button>
+        <div class="top-module autonomy-module">
+          <span>Autonomy</span>
+          <b id="topAutonomyState">OFF</b>
+        </div>
+        <button id="runDuo" class="command primary command-duo duo-tile">
+          <span>Run Duo</span>
+          <i></i>
+        </button>
       </section>
 
       <section class="board">

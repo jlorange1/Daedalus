@@ -2085,3 +2085,342 @@ pre {
 .cards {
   gap: 7px;
 }
+
+/* 8.5 pass: physical board, cabinet rail, and command hierarchy. */
+body {
+  background:
+    linear-gradient(rgba(7, 5, 4, .22), rgba(7, 5, 4, .22)),
+    url("/assets/stone-wall.png");
+  background-size: auto, 188px 124px;
+}
+
+.shell {
+  grid-template-columns: 190px minmax(720px, 1fr) 310px;
+  grid-template-rows: 104px 320px 1fr 218px 26px;
+  gap: 6px;
+  background:
+    linear-gradient(90deg, rgba(7, 5, 4, .45), transparent 16%, transparent 82%, rgba(7, 5, 4, .5)),
+    url("/assets/stone-wall.png");
+  background-size: auto, 188px 124px;
+}
+
+.topbar {
+  grid-template-columns: 220px minmax(260px, 1fr) repeat(3, 126px) 132px 132px;
+  gap: 8px;
+  background:
+    linear-gradient(180deg, rgba(74, 43, 18, .76), rgba(24, 14, 8, .94)),
+    url("/assets/sliced/panels/wood_panel_large.png");
+  background-size: 100% 100%;
+}
+
+.top-module {
+  height: 76px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  border: 2px solid #8a5724;
+  background:
+    linear-gradient(180deg, rgba(39, 29, 18, .94), rgba(12, 9, 6, .98)),
+    url("/assets/sliced/panels/dark_panel_base.png");
+  background-size: 100% 100%;
+  box-shadow: inset 0 0 0 2px #130a04, 0 3px 0 #070403;
+  color: #ffd36a;
+  text-transform: uppercase;
+}
+
+.top-module span {
+  font-size: 12px;
+  letter-spacing: .5px;
+}
+
+.top-module b {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #8eef68;
+  font-size: 13px;
+}
+
+.duo-tile {
+  display: grid;
+  grid-template-columns: 1fr 42px;
+  align-items: center;
+  padding: 0 8px;
+  padding-top: 0;
+}
+
+.duo-tile::before {
+  display: none;
+}
+
+.duo-tile span {
+  align-self: center;
+}
+
+.duo-tile i {
+  width: 40px;
+  height: 42px;
+  display: block;
+  background:
+    url("/assets/role-portrait-producer.png") left center / 26px 31px no-repeat,
+    url("/assets/role-portrait-backend.png") right center / 26px 31px no-repeat;
+  image-rendering: pixelated;
+}
+
+.board {
+  padding: 17px 22px 14px;
+  border-color: #9c6428;
+  background:
+    linear-gradient(rgba(56, 29, 10, .5), rgba(26, 14, 7, .7)),
+    url("/assets/sliced/panels/wood_panel_large.png");
+  background-size: 100% 100%;
+}
+
+.board::before,
+.board::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  height: 8px;
+  background: linear-gradient(90deg, #5d3514, #a66a2b, #5a3314);
+  border: 1px solid #2a1608;
+  box-shadow: inset 0 0 0 1px rgba(255, 210, 112, .12);
+  pointer-events: none;
+}
+
+.board::before { top: 7px; }
+.board::after { bottom: 7px; }
+
+.lane {
+  border-left: 1px solid rgba(184, 120, 47, .58);
+  border-right: 1px solid rgba(45, 24, 9, .48);
+  background: linear-gradient(180deg, rgba(33, 17, 7, .18), rgba(12, 7, 4, .08));
+}
+
+.lane:first-child {
+  border-left-color: transparent;
+}
+
+.lane:last-child {
+  border-right-color: transparent;
+}
+
+.work-card:nth-child(2n) {
+  transform: translateX(2px);
+}
+
+.work-card:nth-child(3n) {
+  transform: translateX(-2px);
+}
+
+.work-card:hover {
+  transform: translateY(-2px) translateX(0);
+}
+
+.studio-floor {
+  min-height: 326px;
+  background-size: 100% 104%;
+  background-position: center 46%;
+}
+
+.inspector {
+  gap: 7px;
+  grid-template-rows: 282px minmax(230px, 1fr) 164px 96px;
+  padding: 0;
+  background:
+    linear-gradient(rgba(10, 7, 5, .18), rgba(10, 7, 5, .18)),
+    url("/assets/stone-wall.png");
+  background-size: auto, 188px 124px;
+}
+
+.inspector .panel {
+  border-color: #8a5724;
+  background:
+    linear-gradient(rgba(17, 12, 8, .86), rgba(7, 5, 4, .94)),
+    url("/assets/sliced/panels/wood_panel_large.png");
+  background-size: 100% 100%;
+}
+
+.inspector .panel:nth-child(2) {
+  background:
+    linear-gradient(rgba(0, 17, 7, .72), rgba(0, 7, 3, .86)),
+    url("/assets/sliced/panels/dark_panel_base.png");
+  background-size: 100% 100%;
+}
+
+.mini-stats {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.mini-stats div {
+  padding: 5px;
+}
+
+pre {
+  height: calc(100% - 28px);
+}
+
+.schedule {
+  grid-template-columns: 138px 1fr 180px;
+  border-color: #9c6428;
+  background:
+    linear-gradient(rgba(19, 13, 8, .76), rgba(8, 6, 4, .94)),
+    url("/assets/sliced/widgets/schedule_timeline_frame.png");
+  background-size: 100% 100%;
+}
+
+.timeline::before {
+  color: #d5a34c;
+  opacity: .8;
+}
+
+.track {
+  height: 31px;
+}
+
+.track span {
+  padding-left: 20px;
+}
+
+.track span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 14px;
+  height: 14px;
+  background: url("/assets/icon-build.png") center / contain no-repeat;
+  image-rendering: pixelated;
+}
+
+.track.blue span::before { background-image: url("/assets/icon-settings.png"); }
+.track.gold span::before { background-image: url("/assets/icon-queue.png"); }
+.track.teal span::before { background-image: url("/assets/icon-push.png"); }
+
+/* Source-sheet refinement pass. */
+.banner {
+  padding: 14px 10px;
+}
+
+.banner img {
+  display: none;
+}
+
+.banner::before {
+  content: none;
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 36px;
+  height: 38px;
+  background: url("/assets/sliced/ui/sidebar_crest.png") center / contain no-repeat;
+  opacity: .75;
+}
+
+.board {
+  padding: 16px 24px 15px;
+  background:
+    linear-gradient(rgba(51, 28, 12, .58), rgba(29, 16, 8, .72)),
+    url("/assets/sliced/panels/wood_panel_large.png");
+  background-size: auto, 100% 100%;
+}
+
+.board::before,
+.board::after {
+  left: 14px;
+  right: 14px;
+  height: 10px;
+  border-color: #593313;
+  background:
+    linear-gradient(90deg, #3b1f0a, #b87931 14%, #6f3e16 48%, #b87931 84%, #3b1f0a);
+}
+
+.lane {
+  padding: 0 9px;
+  border-left: 1px solid rgba(168, 105, 40, .36);
+  border-right: 1px solid rgba(18, 10, 5, .32);
+}
+
+.lane::before {
+  content: none;
+  position: absolute;
+  inset: 24px 2px 4px;
+  background: url("/assets/sliced/panels/mounted_board_column.png") center / 100% 100% no-repeat;
+  opacity: .12;
+  pointer-events: none;
+}
+
+.work-card {
+  background:
+    linear-gradient(rgba(230, 197, 125, .78), rgba(208, 165, 88, .88)),
+    url("/assets/sliced/cards/task_card_clean_default.png");
+  background-size: 100% 100%;
+}
+
+.work-card.state-review,
+.work-card.state-security {
+  background-image:
+    linear-gradient(rgba(230, 197, 125, .72), rgba(208, 165, 88, .88)),
+    url("/assets/sliced/cards/task_card_clean_review.png");
+}
+
+.work-card.state-done {
+  background-image:
+    linear-gradient(rgba(230, 197, 125, .72), rgba(208, 165, 88, .88)),
+    url("/assets/sliced/cards/task_card_clean_done.png");
+}
+
+.inspector {
+  background:
+    linear-gradient(rgba(7, 5, 4, .12), rgba(7, 5, 4, .12)),
+    url("/assets/stone-wall.png");
+  background-size: auto, 188px 124px;
+}
+
+.inspector .panel {
+  background:
+    linear-gradient(rgba(10, 7, 5, .44), rgba(7, 5, 4, .7)),
+    url("/assets/sliced/panels/inspector_cabinet_panel.png"),
+    url("/assets/sliced/panels/dark_panel_base.png");
+  background-size: auto, 100% 100%, 100% 100%;
+}
+
+.agent-medallion {
+  background:
+    linear-gradient(rgba(13, 8, 4, .52), rgba(13, 8, 4, .52)),
+    url("/assets/sliced/panels/inspector_portrait_frame.png");
+  background-size: 100% 100%;
+}
+
+.schedule {
+  background:
+    linear-gradient(rgba(19, 13, 8, .76), rgba(8, 6, 4, .94)),
+    url("/assets/sliced/panels/dark_panel_base.png");
+  background-size: 100% 100%, 100% 100%;
+}
+
+.events {
+  background:
+    linear-gradient(rgba(25, 15, 8, .76), rgba(9, 6, 4, .86));
+}
+
+.command,
+.top-module {
+  border-color: #9a652b;
+  background:
+    linear-gradient(180deg, rgba(70, 43, 22, .88), rgba(24, 14, 7, .98)),
+    url("/assets/sliced/panels/dark_panel_base.png");
+  background-size: 100% 100%;
+}
+
+.command:hover {
+  background:
+    linear-gradient(180deg, rgba(92, 58, 27, .9), rgba(28, 16, 8, .98)),
+    url("/assets/sliced/panels/dark_panel_base.png");
+  background-size: 100% 100%;
+}
+
+.command::after {
+  display: block;
+}
