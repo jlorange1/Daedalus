@@ -18,7 +18,7 @@ Turn the current Daedalus dashboard into a reliable implementation-ready RSPS st
 - Add a reduced-motion CSS block for existing infinite animations.
 - Clamp progress meter values client-side before applying `--value`.
 - Handle `/api/status` fetch failure with a visible stale/offline state instead of only a toast.
-- Replace visual fallback backlog with a clearly marked demo mode or server-provided seed state.
+- Keep the live-empty-state queue behavior; only reintroduce seeded cards behind an explicit demo mode.
 
 Acceptance:
 
@@ -90,4 +90,3 @@ When tests are added:
 ```bash
 uv run pytest
 ```
-

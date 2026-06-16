@@ -3386,6 +3386,31 @@ body {
     0 0 16px rgba(93, 255, 176, .16);
 }
 
+.empty-card {
+  min-height: 74px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  padding: 10px;
+  border: 1px dashed rgba(72, 217, 255, .28);
+  color: rgba(220, 239, 255, .74);
+  background:
+    linear-gradient(90deg, rgba(72, 217, 255, .045), rgba(157, 124, 255, .035)),
+    rgba(2, 8, 16, .72);
+}
+
+.empty-card strong {
+  color: #a8efff;
+  font-size: 12px;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+}
+
+.empty-card span {
+  color: rgba(220, 239, 255, .6);
+  font-size: 11px;
+}
+
 .agent-desk:hover {
   border-color: rgba(72, 217, 255, .62);
   box-shadow: 0 0 18px rgba(72, 217, 255, .16);

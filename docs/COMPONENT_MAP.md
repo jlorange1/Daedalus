@@ -40,7 +40,9 @@ Future panel routing should use existing `data-panel` attributes. Do not remove 
   - `#inboxList`, `#runningList`, `#failedList`, `#doneList`
   - `#inboxCount`, `#runningCount`, `#failedCount`, `#doneCount`
 - Cards are rendered by `workCard(item, fallbackTag)`.
-- Live queue items display newest from API; if a lane is empty, `app.js` uses visual demo backlog cards to keep the board populated.
+- Live queue items display newest from API.
+- Empty lanes render explicit `.empty-card` operational states through `emptyLane(status)`.
+- The old unlabelled visual fallback backlog and unused mock JSON fixtures were removed.
 
 ## Agent Floor
 

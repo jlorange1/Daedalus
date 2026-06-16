@@ -64,7 +64,8 @@ The script:
 | `manifests/animations.json` | Animation strips with frame dimensions, frame count, FPS, loop flag, anchor, usage, and sheet size. |
 | `manifests/nine_slice.json` | Resizable panel definitions for `wood_panel_large` and `dark_panel_base`. |
 | `manifests/components.json` | Component-to-asset groupings for app shell, sidebar, header, kanban, agent grid, inspector, schedule timeline, and ambient layer. |
-| `manifests/mock-data-manifest.json` | Dashboard data fixture manifest, separate from the image slicing pipeline. |
+
+Note: the old dashboard mock-data manifest was removed on 2026-06-16. Runtime state now comes from `/api/status`; empty lanes use styled empty states instead of seeded fixture cards.
 
 ## Animation Strips
 

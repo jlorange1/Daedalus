@@ -30,6 +30,20 @@ function workCard(item, fallbackTag) {
   </article>`;
 }
 
+function emptyLane(status) {
+  const labels = {
+    inbox: ["Queue clear", "No queued work orders"],
+    running: ["No active run", "Agents are standing by"],
+    failed: ["Review clear", "No failed work orders"],
+    done: ["No completions", "Completed work will appear here"],
+  };
+  const [title, body] = labels[status] || ["Empty", "No live data"];
+  return `<article class="empty-card">
+    <strong>${escapeHtml(title)}</strong>
+    <span>${escapeHtml(body)}</span>
+  </article>`;
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -39,41 +53,19 @@ function escapeHtml(value) {
 }
 
 function renderQueue(queue) {
-  const visualBacklog = {
-    inbox: [
-      { title: "Design crystal staff encounter hook", file: "#213", kind: "Content", stamp: "queued" },
-      { title: "Bank Tabs QoL Improvements", file: "#217", kind: "Backend", stamp: "queued" },
-      { title: "Player Moderation Dashboard", file: "#221", kind: "Backend", stamp: "ready" },
-      { title: "Daily Task System Refactor", file: "#226", kind: "Tech Debt", stamp: "ready" },
-    ],
-    running: [
-      { title: "Safe Arena Matchmaking System", file: "#206", kind: "Backend", stamp: "62%" },
-      { title: "Wildlands Boss Rework", file: "#207", kind: "Content", stamp: "active" },
-      { title: "Anti-Cheat Packet Anomaly Detection", file: "#209", kind: "Security", stamp: "active" },
-    ],
-    failed: [
-      { title: "Item Drop Table Balancing", file: "#204", kind: "Content", stamp: "review" },
-      { title: "Login Server Rate Limiting", file: "#205", kind: "Security", stamp: "review" },
-    ],
-    done: [
-      { title: "XP Locking Improvements", file: "#202", kind: "Done", stamp: "May 11" },
-      { title: "Quest: Dragonkin Diplomacy", file: "#201", kind: "Done", stamp: "May 10" },
-      { title: "Discord Bot Notifications", file: "#200", kind: "Done", stamp: "May 9" },
-    ],
-  };
-  let visualTotal = 0;
   for (const status of ["inbox", "running", "failed", "done"]) {
     const lane = queue[status];
     const list = $(`#${status}List`);
     const tag = status === "inbox" ? "Queued" : status === "running" ? "Active" : status === "failed" ? "Review" : "Done";
-    const items = lane.items.length ? lane.items.slice().reverse() : visualBacklog[status];
-    visualTotal += lane.items.length ? lane.count : items.length;
-    $(`#${status}Count`).textContent = lane.items.length ? lane.count : items.length;
-    list.innerHTML = items.slice(0, 4).map((item) => workCard(item, tag)).join("");
+    const items = lane.items.slice().reverse();
+    $(`#${status}Count`).textContent = lane.count;
+    list.innerHTML = items.length
+      ? items.slice(0, 4).map((item) => workCard(item, tag)).join("")
+      : emptyLane(status);
   }
   const total = queue.inbox.count + queue.running.count + queue.failed.count;
-  $("#queueBadge").textContent = total || visualTotal;
-  $("#queueCount").textContent = `${total || visualTotal} work orders`;
+  $("#queueBadge").textContent = total;
+  $("#queueCount").textContent = `${total} work orders`;
 }
 
 function renderAgents(agents) {
@@ -140,11 +132,12 @@ function renderInspector(status) {
 function renderActivityLog(status, selectedAgent) {
   const buildReady = status.readiness.java && status.readiness.git_lfs && status.readiness.rsps_repo;
   const rsps = status.git.rsps;
+  const hasTask = selectedAgent.task && selectedAgent.task !== "No live work assigned";
   const entries = [
     {
       tone: selectedAgent.status === "working" ? "good" : "warn",
       label: selectedAgent.status === "working" ? "Work" : "Queue",
-      text: `${selectedAgent.name} is on ${selectedAgent.task}`,
+      text: hasTask ? `${selectedAgent.name} is on ${selectedAgent.task}` : `${selectedAgent.name} has no live assignment`,
     },
     {
       tone: buildReady ? "good" : "warn",

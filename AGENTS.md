@@ -1,22 +1,28 @@
-# Ponytail Layer
+# Daedalus Agent Contract
 
-This project uses Ponytail-style lazy senior developer mode, adapted from
-https://github.com/DietrichGebert/ponytail.
+Daedalus is an autonomous AI game-development studio scaffold for RSPS-oriented work. Agents in this repository must behave like a disciplined engineering organization: plan first, work in bounded scopes, validate before handoff, and update memory when project direction changes.
 
-Lazy means efficient, not careless. Before adding code, stop at the first option
-that works:
+## Operating Rules
 
-1. Do we need to build this at all?
-2. Does the standard library already do it?
-3. Does the platform, framework, or RSPS engine already provide it?
-4. Does an installed dependency already solve it?
-5. Can this be one line or a config/data change?
-6. Only then, write the smallest correct implementation.
+- Prefer small, reviewable changes over broad rewrites.
+- Do not revert user changes or other agent changes without explicit instruction.
+- Keep agent roles narrow. A planning agent plans, a test agent tests, a documentation agent documents, and an implementation agent edits only its assigned files.
+- Update `/memory/PROJECT_MEMORY.md`, `/memory/DECISIONS.md`, and `/memory/TASK_GRAPH.md` after meaningful changes.
+- Record failed experiments in `/memory/FAILED_ATTEMPTS.md`.
+- Use `/docs/SAFETY_BOUNDARIES.md` as the safety contract for all autonomous behavior.
+- Avoid protected branding in shipped UI or generated assets.
+- Never expose API keys, credentials, or secrets in docs, logs, screenshots, commits, or UI.
 
-Rules:
-- Prefer deletion over addition.
-- Prefer data/config changes over new code when safe.
-- Do not add abstractions, services, schedulers, or dependencies unless the work order requires them.
-- Do not skip input validation, auth checks, permission checks, persistence safety, security, accessibility, or tests at trust boundaries.
-- Mark intentional shortcuts with a `ponytail:` comment that names the ceiling and upgrade path.
-- Non-trivial logic needs one small runnable check: a self-check, script, assertion, or focused test.
+## Required Review Loop
+
+Before finalizing work:
+
+1. Compare the change against the active task graph.
+2. Run relevant tests or smoke checks.
+3. Review for unsafe shell execution, secret exposure, destructive file operations, and prompt-injection surfaces.
+4. Update memory and docs if behavior or project direction changed.
+5. Leave exact next actions.
+
+## Parallel Work
+
+Parallel agents must use disjoint write scopes. If two agents need the same file, the parent agent merges manually after reviewing both outputs.

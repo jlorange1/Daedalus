@@ -7,7 +7,6 @@
 - Add an offline/stale state when `/api/status` fails.
 - Make agent desks keyboard-focusable and selectable with Enter/Space.
 - Add confirmation before spawning `run-duo` or `cron-tick`.
-- Document or remove the visual fallback backlog once live queue UX is finalized.
 
 ## API
 
@@ -17,7 +16,7 @@
   - `/api/action` allowlist behavior.
   - work-order filename slug generation.
 - Add response field for server time if the day/clock becomes backend-owned.
-- Add explicit `demo` or `fallback` flag if client should show seeded visual cards.
+- Add explicit `demo` flag only if seeded visual cards are intentionally reintroduced later.
 
 ## Frontend
 
@@ -41,4 +40,3 @@
 - Do not add frontend controls that write `.env` or push git branches without a separate confirmation design.
 - Redact secrets from logs before any log tail becomes visible in the UI.
 - Keep Build/Test disabled or toast-only until command execution and timeout behavior are implemented.
-

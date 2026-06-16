@@ -112,17 +112,22 @@ def _agents(queue: dict[str, object]) -> list[dict[str, object]]:
     running = int(queue["running"]["count"])  # type: ignore[index]
     inbox = int(queue["inbox"]["count"])  # type: ignore[index]
     roles = [
-        ("Producer", "Pippa", "planning milestones", "OPENROUTER_PRODUCER_MODEL"),
-        ("Backend Developer", "Borin", "coding server systems", "OPENROUTER_BACKEND_DEVELOPER_MODEL"),
-        ("Content Developer", "Luna", "writing quests and data", "OPENROUTER_CONTENT_DEVELOPER_MODEL"),
-        ("QA Tester", "Tess", "running build checks", "OPENROUTER_QA_TESTER_MODEL"),
-        ("Security Reviewer", "Kael", "reviewing abuse paths", "OPENROUTER_SECURITY_REVIEWER_MODEL"),
-        ("Documentation Writer", "Mira", "recording implementation notes", "OPENROUTER_DOCUMENTATION_WRITER_MODEL"),
+        ("Producer", "Command Core", "OPENROUTER_PRODUCER_MODEL"),
+        ("Backend Developer", "Server Core", "OPENROUTER_BACKEND_DEVELOPER_MODEL"),
+        ("Content Developer", "Content Core", "OPENROUTER_CONTENT_DEVELOPER_MODEL"),
+        ("QA Tester", "QA Core", "OPENROUTER_QA_TESTER_MODEL"),
+        ("Security Reviewer", "Security Core", "OPENROUTER_SECURITY_REVIEWER_MODEL"),
+        ("Documentation Writer", "Docs Core", "OPENROUTER_DOCUMENTATION_WRITER_MODEL"),
     ]
     env = _read_env_file()
+    running_items = list(queue["running"]["items"])  # type: ignore[index]
+    inbox_items = list(queue["inbox"]["items"])  # type: ignore[index]
+    live_items = running_items + inbox_items
     agents = []
-    for index, (role, name, task, model_key) in enumerate(roles):
+    for index, (role, name, model_key) in enumerate(roles):
         active = running > 0 or (inbox > 0 and index in {0, 1, 2})
+        assigned = live_items[index % len(live_items)] if active and live_items else None
+        task = str(assigned["title"]) if assigned else "No live work assigned"
         agents.append(
             {
                 "role": role,
