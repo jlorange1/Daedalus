@@ -5167,6 +5167,11 @@ h2,
   font-size: 11px;
 }
 
+.workflow-run .artifact-summary {
+  margin-top: 5px;
+  color: var(--mythos-green);
+}
+
 .mini-command {
   min-height: 34px;
   border: 1px solid rgba(102, 255, 194, .34);

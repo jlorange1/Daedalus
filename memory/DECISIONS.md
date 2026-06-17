@@ -73,3 +73,10 @@
 - Alternatives considered: Let cron blindly queue every workflow step; require all step state changes manually; make code-writing steps auto-approved.
 - Risk: Step advancement is based on work-order completion status, not yet on rich artifact review quality.
 - Rollback plan: Revert `update_step_status`, `approve_step`, and worker calls to `advance_from_work_order`.
+
+- Date: 2026-06-17
+- Decision: Attach bounded artifact evidence from worker runs to workflow steps.
+- Why: Review-gated approvals need visible facts such as changed files, validation result, log path, and repo/worktree path.
+- Alternatives considered: Store raw logs and prompts; rely only on exit code; defer evidence capture.
+- Risk: Artifact evidence is still worker-reported local metadata and does not prove semantic correctness.
+- Rollback plan: Remove `changed_files`, artifact payloads, and dashboard artifact summaries.

@@ -62,5 +62,6 @@ The first durable orchestrator run-state model is now present:
 6. Completed or failed work orders advance their workflow step.
 7. Completed dependencies unblock downstream steps.
 8. Code-writing steps pause at `awaiting_review` until approved from the dashboard.
+9. Worker runs attach bounded artifact evidence to workflow steps: changed file count, changed file paths, worker exit code, log path, and repo/worktree path.
 
-The next durable upgrade is richer artifact review: attach summaries, changed files, and validation evidence to each workflow step before approval.
+The next durable upgrade is richer review policy: require artifact evidence thresholds before approval and add reviewer notes to approved steps.

@@ -129,6 +129,7 @@ def update_step_status(
     *,
     detail: str | None = None,
     worker_run_id: str | None = None,
+    artifact: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     if status not in STEP_STATUSES:
         raise ValueError(f"Unknown workflow step status: {status}")
@@ -143,6 +144,8 @@ def update_step_status(
         step["detail"] = detail[-1000:]
     if worker_run_id:
         step["worker_run_id"] = worker_run_id
+    if artifact:
+        step["artifact"] = artifact
     if status == "done":
         _refresh_ready_steps(manifest)
     if any(item.get("status") in {"failed", "blocked"} for item in steps.values()):
@@ -171,7 +174,14 @@ def approve_step(run_id: str, step_id: str) -> dict[str, Any]:
     return enqueue_ready_steps(run_id)
 
 
-def advance_from_work_order(metadata: dict[str, Any] | None, final_status: str, *, detail: str | None = None, worker_run_id: str | None = None) -> dict[str, Any] | None:
+def advance_from_work_order(
+    metadata: dict[str, Any] | None,
+    final_status: str,
+    *,
+    detail: str | None = None,
+    worker_run_id: str | None = None,
+    artifact: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
     if not metadata:
         return None
     run_id = metadata.get("run_id")
@@ -179,7 +189,7 @@ def advance_from_work_order(metadata: dict[str, Any] | None, final_status: str, 
     if not run_id or not step_id:
         return None
     status = "done" if final_status == "done" else "failed"
-    return update_step_status(str(run_id), str(step_id), status, detail=detail, worker_run_id=worker_run_id)
+    return update_step_status(str(run_id), str(step_id), status, detail=detail, worker_run_id=worker_run_id, artifact=artifact)
 
 
 def list_workflow_runs(limit: int = 5) -> list[dict[str, Any]]:

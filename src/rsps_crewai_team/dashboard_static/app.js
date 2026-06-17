@@ -254,6 +254,9 @@ function renderAgency(status) {
       <article class="workflow-run">
         <strong>${escapeHtml(run.workflow_name || run.workflow_id)}</strong>
         <span>${escapeHtml(run.status)} / ${run.done || 0}/${run.step_count || 0} done / ${run.queued || 0} queued</span>
+        ${(run.steps || []).filter((step) => step.artifact).slice(0, 2).map((step) => `
+          <span class="artifact-summary">${escapeHtml(step.id)} evidence: ${step.artifact.changed_file_count || 0} files / exit ${escapeHtml(step.artifact.validation?.worker_exit_code ?? "n/a")}</span>
+        `).join("")}
         ${(run.steps || []).filter((step) => step.status === "awaiting_review").slice(0, 2).map((step) => `
           <button class="approve-step mini-command" data-run="${escapeHtml(run.run_id)}" data-step="${escapeHtml(step.id)}">Approve ${escapeHtml(step.id)}</button>
         `).join("")}

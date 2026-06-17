@@ -67,6 +67,26 @@ class OrchestratorTests(unittest.TestCase):
         self.assertEqual(approved["steps"]["implementation"]["status"], "queued")
         self.assertIsNotNone(approved["steps"]["implementation"]["work_order"])
 
+    def test_step_artifact_is_recorded(self) -> None:
+        manifest = orchestrator.create_workflow_run("profitability_review")
+        run_id = manifest["run_id"]
+        artifact = {
+            "changed_files": ["src/example.py"],
+            "changed_file_count": 1,
+            "validation": {"worker_exit_code": 0, "log_path": "logs/example.log"},
+        }
+
+        advanced = orchestrator.update_step_status(
+            run_id,
+            "business_scope",
+            "done",
+            worker_run_id="worker-run-1",
+            artifact=artifact,
+        )
+
+        self.assertEqual(advanced["steps"]["business_scope"]["worker_run_id"], "worker-run-1")
+        self.assertEqual(advanced["steps"]["business_scope"]["artifact"]["changed_file_count"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

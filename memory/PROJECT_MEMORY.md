@@ -70,6 +70,7 @@ Daedalus is an autonomous coding and operations scaffold for an AI-assisted RSPS
 - Intelligence upgrade configs now capture spec-driven development, prompt patterns, skill registry metadata, inspiration-source attribution, and an ethical OpenBB-inspired profitability model in `src/rsps_crewai_team/config/*`.
 - Workflow runs now create manifests in `logs/agency-runs/`, queue sidecar-tagged work orders, and worker executions create bounded run manifests in `logs/runs/`.
 - Workflow advancement now marks completed/failed steps, unblocks dependent non-code steps, and holds code-writing steps at `awaiting_review` until approved from the dashboard.
+- Worker completion now attaches bounded artifact evidence to workflow steps and run manifests, including changed files and validation exit code.
 - Asset and JSON validation commands pass as of the last dashboard cleanup.
 - Existing persistent memory files were present before the memory-system design: `DECISIONS.md`, `OPEN_QUESTIONS.md`, `FAILED_ATTEMPTS.md`, and `TASK_GRAPH.md`.
 - Phase 1 specialist agents completed and wrote `docs/REPO_MAP.md`, `docs/TARGET_ARCHITECTURE.md`, `docs/IMPLEMENTATION_PLAN.md`, `docs/MEMORY_SYSTEM.md`, `docs/EVALS.md`, `docs/DEFENSIVE_SECURITY_REVIEW.md`, `docs/TEST_PLAN.md`, and `docs/OPERATOR_GUIDE.md`.

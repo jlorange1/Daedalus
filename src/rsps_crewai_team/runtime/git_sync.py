@@ -64,6 +64,20 @@ def has_changes(path: Path | None = None) -> bool:
     return bool(result.output)
 
 
+def changed_files(path: Path | None = None) -> list[str]:
+    repo = path or rsps_repo_path()
+    result = _run_git(["status", "--porcelain"], repo)
+    if result.exit_code != 0 or not result.output:
+        return []
+    files: list[str] = []
+    for line in result.output.splitlines():
+        if not line.strip():
+            continue
+        parts = line.strip().split(maxsplit=1)
+        files.append(parts[1].strip() if len(parts) == 2 else parts[0].strip())
+    return files
+
+
 def commit_all(message: str, path: Path | None = None) -> GitResult:
     repo = path or rsps_repo_path()
     _run_git(["add", "-A"], repo)

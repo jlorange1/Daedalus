@@ -41,6 +41,15 @@ class GitSyncTests(unittest.TestCase):
         self.assertNotEqual(result.exit_code, 0)
         self.assertIn("Refusing to push autonomous work", result.output)
 
+    def test_changed_files_reports_porcelain_paths(self) -> None:
+        (self.repo / "README.md").write_text("changed\n", encoding="utf-8")
+        (self.repo / "new.txt").write_text("new\n", encoding="utf-8")
+
+        files = git_sync.changed_files(self.repo)
+
+        self.assertIn("README.md", files)
+        self.assertIn("new.txt", files)
+
 
 if __name__ == "__main__":
     unittest.main()
