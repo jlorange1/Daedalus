@@ -1,0 +1,195 @@
+{
+  "source_inspiration": {
+    "name": "agency-orchestrator",
+    "repository": "https://github.com/jnMetaCode/agency-orchestrator",
+    "license": "Apache-2.0",
+    "adaptation": "Daedalus uses dependency-aware workflow definitions and execution levels, but keeps execution inside its existing Python/CrewAI/OpenClaw safety gates."
+  },
+  "workflows": [
+    {
+      "id": "feature_delivery_mesh",
+      "name": "Feature Delivery Mesh",
+      "description": "Plan, implement, validate, and release a scoped server feature.",
+      "concurrency": 6,
+      "entrypoint": "executive_production",
+      "steps": [
+        {
+          "id": "scope",
+          "department": "executive_production",
+          "output": "milestone_brief",
+          "task": "Define scope, success criteria, blockers, and human approval gates."
+        },
+        {
+          "id": "design",
+          "department": "design_direction",
+          "depends_on": ["scope"],
+          "output": "design_spec",
+          "task": "Convert the milestone brief into player-facing design and acceptance criteria."
+        },
+        {
+          "id": "server_plan",
+          "department": "server_planning",
+          "depends_on": ["scope", "design"],
+          "output": "server_roadmap",
+          "task": "Create implementation slices, dependencies, risk gates, and work-order sequence."
+        },
+        {
+          "id": "world_content",
+          "department": "world_quest_design",
+          "depends_on": ["design"],
+          "output": "world_content_spec",
+          "task": "Plan zones, quest flow, NPC placement, and encounter pacing."
+        },
+        {
+          "id": "economy_review",
+          "department": "economy_balance",
+          "depends_on": ["design", "world_content"],
+          "output": "economy_risk_matrix",
+          "task": "Review rates, rewards, shops, sinks, and abuse-prone progression."
+        },
+        {
+          "id": "implementation",
+          "department": "backend_engineering",
+          "depends_on": ["server_plan", "economy_review"],
+          "output": "code_patch",
+          "task": "Implement the smallest approved vertical slice through the guarded coding worker."
+        },
+        {
+          "id": "client_review",
+          "department": "client_ux",
+          "depends_on": ["design", "implementation"],
+          "output": "client_impact",
+          "task": "Assess client, interface, cache, and user-facing compatibility impact."
+        },
+        {
+          "id": "qa",
+          "department": "qa_automation",
+          "depends_on": ["implementation"],
+          "output": "test_results",
+          "task": "Run available build/test/smoke checks and record evidence."
+        },
+        {
+          "id": "security",
+          "department": "security_anti_abuse",
+          "depends_on": ["implementation"],
+          "output": "security_findings",
+          "task": "Perform defensive review for dupes, permission issues, and unsafe trust boundaries."
+        },
+        {
+          "id": "release",
+          "department": "build_release",
+          "depends_on": ["qa", "security", "client_review"],
+          "output": "release_packet",
+          "task": "Prepare release checklist, rollback plan, and go/no-go status."
+        },
+        {
+          "id": "docs",
+          "department": "documentation",
+          "depends_on": ["release"],
+          "output": "handoff_docs",
+          "task": "Update docs, memory, and implementation handoff notes."
+        },
+        {
+          "id": "ops_sync",
+          "department": "devops_github",
+          "depends_on": ["release", "docs"],
+          "output": "ops_sync",
+          "task": "Verify branch health, cron readiness, logs, and optional GitHub push gates."
+        }
+      ]
+    },
+    {
+      "id": "visual_product_pass",
+      "name": "Visual Product Pass",
+      "description": "Improve dashboard/client-facing presentation with design, implementation, QA, and docs gates.",
+      "concurrency": 4,
+      "entrypoint": "design_direction",
+      "steps": [
+        {
+          "id": "creative_direction",
+          "department": "design_direction",
+          "output": "creative_brief",
+          "task": "Define visual target, UX goals, and acceptance criteria."
+        },
+        {
+          "id": "art_audio_review",
+          "department": "art_audio_direction",
+          "depends_on": ["creative_direction"],
+          "output": "asset_plan",
+          "task": "Check asset provenance, visual consistency, and implementation readiness."
+        },
+        {
+          "id": "client_plan",
+          "department": "client_ux",
+          "depends_on": ["creative_direction", "art_audio_review"],
+          "output": "ui_plan",
+          "task": "Map visual direction into concrete UI/client changes."
+        },
+        {
+          "id": "implementation",
+          "department": "backend_engineering",
+          "depends_on": ["client_plan"],
+          "output": "ui_patch",
+          "task": "Apply the smallest coherent UI/client patch."
+        },
+        {
+          "id": "qa",
+          "department": "qa_automation",
+          "depends_on": ["implementation"],
+          "output": "visual_qa",
+          "task": "Run smoke checks and screenshot/interaction QA where available."
+        },
+        {
+          "id": "docs",
+          "department": "documentation",
+          "depends_on": ["qa"],
+          "output": "style_handoff",
+          "task": "Update style notes and future-agent instructions."
+        }
+      ]
+    },
+    {
+      "id": "incident_recovery",
+      "name": "Incident Recovery",
+      "description": "Triage failed autonomous work and recover without repeating known mistakes.",
+      "concurrency": 3,
+      "entrypoint": "devops_github",
+      "steps": [
+        {
+          "id": "ops_triage",
+          "department": "devops_github",
+          "output": "ops_report",
+          "task": "Collect branch, log, cron, and worker state."
+        },
+        {
+          "id": "security_triage",
+          "department": "security_anti_abuse",
+          "depends_on": ["ops_triage"],
+          "output": "safety_report",
+          "task": "Review whether the failure created unsafe state or permission risk."
+        },
+        {
+          "id": "qa_repro",
+          "department": "qa_automation",
+          "depends_on": ["ops_triage"],
+          "output": "repro_report",
+          "task": "Reproduce the failure with the smallest safe command and record evidence."
+        },
+        {
+          "id": "fix_plan",
+          "department": "server_planning",
+          "depends_on": ["security_triage", "qa_repro"],
+          "output": "recovery_plan",
+          "task": "Create a minimal recovery work order and rollback path."
+        },
+        {
+          "id": "docs",
+          "department": "documentation",
+          "depends_on": ["fix_plan"],
+          "output": "failed_attempt_update",
+          "task": "Update failed-attempt memory and operator handoff."
+        }
+      ]
+    }
+  ]
+}

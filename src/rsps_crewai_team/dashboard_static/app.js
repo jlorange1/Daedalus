@@ -217,6 +217,27 @@ function renderReadiness(status) {
   ].map(([label, ok]) => `<p><span class="state-dot ${ok ? "good" : "warn"}"></span>${label}<b>${ok ? "ready" : "needed"}</b></p>`).join("");
 }
 
+function renderAgency(status) {
+  const agency = status.agency;
+  if (!agency) return;
+  const primaryWorkflow = agency.workflows?.find((item) => item.id === "feature_delivery_mesh") || agency.workflows?.[0];
+  const levelText = primaryWorkflow?.levels
+    ?.map((level, index) => `<span><b>L${index + 1}</b>${level.map((step) => escapeHtml(step)).join(" + ")}</span>`)
+    .join("") || "<span>No workflow levels loaded</span>";
+  $("#agencyLayer").innerHTML = `
+    <div class="agency-metrics">
+      <div><strong>${agency.department_count}</strong><span>Departments</span></div>
+      <div><strong>${agency.workflow_count}</strong><span>Workflows</span></div>
+      <div><strong>${primaryWorkflow?.max_parallel || 0}</strong><span>Max Parallel</span></div>
+    </div>
+    <p class="agency-source">Inspired by ${escapeHtml(agency.source?.name || "agency role libraries")} / ${escapeHtml(agency.source?.license || "open source")}.</p>
+    <div class="agency-flow">
+      <strong>${escapeHtml(primaryWorkflow?.name || "Workflow Mesh")}</strong>
+      ${levelText}
+    </div>
+  `;
+}
+
 async function refresh() {
   const response = await fetch("/api/status");
   const status = await response.json();
@@ -224,6 +245,7 @@ async function refresh() {
   renderQueue(status.queue);
   renderAgents(status.agents);
   renderReadiness(status);
+  renderAgency(status);
 }
 
 async function post(path, payload) {

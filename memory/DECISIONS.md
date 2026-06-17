@@ -43,3 +43,12 @@
 - Alternatives considered: Document the snippet only; set a higher depth for recursive agents.
 - Risk: The config is machine-local and not tracked in this repository.
 - Rollback plan: Remove the `[agents]` section from `/var/home/Scaar/.codex/config.toml` or adjust the numeric limits.
+
+## 2026-06-17
+
+- Date: 2026-06-17
+- Decision: Adapt public agency-agents/orchestrator patterns into a Daedalus-native agency catalog and workflow DAG layer.
+- Why: The user requested using the GitHub Agency-agents project to enhance the system at every level. The upstream repository is MIT licensed and its most useful patterns are specialized role contracts, deliverable-focused agents, and dependency-aware orchestration.
+- Alternatives considered: Vendor the full upstream role library; install the upstream orchestrator as a separate runtime; only document the repository link.
+- Risk: The catalog can drift from CrewAI task execution until workflow traces are implemented.
+- Rollback plan: Remove `src/rsps_crewai_team/config/agency_*.json`, `src/rsps_crewai_team/runtime/agency.py`, dashboard agency rendering, and the related tests/docs.

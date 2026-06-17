@@ -2,6 +2,8 @@
 
 Autonomous sci-fi software-studio dashboard and CrewAI/OpenClaw workforce scaffold for open-source 2009-era MMORPG server development. It coordinates specialized agents for planning, server direction, implementation guidance, code review, content design, QA, security, release, DevOps, art/audio direction, and documentation.
 
+The studio also includes a Daedalus-native Agency layer inspired by the public `agency-agents` and `agency-orchestrator` projects. See [docs/AGENCY_AGENTS_INTEGRATION.md](docs/AGENCY_AGENTS_INTEGRATION.md) for the role catalog, workflow DAG model, safety gates, and future extension points.
+
 ## One-Click Launcher
 
 Use the desktop launcher:

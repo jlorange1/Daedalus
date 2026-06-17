@@ -57,6 +57,10 @@ def check_required_paths() -> tuple[bool, str]:
         "work_orders/failed",
         "src/rsps_crewai_team/worker.py",
         "src/rsps_crewai_team/dashboard.py",
+        "src/rsps_crewai_team/runtime/agency.py",
+        "src/rsps_crewai_team/config/agency_catalog.json",
+        "src/rsps_crewai_team/config/agency_workflows.json",
+        "docs/AGENCY_AGENTS_INTEGRATION.md",
     ]
     missing = [item for item in required if not (ROOT / item).exists()]
     if missing:
@@ -125,6 +129,32 @@ def check_json_assets_parse() -> tuple[bool, str]:
     return True, f"{len(json_files)} JSON files parse"
 
 
+def check_agency_config() -> tuple[bool, str]:
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(ROOT / "src")
+    script = (
+        "from rsps_crewai_team.runtime.agency import agency_status;"
+        "s=agency_status();"
+        "assert s['department_count'] >= 14;"
+        "assert s['workflow_count'] >= 3;"
+        "assert any(w['id']=='feature_delivery_mesh' for w in s['workflows']);"
+        "print(f\"{s['department_count']} departments, {s['workflow_count']} workflows\")"
+    )
+    result = subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=ROOT,
+        env=env,
+        text=True,
+        capture_output=True,
+        timeout=5,
+        check=False,
+    )
+    output = "\n".join(part for part in [result.stdout.strip(), result.stderr.strip()] if part)
+    if result.returncode != 0:
+        return False, f"agency config failed: {output[-500:]}"
+    return True, output.strip()
+
+
 def check_worker_status_latency() -> tuple[bool, str]:
     env = os.environ.copy()
     env["PYTHONPATH"] = str(ROOT / "src")
@@ -155,6 +185,7 @@ def run_checks() -> dict[str, object]:
         ("safety_boundaries", check_safety_boundaries),
         ("python_source_parses", check_python_source_parses),
         ("json_assets_parse", check_json_assets_parse),
+        ("agency_config", check_agency_config),
         ("worker_status_latency", check_worker_status_latency),
     ]
     started = datetime.now(timezone.utc)

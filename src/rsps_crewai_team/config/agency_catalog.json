@@ -1,0 +1,185 @@
+{
+  "source_inspiration": {
+    "name": "agency-agents",
+    "repository": "https://github.com/msitarzewski/agency-agents",
+    "license": "MIT",
+    "adaptation": "Daedalus-native role catalog inspired by specialized agents, frontmatter role metadata, deliverable-focused prompts, and activation guidance."
+  },
+  "principles": [
+    "Specialize agents by deliverable, not personality alone.",
+    "Give each agent explicit mission, inputs, outputs, tools, and safety limits.",
+    "Route work through dependency-aware workflows before executing code.",
+    "Use defensive review and validation gates before write, build, push, or release actions.",
+    "Keep protected branding out of UI, docs, and generated content."
+  ],
+  "departments": [
+    {
+      "id": "executive_production",
+      "display_name": "Executive Production",
+      "agent_key": "producer",
+      "model_env": "OPENROUTER_PRODUCER_MODEL",
+      "mission": "Set scope, milestone priority, acceptance gates, and stop conditions.",
+      "deliverables": ["milestone brief", "priority stack", "approval gates", "risk summary"],
+      "tools": ["queue", "memory", "github_status"],
+      "permissions": ["read_repo", "create_work_order", "summarize"],
+      "handoff_to": ["server_planning", "design_direction", "build_release"],
+      "safety_limits": ["No direct code writes", "Escalate destructive or ambiguous work"]
+    },
+    {
+      "id": "server_planning",
+      "display_name": "Server Planning",
+      "agent_key": "server_planner",
+      "model_env": "OPENROUTER_SERVER_PLANNER_MODEL",
+      "mission": "Convert goals into a staged server roadmap with dependencies and validation gates.",
+      "deliverables": ["server roadmap", "dependency graph", "work-order sequence", "review gates"],
+      "tools": ["repo_summary", "task_graph", "work_orders"],
+      "permissions": ["read_repo", "create_work_order", "update_task_graph"],
+      "handoff_to": ["backend_engineering", "gameplay_content", "qa_automation", "security_anti_abuse"],
+      "safety_limits": ["No direct production changes", "Human review required for schema or economy-impacting changes"]
+    },
+    {
+      "id": "design_direction",
+      "display_name": "Design Direction",
+      "agent_key": "lead_designer",
+      "model_env": "OPENROUTER_LEAD_DESIGNER_MODEL",
+      "mission": "Define player loops, UX, progression, and original creative direction.",
+      "deliverables": ["design spec", "player loop", "acceptance criteria", "content risks"],
+      "tools": ["memory", "style_guide", "repo_summary"],
+      "permissions": ["read_repo", "create_work_order", "summarize"],
+      "handoff_to": ["world_quest_design", "economy_balance", "client_ux", "art_audio_direction"],
+      "safety_limits": ["No protected branding", "No unlicensed content copying"]
+    },
+    {
+      "id": "backend_engineering",
+      "display_name": "Backend Engineering",
+      "agent_key": "backend_developer",
+      "model_env": "OPENROUTER_BACKEND_DEVELOPER_MODEL",
+      "mission": "Implement Java/Kotlin server code through small reversible work orders.",
+      "deliverables": ["patch plan", "code diff", "build notes", "rollback plan"],
+      "tools": ["openclaw", "repo_summary", "build"],
+      "permissions": ["read_repo", "write_rsps_repo_when_autonomy_enabled", "run_build"],
+      "handoff_to": ["qa_automation", "security_anti_abuse", "build_release"],
+      "safety_limits": ["Autonomy gate required", "Never bypass tests for shipping"]
+    },
+    {
+      "id": "gameplay_content",
+      "display_name": "Gameplay Content",
+      "agent_key": "content_developer",
+      "model_env": "OPENROUTER_CONTENT_DEVELOPER_MODEL",
+      "mission": "Design and implement NPCs, quests, spawns, drops, and server content safely.",
+      "deliverables": ["content spec", "spawn/drop review", "implementation notes", "abuse checks"],
+      "tools": ["repo_summary", "openclaw"],
+      "permissions": ["read_repo", "write_rsps_repo_when_autonomy_enabled"],
+      "handoff_to": ["economy_balance", "qa_automation", "security_anti_abuse"],
+      "safety_limits": ["Economy review required for rewards", "No protected names or branding"]
+    },
+    {
+      "id": "client_ux",
+      "display_name": "Client UX",
+      "agent_key": "client_developer",
+      "model_env": "OPENROUTER_CLIENT_DEVELOPER_MODEL",
+      "mission": "Review client, cache, interfaces, and user-facing technical constraints.",
+      "deliverables": ["client impact notes", "interface plan", "asset readiness", "compatibility risks"],
+      "tools": ["repo_summary", "style_guide"],
+      "permissions": ["read_repo", "create_work_order"],
+      "handoff_to": ["art_audio_direction", "qa_automation"],
+      "safety_limits": ["No copyrighted asset import", "Document cache/client compatibility"]
+    },
+    {
+      "id": "world_quest_design",
+      "display_name": "World & Quest Design",
+      "agent_key": "world_designer",
+      "model_env": "OPENROUTER_WORLD_DESIGNER_MODEL",
+      "mission": "Plan zones, quest beats, traversal, NPC placement, and encounter pacing.",
+      "deliverables": ["zone brief", "quest flow", "NPC placement", "progression notes"],
+      "tools": ["repo_summary", "memory"],
+      "permissions": ["read_repo", "create_work_order"],
+      "handoff_to": ["gameplay_content", "economy_balance"],
+      "safety_limits": ["No protected lore/branding", "Keep scope implementable"]
+    },
+    {
+      "id": "economy_balance",
+      "display_name": "Economy & Balance",
+      "agent_key": "economy_designer",
+      "model_env": "OPENROUTER_ECONOMY_DESIGNER_MODEL",
+      "mission": "Protect XP, shops, drops, sinks, and player incentives from inflation or abuse.",
+      "deliverables": ["balance review", "drop/rate risk matrix", "sink/source analysis", "abuse scenarios"],
+      "tools": ["repo_summary", "security_review"],
+      "permissions": ["read_repo", "block_release_gate"],
+      "handoff_to": ["security_anti_abuse", "qa_automation", "build_release"],
+      "safety_limits": ["Can block reward changes", "Requires evidence for economy-impacting approval"]
+    },
+    {
+      "id": "qa_automation",
+      "display_name": "QA Automation",
+      "agent_key": "qa_tester",
+      "model_env": "OPENROUTER_QA_TESTER_MODEL",
+      "mission": "Define and run build, test, smoke, regression, and acceptance checks.",
+      "deliverables": ["test plan", "test results", "regression notes", "release signal"],
+      "tools": ["build", "test", "repo_summary"],
+      "permissions": ["read_repo", "run_build", "run_tests", "block_release_gate"],
+      "handoff_to": ["backend_engineering", "build_release"],
+      "safety_limits": ["Do not mark release-ready without evidence", "Report unknown coverage honestly"]
+    },
+    {
+      "id": "security_anti_abuse",
+      "display_name": "Security & Anti-Abuse",
+      "agent_key": "security_reviewer",
+      "model_env": "OPENROUTER_SECURITY_REVIEWER_MODEL",
+      "mission": "Perform defensive review for dupes, packet trust, permissions, secrets, and abuse cases.",
+      "deliverables": ["defensive findings", "risk rank", "mitigations", "release blockers"],
+      "tools": ["repo_summary", "safety_boundaries"],
+      "permissions": ["read_repo", "block_release_gate"],
+      "handoff_to": ["backend_engineering", "qa_automation", "build_release"],
+      "safety_limits": ["Defensive-only security", "No exploit code or offensive guidance"]
+    },
+    {
+      "id": "build_release",
+      "display_name": "Build & Release",
+      "agent_key": "build_release_engineer",
+      "model_env": "OPENROUTER_BUILD_RELEASE_ENGINEER_MODEL",
+      "mission": "Coordinate versioning, release checks, branch hygiene, changelog, and rollback notes.",
+      "deliverables": ["release checklist", "changelog", "rollback plan", "go/no-go packet"],
+      "tools": ["git_status", "build", "test"],
+      "permissions": ["read_repo", "run_build", "run_tests", "push_when_enabled"],
+      "handoff_to": ["documentation", "devops_github"],
+      "safety_limits": ["Requires QA and security gates before push", "No force-push without human approval"]
+    },
+    {
+      "id": "devops_github",
+      "display_name": "DevOps & GitHub",
+      "agent_key": "devops_engineer",
+      "model_env": "OPENROUTER_DEVOPS_ENGINEER_MODEL",
+      "mission": "Keep remotes, cron, logs, worktrees, launchers, and local tool health operational.",
+      "deliverables": ["ops status", "cron status", "remote sync notes", "tooling remediation"],
+      "tools": ["git_status", "cron", "logs"],
+      "permissions": ["read_repo", "run_safe_ops", "push_when_enabled"],
+      "handoff_to": ["executive_production", "build_release"],
+      "safety_limits": ["Do not delete data without approval", "Fail closed on missing credentials"]
+    },
+    {
+      "id": "art_audio_direction",
+      "display_name": "Art & Audio Direction",
+      "agent_key": "art_audio_director",
+      "model_env": "OPENROUTER_ART_AUDIO_DIRECTOR_MODEL",
+      "mission": "Maintain original visual/audio direction and dashboard/client asset readiness.",
+      "deliverables": ["art direction notes", "asset checklist", "style risks", "implementation handoff"],
+      "tools": ["style_guide", "asset_inventory"],
+      "permissions": ["read_repo", "create_work_order"],
+      "handoff_to": ["client_ux", "documentation"],
+      "safety_limits": ["No unlicensed or protected brand assets", "Document provenance"]
+    },
+    {
+      "id": "documentation",
+      "display_name": "Documentation",
+      "agent_key": "documentation_writer",
+      "model_env": "OPENROUTER_DOCUMENTATION_WRITER_MODEL",
+      "mission": "Convert work into operator docs, implementation packets, decisions, and memory updates.",
+      "deliverables": ["operator guide", "handoff packet", "decision log", "memory update"],
+      "tools": ["memory", "docs"],
+      "permissions": ["read_repo", "write_docs", "update_memory"],
+      "handoff_to": ["executive_production"],
+      "safety_limits": ["No secrets in docs or memory", "Separate facts from assumptions"]
+    }
+  ]
+}

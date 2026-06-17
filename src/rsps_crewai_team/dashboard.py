@@ -12,6 +12,7 @@ from urllib.parse import urlparse
 
 from dotenv import load_dotenv
 
+from rsps_crewai_team.runtime.agency import agency_status
 from rsps_crewai_team.runtime.settings import PROJECT_ROOT, WORK_ORDERS_DIR, bool_env
 from rsps_crewai_team.runtime.work_orders import STATUS_DIRS, create_work_order, ensure_work_order_dirs
 
@@ -183,6 +184,7 @@ def _status() -> dict[str, object]:
         },
         "queue": queue,
         "agents": _agents(queue),
+        "agency": agency_status(),
         "git": {
             "daedalus": _git_summary(PROJECT_ROOT),
             "rsps": _git_summary(repo_path) if repo_path else {"available": False, "branch": "none", "clean": False},
