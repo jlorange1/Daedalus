@@ -36,6 +36,8 @@ def _openclaw_command(message_file: Path, agent_id: str) -> list[str]:
         "--local",
         "--agent",
         agent_id,
+        "--session-key",
+        f"agent:{agent_id}:{message_file.stem}",
         "--model",
         model,
         "--message",
