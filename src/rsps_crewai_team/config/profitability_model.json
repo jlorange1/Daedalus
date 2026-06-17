@@ -2,7 +2,9 @@
   "engine": {
     "name": "Daedalus Profitability Intelligence",
     "inspiration": "OpenBB-style analyst workflows adapted to ethical private-server operations.",
-    "disclaimer": "This is an internal planning model, not financial advice."
+    "disclaimer": "This is an internal planning model, not financial advice.",
+    "metrics_path_env": "RSPS_PROFITABILITY_METRICS_PATH",
+    "default_metrics_path": "data/profitability_metrics.json"
   },
   "ethics_policy": [
     "Prefer cosmetics, convenience, memberships, events, and community value.",
@@ -10,13 +12,13 @@
     "Economy and anti-abuse review can block monetization changes."
   ],
   "metrics": [
-    {"id": "monthly_active_players", "label": "Monthly Active Players", "unit": "players", "default": 450},
-    {"id": "payer_conversion", "label": "Payer Conversion", "unit": "percent", "default": 4.0},
-    {"id": "arppu", "label": "Avg Revenue Per Paying User", "unit": "usd", "default": 12.0},
-    {"id": "hosting_cost", "label": "Hosting Cost", "unit": "usd", "default": 85.0},
-    {"id": "tooling_cost", "label": "Tooling Cost", "unit": "usd", "default": 35.0},
-    {"id": "asset_budget", "label": "Asset Budget", "unit": "usd", "default": 40.0},
-    {"id": "retention_d30", "label": "D30 Retention", "unit": "percent", "default": 18.0}
+    {"id": "monthly_active_players", "label": "Monthly Active Players", "unit": "players", "required": true},
+    {"id": "payer_conversion", "label": "Payer Conversion", "unit": "percent", "required": true},
+    {"id": "arppu", "label": "Avg Revenue Per Paying User", "unit": "usd", "required": true},
+    {"id": "hosting_cost", "label": "Hosting Cost", "unit": "usd", "required": true},
+    {"id": "tooling_cost", "label": "Tooling Cost", "unit": "usd", "required": true},
+    {"id": "asset_budget", "label": "Asset Budget", "unit": "usd", "required": true},
+    {"id": "retention_d30", "label": "D30 Retention", "unit": "percent", "required": false}
   ],
   "revenue_streams": [
     {"id": "cosmetics", "label": "Cosmetics", "risk": "low", "notes": "Visual-only supporter items."},

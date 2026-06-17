@@ -61,7 +61,9 @@ The first durable orchestrator run-state model is now present:
 5. The dashboard shows workflow runs and recent worker manifests.
 6. Completed or failed work orders advance their workflow step.
 7. Completed dependencies unblock downstream steps.
-8. Code-writing steps pause at `awaiting_review` until approved from the dashboard.
+8. Code-writing steps are auto-approved and queue without a manual review gate.
 9. Worker runs attach bounded artifact evidence to workflow steps: changed file count, changed file paths, worker exit code, log path, and repo/worktree path.
 
-The next durable upgrade is richer review policy: require artifact evidence thresholds before approval and add reviewer notes to approved steps.
+Profitability is live-data only. If `RSPS_PROFITABILITY_METRICS_PATH` or `data/profitability_metrics.json` is missing, the dashboard reports profitability as unavailable instead of estimating from mock/default values.
+
+The next durable upgrade is richer live telemetry ingestion: write real player, payer, cost, and retention metrics into the configured profitability metrics file from server logs or admin exports.

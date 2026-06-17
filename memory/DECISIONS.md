@@ -80,3 +80,10 @@
 - Alternatives considered: Store raw logs and prompts; rely only on exit code; defer evidence capture.
 - Risk: Artifact evidence is still worker-reported local metadata and does not prove semantic correctness.
 - Rollback plan: Remove `changed_files`, artifact payloads, and dashboard artifact summaries.
+
+- Date: 2026-06-17
+- Decision: Auto-approve workflow code steps and remove mock/default profitability assumptions.
+- Why: The user requested no gated code and no mock profitability data.
+- Alternatives considered: Keep review gates; keep planning defaults; display estimated values with warnings.
+- Risk: Auto-approved code steps increase autonomous-change risk; profitability will show unavailable until a real metrics source exists.
+- Rollback plan: Restore review-required workflow code steps and profitability defaults if the operator wants a conservative/demo mode again.

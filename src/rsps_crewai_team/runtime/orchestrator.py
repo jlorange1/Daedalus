@@ -61,7 +61,7 @@ def create_workflow_run(workflow_id: str, title: str | None = None) -> dict[str,
             "output": step.get("output", ""),
             "task": step.get("task", ""),
             "writes_code": writes_code,
-            "approval_status": "review_required" if writes_code else "approved",
+            "approval_status": "approved",
             "status": "ready" if step_id in first_ready else "pending",
             "work_order": None,
         }
@@ -116,10 +116,7 @@ def _refresh_ready_steps(manifest: dict[str, Any]) -> None:
             continue
         dependencies = step.get("depends_on", [])
         if all(steps.get(dep, {}).get("status") == "done" for dep in dependencies):
-            if step.get("writes_code") and step.get("approval_status") != "approved":
-                step["status"] = "awaiting_review"
-            else:
-                step["status"] = "ready"
+            step["status"] = "ready"
 
 
 def update_step_status(

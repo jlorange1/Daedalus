@@ -8,6 +8,10 @@ Additional integration patterns from spec-kit, UI/UX Pro Max, LobeHub, OpenHands
 
 Workflow runs can now be started from the dashboard Agency Layer. A run creates a manifest under `logs/agency-runs/`, queues first-level work orders with sidecar metadata, and records bounded worker evidence under `logs/runs/` when workers execute.
 
+Cron is self-filling: each tick creates a new `profitability_review` workflow when there are no active workflow runs and no queued/running work orders. Code-writing workflow steps are auto-approved; autonomous repository writes still require `RSPS_ALLOW_AUTONOMOUS=true`.
+
+Profitability does not use mock defaults. Put live metrics at `RSPS_PROFITABILITY_METRICS_PATH` or `data/profitability_metrics.json`; otherwise the dashboard reports profitability as unavailable.
+
 ## One-Click Launcher
 
 Use the desktop launcher:
@@ -43,12 +47,12 @@ If `uv sync` cannot download dependencies because network access is blocked, run
 3. Backend/content/client specialists produce implementation guidance and file targets.
 4. QA and security agents review build/test risks, dupes, permission checks, and exploit paths.
 5. Documentation agent outputs implementation notes and a review checklist.
-6. `rsps-worker` can apply one approved work order directly to the configured RSPS repo.
-7. `rsps-cron` can run scheduled autonomous cycles when explicitly enabled.
+6. `rsps-worker` can apply queued work orders directly to the configured RSPS repo when autonomy is enabled.
+7. `rsps-cron` can run scheduled autonomous cycles and self-fill the queue when the system is idle.
 
 Codex is not required for scheduled autonomous runs after the local launcher/cron process is running. The PC must stay awake and online, `.env` must contain the OpenRouter key, OpenClaw must be configured, and `RSPS_ALLOW_AUTONOMOUS=true` must remain enabled.
 
-By default this scaffold is conservative: direct file modification is disabled until `RSPS_ALLOW_AUTONOMOUS=true` is set.
+The included `.env.example` is configured for autonomous local operation. Keep `RSPS_ALLOW_AUTONOMOUS=true` only on a machine and repository where you want Daedalus to write code without an extra approval step.
 
 ## Environment
 
@@ -226,13 +230,13 @@ This writes:
 cron/rsps-crewai.cron
 ```
 
-Install it as your user crontab:
+Install it as the local scheduler:
 
 ```bash
 uv run rsps-cron install
 ```
 
-The cron tick runs the OpenClaw duo every 30 minutes when `RSPS_DUO_MODE=true`, but only when `RSPS_ALLOW_AUTONOMOUS=true`.
+If `crontab` is installed, this writes the user crontab. If `crontab` is unavailable, it installs and enables the user systemd timer `daedalus-rsps-cron.timer`. The tick self-fills an idle queue with a `profitability_review` workflow, then runs the OpenClaw duo every 30 minutes when `RSPS_DUO_MODE=true` and `RSPS_ALLOW_AUTONOMOUS=true`.
 
 ## Studio Dashboard
 
@@ -260,7 +264,7 @@ uv run python scripts/dashboard_assets.py
 
 Keep source sheet names, slice names, and manifest entries legal-safe and project-owned. Do not use official RuneScape/Jagex logos, sprites, screenshots, or trade dress as dashboard assets. See [ASSET_INVENTORY.md](docs/ASSET_INVENTORY.md) for the current source sheets, outputs, animation strips, state gaps, and naming rules.
 
-The dashboard shows queue state, agent roles, readiness checks, Git status, cron schedule, and OpenClaw duo controls. Enqueue is safe to use immediately. Worker execution still respects `RSPS_ALLOW_AUTONOMOUS=false`.
+The dashboard shows queue state, agent roles, readiness checks, Git status, cron schedule, and OpenClaw duo controls. Enqueue is safe to use immediately. Worker execution requires `RSPS_ALLOW_AUTONOMOUS=true`; the included local setup enables that for unattended development.
 
 ## Files
 

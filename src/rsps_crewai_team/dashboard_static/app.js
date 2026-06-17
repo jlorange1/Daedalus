@@ -280,16 +280,21 @@ function renderIntelligence(status) {
   const intelligence = status.intelligence;
   if (!intelligence) return;
   const scenarios = intelligence.profitability?.scenarios || [];
-  $("#profitEngine").innerHTML = `
-    <div class="profit-strip">
-      ${scenarios.map((item) => `
+  const profitBody = scenarios.length
+    ? `<div class="profit-strip">${scenarios.map((item) => `
         <article class="profit-card ${item.net >= 0 ? "good" : "warn"}">
           <strong>${escapeHtml(item.id)}</strong>
           <span>${item.players} players / ${item.paying_users} payers</span>
           <b>${item.net >= 0 ? "+" : ""}$${item.net}</b>
         </article>
-      `).join("")}
-    </div>
+      `).join("")}</div>`
+    : `<article class="profit-card warn unavailable">
+        <strong>Live data unavailable</strong>
+        <span>${escapeHtml(intelligence.profitability?.missing_reason || "No profitability telemetry source configured.")}</span>
+        <b>no estimate</b>
+      </article>`;
+  $("#profitEngine").innerHTML = `
+    ${profitBody}
     <p>${escapeHtml(intelligence.profitability?.ethics_policy?.[0] || "Ethical monetization gates active.")}</p>
   `;
   $("#governanceLayer").innerHTML = `

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import shutil
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -8,7 +9,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from rsps_crewai_team.runtime.settings import LOGS_DIR, PROJECT_ROOT, bool_env
-from rsps_crewai_team.runtime.orchestrator import list_workflow_runs
+from rsps_crewai_team.runtime.orchestrator import create_workflow_run, list_workflow_runs
+from rsps_crewai_team.runtime.work_orders import ensure_work_order_dirs
 from rsps_crewai_team.worker import run_duo, run_once
 
 
@@ -25,6 +27,31 @@ PATH=/var/home/Scaar/.local/bin:/usr/local/bin:/usr/bin:/bin
 15 3 * * * cd '/var/home/Scaar/Desktop/game project/Daedalus' && /var/home/Scaar/.local/bin/uv run rsps-team "Review current RSPS development status and propose the next 3 work orders." >> '/var/home/Scaar/Desktop/game project/Daedalus/logs/daily-planning.log' 2>&1
 """
 
+SYSTEMD_SERVICE_TEMPLATE = """[Unit]
+Description=Daedalus autonomous development tick
+
+[Service]
+Type=oneshot
+WorkingDirectory=/var/home/Scaar/Desktop/game project/Daedalus
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/var/home/Scaar/.local/bin/uv run rsps-cron tick
+StandardOutput=append:/var/home/Scaar/Desktop/game project/Daedalus/logs/cron.log
+StandardError=append:/var/home/Scaar/Desktop/game project/Daedalus/logs/cron.log
+"""
+
+SYSTEMD_TIMER_TEMPLATE = """[Unit]
+Description=Run Daedalus autonomous development tick every 30 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=30min
+AccuracySec=1min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+"""
+
 
 def tick(_: argparse.Namespace) -> None:
     load_dotenv(PROJECT_ROOT / ".env")
@@ -32,6 +59,7 @@ def tick(_: argparse.Namespace) -> None:
     print(f"[{datetime.now(timezone.utc).isoformat()}] rsps-cron tick")
     runs = list_workflow_runs(limit=3)
     print(f"workflow_runs={len(runs)}")
+    ensure_self_fulfilling_backlog()
     if not bool_env("RSPS_ALLOW_AUTONOMOUS", False):
         print("Autonomous execution disabled. Set RSPS_ALLOW_AUTONOMOUS=true to run workers.")
         return
@@ -39,6 +67,18 @@ def tick(_: argparse.Namespace) -> None:
         run_duo(argparse.Namespace())
     else:
         run_once(argparse.Namespace())
+
+
+def ensure_self_fulfilling_backlog() -> None:
+    workflow_id = "profitability_review"
+    active = [run for run in list_workflow_runs(limit=10) if run.get("status") == "active"]
+    ensure_work_order_dirs()
+    queued = list((PROJECT_ROOT / "work_orders" / "inbox").glob("*.md"))
+    running = list((PROJECT_ROOT / "work_orders" / "running").glob("*.md"))
+    if active or queued or running:
+        return
+    created = create_workflow_run(workflow_id, title="Self-filling autonomous studio cycle")
+    print(f"created_workflow_run={created['run_id']}")
 
 
 def render(_: argparse.Namespace) -> None:
@@ -51,8 +91,23 @@ def render(_: argparse.Namespace) -> None:
 def install(_: argparse.Namespace) -> None:
     render(argparse.Namespace())
     path = PROJECT_ROOT / "cron" / "rsps-crewai.cron"
-    subprocess.run(["crontab", str(path)], check=True)
-    print("Installed user crontab from " + str(path))
+    if shutil.which("crontab"):
+        subprocess.run(["crontab", str(path)], check=True)
+        print("Installed user crontab from " + str(path))
+        return
+    install_systemd_timer()
+
+
+def install_systemd_timer() -> None:
+    user_systemd = Path.home() / ".config" / "systemd" / "user"
+    user_systemd.mkdir(parents=True, exist_ok=True)
+    service_path = user_systemd / "daedalus-rsps-cron.service"
+    timer_path = user_systemd / "daedalus-rsps-cron.timer"
+    service_path.write_text(SYSTEMD_SERVICE_TEMPLATE, encoding="utf-8")
+    timer_path.write_text(SYSTEMD_TIMER_TEMPLATE, encoding="utf-8")
+    subprocess.run(["systemctl", "--user", "daemon-reload"], check=True)
+    subprocess.run(["systemctl", "--user", "enable", "--now", "daedalus-rsps-cron.timer"], check=True)
+    print("crontab was not found; installed user systemd timer " + str(timer_path))
 
 
 def main() -> None:

@@ -8,7 +8,7 @@ Daedalus is an AI-assisted RSPS development studio. It has three main operating 
 - OpenClaw coding workers with `rsps-worker` and `rsps-cron`.
 - A local dashboard with queue, readiness, agent, Git, log, and automation controls.
 
-The default posture is conservative. Planning can run with an API key, but direct RSPS repository modification is blocked unless `RSPS_ALLOW_AUTONOMOUS=true` is set in `.env`.
+The current local posture is autonomous. Planning can run with an API key, and coding workers can modify the configured RSPS repository when `RSPS_ALLOW_AUTONOMOUS=true` is set in `.env`. Keep that flag enabled only for repositories where unattended code changes are intended.
 
 ## Start Here
 
@@ -97,13 +97,13 @@ Render cron without installing it:
 uv run rsps-cron render
 ```
 
-Inspect `cron/rsps-crewai.cron`, then install only when the schedule and safety gates are acceptable:
+Inspect `cron/rsps-crewai.cron`, then install when the autonomous schedule is acceptable:
 
 ```bash
 uv run rsps-cron install
 ```
 
-The generated cron runs `rsps-cron tick` every 30 minutes. The tick still checks `RSPS_ALLOW_AUTONOMOUS`; if autonomy is disabled, it logs and exits without running workers.
+The installer uses `crontab` when available. On systems without `crontab`, it installs `~/.config/systemd/user/daedalus-rsps-cron.timer` and enables it with `systemctl --user`. The tick self-fills an idle queue with a `profitability_review` workflow, then checks `RSPS_ALLOW_AUTONOMOUS`; if autonomy is disabled, it logs and exits without running workers.
 
 ## Dashboard
 
@@ -431,7 +431,7 @@ Do not blindly move a failed work order back to `inbox`; first narrow the scope 
    uv run rsps-cron render
    ```
 
-2. Confirm it is installed in the user crontab.
+2. Confirm it is installed in the user crontab or as `daedalus-rsps-cron.timer`.
 3. Inspect `logs/cron.log`.
 4. Confirm `RSPS_ALLOW_AUTONOMOUS=true` if worker execution is expected.
 5. Run one manual tick:
