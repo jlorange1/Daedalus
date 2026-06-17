@@ -1,0 +1,64 @@
+{
+  "skills": [
+    {
+      "name": "daedalus-orchestration",
+      "path": "skills/daedalus-orchestration/SKILL.md",
+      "owner_domain": "orchestration",
+      "allowed_tools": ["git", "python", "docs", "tests"],
+      "required_files": ["memory/PROJECT_MEMORY.md", "memory/TASK_GRAPH.md"],
+      "safety_limits": ["Do not store secrets", "Do not bypass autonomy gates"],
+      "validation_command": "PYTHONDONTWRITEBYTECODE=1 python3 evals/run_static_evals.py",
+      "status": "active"
+    },
+    {
+      "name": "daedalus-evals",
+      "path": "skills/daedalus-evals/SKILL.md",
+      "owner_domain": "evaluation",
+      "allowed_tools": ["python", "unittest", "static_evals"],
+      "required_files": ["evals/run_static_evals.py", "evals/score_agent_trace.py"],
+      "safety_limits": ["Report failures plainly", "Do not hide skipped checks"],
+      "validation_command": "PYTHONDONTWRITEBYTECODE=1 python3 evals/run_static_evals.py",
+      "status": "active"
+    },
+    {
+      "name": "rsps-java-workflow",
+      "path": "skills/rsps-java-workflow/SKILL.md",
+      "owner_domain": "server_development",
+      "allowed_tools": ["java", "maven", "git", "tests"],
+      "required_files": ["docs/RSPS_SOURCE.md"],
+      "safety_limits": ["No protected branding", "Respect configured open-source source"],
+      "validation_command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m unittest discover -s tests",
+      "status": "active"
+    },
+    {
+      "name": "vibe-kanban-workspaces",
+      "path": "skills/vibe-kanban-workspaces/SKILL.md",
+      "owner_domain": "workspaces",
+      "allowed_tools": ["git", "worktrees", "queue"],
+      "required_files": ["work_orders/inbox", "work_orders/running"],
+      "safety_limits": ["Avoid overlapping writes", "Review before merge"],
+      "validation_command": "git status --short",
+      "status": "active"
+    },
+    {
+      "name": "n8n-mcp-automation",
+      "path": "skills/n8n-mcp-automation/SKILL.md",
+      "owner_domain": "automation",
+      "allowed_tools": ["docs", "workflow_specs"],
+      "required_files": ["docs/AUTONOMY.md"],
+      "safety_limits": ["Dry-run first", "No secret exposure"],
+      "validation_command": "PYTHONDONTWRITEBYTECODE=1 python3 evals/run_static_evals.py",
+      "status": "active"
+    },
+    {
+      "name": "obsidian-project-memory",
+      "path": "skills/obsidian-project-memory/SKILL.md",
+      "owner_domain": "memory",
+      "allowed_tools": ["markdown", "memory"],
+      "required_files": ["memory/PROJECT_MEMORY.md", "memory/DECISIONS.md"],
+      "safety_limits": ["No secrets", "Facts must be validated or labeled assumptions"],
+      "validation_command": "PYTHONDONTWRITEBYTECODE=1 python3 evals/run_static_evals.py",
+      "status": "active"
+    }
+  ]
+}

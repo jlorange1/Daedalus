@@ -52,3 +52,10 @@
 - Alternatives considered: Vendor the full upstream role library; install the upstream orchestrator as a separate runtime; only document the repository link.
 - Risk: The catalog can drift from CrewAI task execution until workflow traces are implemented.
 - Rollback plan: Remove `src/rsps_crewai_team/config/agency_*.json`, `src/rsps_crewai_team/runtime/agency.py`, dashboard agency rendering, and the related tests/docs.
+
+- Date: 2026-06-17
+- Decision: Add native intelligence configs for spec contracts, prompt patterns, skill registry metadata, external inspiration attribution, and ethical profitability modeling.
+- Why: The user requested adapting spec-kit, UI/UX Pro Max, LobeHub, OpenHands, Prompt Engineering Guide, DeerFlow, OpenBB, MetaGPT, and awesome-claude-skills into the dashboard, workflows, and agents.
+- Alternatives considered: Install all upstream tools; vendor selected repositories; only write documentation.
+- Risk: These configs are currently governance and visibility layers, not a full executable orchestrator.
+- Rollback plan: Remove `src/rsps_crewai_team/config/inspiration_sources.json`, `spec_contracts.json`, `prompt_patterns.json`, `skill_catalog.json`, `profitability_model.json`, `runtime/intelligence.py`, dashboard panels, and related tests/docs.

@@ -61,6 +61,12 @@ def check_required_paths() -> tuple[bool, str]:
         "src/rsps_crewai_team/config/agency_catalog.json",
         "src/rsps_crewai_team/config/agency_workflows.json",
         "docs/AGENCY_AGENTS_INTEGRATION.md",
+        "src/rsps_crewai_team/runtime/intelligence.py",
+        "src/rsps_crewai_team/config/inspiration_sources.json",
+        "src/rsps_crewai_team/config/spec_contracts.json",
+        "src/rsps_crewai_team/config/prompt_patterns.json",
+        "src/rsps_crewai_team/config/skill_catalog.json",
+        "src/rsps_crewai_team/config/profitability_model.json",
     ]
     missing = [item for item in required if not (ROOT / item).exists()]
     if missing:
@@ -155,6 +161,31 @@ def check_agency_config() -> tuple[bool, str]:
     return True, output.strip()
 
 
+def check_intelligence_config() -> tuple[bool, str]:
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(ROOT / "src")
+    script = (
+        "from rsps_crewai_team.runtime.intelligence import validate_intelligence_configs;"
+        "s=validate_intelligence_configs();"
+        "assert s['source_count'] >= 9;"
+        "assert s['skill_count'] >= 6;"
+        "print(f\"{s['source_count']} sources, {s['skill_count']} skills\")"
+    )
+    result = subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=ROOT,
+        env=env,
+        text=True,
+        capture_output=True,
+        timeout=5,
+        check=False,
+    )
+    output = "\n".join(part for part in [result.stdout.strip(), result.stderr.strip()] if part)
+    if result.returncode != 0:
+        return False, f"intelligence config failed: {output[-500:]}"
+    return True, output.strip()
+
+
 def check_worker_status_latency() -> tuple[bool, str]:
     env = os.environ.copy()
     env["PYTHONPATH"] = str(ROOT / "src")
@@ -186,6 +217,7 @@ def run_checks() -> dict[str, object]:
         ("python_source_parses", check_python_source_parses),
         ("json_assets_parse", check_json_assets_parse),
         ("agency_config", check_agency_config),
+        ("intelligence_config", check_intelligence_config),
         ("worker_status_latency", check_worker_status_latency),
     ]
     started = datetime.now(timezone.utc)

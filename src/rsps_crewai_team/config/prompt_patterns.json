@@ -1,0 +1,48 @@
+{
+  "patterns": [
+    {
+      "id": "role_contract",
+      "name": "Role Contract",
+      "category": "agent_identity",
+      "use_when": "Defining or revising an agent role.",
+      "template": "You are {role}. Mission: {mission}. Inputs: {inputs}. Outputs: {outputs}. You may use: {tools}. You must not: {safety_limits}.",
+      "required_context": ["role", "mission", "inputs", "outputs", "tools", "safety_limits"],
+      "forbidden_content": ["secrets", "unbounded tool permission", "offensive security instructions"],
+      "eval_cases": ["role_has_output_contract", "role_has_safety_limits"],
+      "source_attribution": "Adapted from public prompt engineering role-prompting patterns."
+    },
+    {
+      "id": "spec_to_plan",
+      "name": "Spec To Plan",
+      "category": "spec_driven_development",
+      "use_when": "Turning a user goal or spec into implementation steps.",
+      "template": "Given spec {spec}, produce a plan with affected systems, write scope, dependencies, validation, risks, and rollback.",
+      "required_context": ["spec", "repo_context", "safety_boundaries"],
+      "forbidden_content": ["invented file paths", "large unreviewable changes"],
+      "eval_cases": ["plan_names_write_scope", "plan_has_validation"],
+      "source_attribution": "Adapted from spec-driven development workflows."
+    },
+    {
+      "id": "critique_gate",
+      "name": "Critique Gate",
+      "category": "review",
+      "use_when": "Before merging, pushing, or marking work complete.",
+      "template": "Review {artifact} against {requirements}. Return blockers, warnings, evidence, and exact fixes.",
+      "required_context": ["artifact", "requirements", "validation_results"],
+      "forbidden_content": ["rubber-stamp approval", "unstated assumptions"],
+      "eval_cases": ["review_prioritizes_findings", "review_mentions_test_gaps"],
+      "source_attribution": "Adapted from self-check and critique prompting patterns."
+    },
+    {
+      "id": "profitability_scenario",
+      "name": "Profitability Scenario",
+      "category": "analytics",
+      "use_when": "Evaluating ethical server monetization and sustainability options.",
+      "template": "Using metrics {metrics}, model base/upside/downside scenarios. Do not recommend pay-to-win mechanics. Include assumptions, risks, and validation data needed.",
+      "required_context": ["metrics", "costs", "revenue_streams", "ethics_policy"],
+      "forbidden_content": ["pay-to-win pressure", "gambling mechanics", "financial advice"],
+      "eval_cases": ["scenario_has_assumptions", "scenario_flags_ethics"],
+      "source_attribution": "Daedalus-native adaptation of analyst workflow patterns."
+    }
+  ]
+}

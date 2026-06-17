@@ -190,6 +190,70 @@
           "task": "Update failed-attempt memory and operator handoff."
         }
       ]
+    },
+    {
+      "id": "profitability_review",
+      "name": "Profitability Review",
+      "description": "Evaluate ethical server sustainability, costs, revenue streams, retention, and economy impact before monetization work.",
+      "concurrency": 4,
+      "entrypoint": "executive_production",
+      "steps": [
+        {
+          "id": "business_scope",
+          "department": "executive_production",
+          "output": "profitability_brief",
+          "task": "Define the sustainability question, target audience, constraints, and non-pay-to-win policy."
+        },
+        {
+          "id": "economy_analysis",
+          "department": "economy_balance",
+          "depends_on": ["business_scope"],
+          "output": "economy_impact",
+          "task": "Assess whether proposed revenue streams distort rates, shops, trade, rewards, or progression."
+        },
+        {
+          "id": "player_experience",
+          "department": "design_direction",
+          "depends_on": ["business_scope"],
+          "output": "player_experience_review",
+          "task": "Review monetization options for fairness, transparency, retention, and community trust."
+        },
+        {
+          "id": "security_abuse",
+          "department": "security_anti_abuse",
+          "depends_on": ["business_scope"],
+          "output": "abuse_risk_review",
+          "task": "Identify fraud, chargeback, market manipulation, account service, and duping risks."
+        },
+        {
+          "id": "scenario_model",
+          "department": "server_planning",
+          "depends_on": ["economy_analysis", "player_experience", "security_abuse"],
+          "output": "profitability_scenarios",
+          "task": "Model downside/base/upside scenarios and identify data needed for confidence."
+        },
+        {
+          "id": "qa_gate",
+          "department": "qa_automation",
+          "depends_on": ["scenario_model"],
+          "output": "measurement_plan",
+          "task": "Define telemetry and validation checks for retention, conversion, and support load."
+        },
+        {
+          "id": "release_decision",
+          "department": "build_release",
+          "depends_on": ["scenario_model", "qa_gate"],
+          "output": "monetization_go_no_go",
+          "task": "Prepare go/no-go recommendation with rollout, rollback, and monitoring plan."
+        },
+        {
+          "id": "docs",
+          "department": "documentation",
+          "depends_on": ["release_decision"],
+          "output": "profitability_handoff",
+          "task": "Document assumptions, ethics gates, metrics, and next work orders."
+        }
+      ]
     }
   ]
 }

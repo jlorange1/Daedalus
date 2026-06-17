@@ -1,0 +1,41 @@
+{
+  "principles": [
+    "Every autonomous change starts with a written spec or work order.",
+    "Specs name non-goals, write scope, risks, validation, and rollback before implementation.",
+    "Implementation tasks stay small enough for one reviewable patch.",
+    "QA, security, and release gates can block the workflow.",
+    "Specs must avoid protected branding and unsafe/offensive capabilities."
+  ],
+  "artifact_types": [
+    {
+      "id": "spec",
+      "required_fields": ["goal", "scope", "non_goals", "user_value", "acceptance_criteria", "approval_gate"]
+    },
+    {
+      "id": "plan",
+      "required_fields": ["approach", "affected_systems", "write_scope", "dependencies", "rollback_plan"]
+    },
+    {
+      "id": "tasks",
+      "required_fields": ["task_id", "owner_department", "inputs", "outputs", "parallelizable", "blocked_by"]
+    },
+    {
+      "id": "checklist",
+      "required_fields": ["validation_commands", "manual_checks", "qa_gate", "security_gate", "release_gate"]
+    },
+    {
+      "id": "analysis",
+      "required_fields": ["assumptions", "evidence", "risks", "decision", "remaining_questions"]
+    }
+  ],
+  "lifecycle": ["draft", "review", "approved", "implemented", "validated", "released"],
+  "approval_gates": [
+    "autonomy_required",
+    "human_review_required",
+    "qa_required",
+    "security_required",
+    "economy_required",
+    "release_required"
+  ],
+  "workflow_links": ["feature_delivery_mesh", "visual_product_pass", "incident_recovery", "profitability_review"]
+}

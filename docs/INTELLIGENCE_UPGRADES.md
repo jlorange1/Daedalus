@@ -1,0 +1,61 @@
+# Intelligence Upgrade Integrations
+
+Daedalus adapts public project patterns into native, validated configuration. These are not vendored dependencies and do not grant execution authority by themselves.
+
+## Sources Adapted
+
+- `github/spec-kit`: spec-driven lifecycle and required implementation artifacts.
+- `nextlevelbuilder/ui-ux-pro-max-skill`: UI quality gates and professional interaction polish.
+- `lobehub/lobehub`: reference-only agent operations dashboard patterns.
+- `OpenHands/OpenHands`: reference-only guarded coding session and workspace lifecycle patterns.
+- `dair-ai/Prompt-Engineering-Guide`: prompt pattern and critique-loop concepts.
+- `bytedance/deer-flow`: long-horizon memory, skill, subagent, and message-gateway concepts.
+- `OpenBB-finance/OpenBB`: reference-only analyst workflow patterns for the profitability engine.
+- `FoundationAgents/MetaGPT`: software-company role decomposition and SOP handoffs.
+- `ComposioHQ/awesome-claude-skills`: reference-only curated skill registry pattern.
+
+## Native Files
+
+- `src/rsps_crewai_team/config/inspiration_sources.json`
+- `src/rsps_crewai_team/config/spec_contracts.json`
+- `src/rsps_crewai_team/config/prompt_patterns.json`
+- `src/rsps_crewai_team/config/skill_catalog.json`
+- `src/rsps_crewai_team/config/profitability_model.json`
+- `src/rsps_crewai_team/runtime/intelligence.py`
+- `tests/test_intelligence_configs.py`
+
+## Dashboard Additions
+
+The dashboard now shows:
+
+- Profit Engine: downside/base/upside net scenarios with ethical monetization guardrails.
+- Spec & Skill Systems: source count, spec artifacts, prompt patterns, local skills, and approval gates.
+- Agency Layer: workflow count, department count, and parallel DAG levels.
+
+## Profitability Policy
+
+The OpenBB-inspired layer is an internal planning model, not financial advice. It is designed to make server operations sustainable without pay-to-win mechanics.
+
+Allowed direction:
+
+- Cosmetics
+- Non-pay-to-win memberships
+- Transparent community events
+- Account services that do not distort progression
+
+Blocked direction:
+
+- Gambling loops
+- Deceptive scarcity
+- Minors-targeted pressure
+- Pay-to-win power, progression, or economy advantages
+
+## Next Engineering Step
+
+The next durable upgrade is an orchestrator run-state model:
+
+1. Create `logs/agency-runs/<run-id>/manifest.json`.
+2. Track workflow steps as `pending`, `ready`, `running`, `awaiting_review`, `done`, `blocked`, or `failed`.
+3. Attach work orders to workflow step IDs.
+4. Dispatch OpenClaw only for approved code-writing steps.
+5. Surface step state and artifacts in the dashboard.

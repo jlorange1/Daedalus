@@ -1,0 +1,67 @@
+{
+  "sources": [
+    {
+      "id": "spec_kit",
+      "name": "spec-kit",
+      "repository": "https://github.com/github/spec-kit",
+      "license": "MIT",
+      "adaptation": "Spec-driven development lifecycle: specify, plan, tasks, checklist, implementation, validation."
+    },
+    {
+      "id": "ui_ux_pro_max",
+      "name": "UI UX Pro Max",
+      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "license": "MIT",
+      "adaptation": "Design-quality checklist for hierarchy, contrast, state coverage, spacing, density, responsiveness, and interaction polish."
+    },
+    {
+      "id": "lobehub",
+      "name": "LobeHub",
+      "repository": "https://github.com/lobehub/lobehub",
+      "license": "Other",
+      "adaptation": "Reference-only inspiration for agent operations dashboards, scheduling, reporting, and team visibility."
+    },
+    {
+      "id": "openhands",
+      "name": "OpenHands",
+      "repository": "https://github.com/OpenHands/OpenHands",
+      "license": "Other",
+      "adaptation": "Reference-only inspiration for guarded coding agent loops, task execution traces, and sandboxed development workflow."
+    },
+    {
+      "id": "prompt_engineering_guide",
+      "name": "Prompt Engineering Guide",
+      "repository": "https://github.com/dair-ai/Prompt-Engineering-Guide",
+      "license": "MIT",
+      "adaptation": "Prompt patterns for role prompting, context grounding, decomposition, critique, self-checking, and evaluation."
+    },
+    {
+      "id": "deer_flow",
+      "name": "DeerFlow",
+      "repository": "https://github.com/bytedance/deer-flow",
+      "license": "MIT",
+      "adaptation": "Long-horizon agent harness concepts: memory, skills, subagents, message gateway, and sandbox-aware run phases."
+    },
+    {
+      "id": "openbb",
+      "name": "OpenBB",
+      "repository": "https://github.com/OpenBB-finance/OpenBB",
+      "license": "Other",
+      "adaptation": "Reference-only inspiration for analyst workflows, KPI dashboards, scenario models, and data-provider boundaries."
+    },
+    {
+      "id": "metagpt",
+      "name": "MetaGPT",
+      "repository": "https://github.com/FoundationAgents/MetaGPT",
+      "license": "MIT",
+      "adaptation": "Software-company role decomposition, product requirements, system design, task breakdown, coding, review, and release roles."
+    },
+    {
+      "id": "awesome_claude_skills",
+      "name": "awesome-claude-skills",
+      "repository": "https://github.com/ComposioHQ/awesome-claude-skills",
+      "license": "Unknown",
+      "adaptation": "Reference-only inspiration for curated skill catalogs and installable capability metadata."
+    }
+  ]
+}

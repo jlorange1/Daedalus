@@ -4,6 +4,8 @@ Autonomous sci-fi software-studio dashboard and CrewAI/OpenClaw workforce scaffo
 
 The studio also includes a Daedalus-native Agency layer inspired by the public `agency-agents` and `agency-orchestrator` projects. See [docs/AGENCY_AGENTS_INTEGRATION.md](docs/AGENCY_AGENTS_INTEGRATION.md) for the role catalog, workflow DAG model, safety gates, and future extension points.
 
+Additional integration patterns from spec-kit, UI/UX Pro Max, LobeHub, OpenHands, Prompt Engineering Guide, DeerFlow, OpenBB, MetaGPT, and awesome-claude-skills are captured as validated Daedalus-native configs. See [docs/INTELLIGENCE_UPGRADES.md](docs/INTELLIGENCE_UPGRADES.md).
+
 ## One-Click Launcher
 
 Use the desktop launcher:

@@ -13,6 +13,7 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 
 from rsps_crewai_team.runtime.agency import agency_status
+from rsps_crewai_team.runtime.intelligence import intelligence_status
 from rsps_crewai_team.runtime.settings import PROJECT_ROOT, WORK_ORDERS_DIR, bool_env
 from rsps_crewai_team.runtime.work_orders import STATUS_DIRS, create_work_order, ensure_work_order_dirs
 
@@ -140,13 +141,17 @@ def _agents(queue: dict[str, object]) -> list[dict[str, object]]:
         active = running > 0 or (inbox > 0 and index in {0, 1, 2, 3, 8, 10})
         assigned = live_items[index % len(live_items)] if active and live_items else None
         task = str(assigned["title"]) if assigned else "No live work assigned"
+        configured_model = env.get(model_key, "not configured").replace("openrouter/", "")
         agents.append(
             {
                 "role": role,
                 "name": name,
                 "focus": focus,
                 "task": task,
-                "model": env.get(model_key, "not configured").replace("openrouter/", ""),
+                "model": configured_model,
+                "model_key": model_key,
+                "provider": configured_model.split("/", 1)[0] if "/" in configured_model else "openrouter",
+                "configured": configured_model != "not configured",
                 "status": "working" if active else "ready",
                 "progress": min(95, 28 + (running * 24) + (index * 7)) if active else 100,
             }
@@ -185,6 +190,7 @@ def _status() -> dict[str, object]:
         "queue": queue,
         "agents": _agents(queue),
         "agency": agency_status(),
+        "intelligence": intelligence_status(),
         "git": {
             "daedalus": _git_summary(PROJECT_ROOT),
             "rsps": _git_summary(repo_path) if repo_path else {"available": False, "branch": "none", "clean": False},

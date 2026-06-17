@@ -1,0 +1,33 @@
+{
+  "engine": {
+    "name": "Daedalus Profitability Intelligence",
+    "inspiration": "OpenBB-style analyst workflows adapted to ethical private-server operations.",
+    "disclaimer": "This is an internal planning model, not financial advice."
+  },
+  "ethics_policy": [
+    "Prefer cosmetics, convenience, memberships, events, and community value.",
+    "Avoid pay-to-win mechanics, gambling loops, deceptive scarcity, and minors-targeted pressure.",
+    "Economy and anti-abuse review can block monetization changes."
+  ],
+  "metrics": [
+    {"id": "monthly_active_players", "label": "Monthly Active Players", "unit": "players", "default": 450},
+    {"id": "payer_conversion", "label": "Payer Conversion", "unit": "percent", "default": 4.0},
+    {"id": "arppu", "label": "Avg Revenue Per Paying User", "unit": "usd", "default": 12.0},
+    {"id": "hosting_cost", "label": "Hosting Cost", "unit": "usd", "default": 85.0},
+    {"id": "tooling_cost", "label": "Tooling Cost", "unit": "usd", "default": 35.0},
+    {"id": "asset_budget", "label": "Asset Budget", "unit": "usd", "default": 40.0},
+    {"id": "retention_d30", "label": "D30 Retention", "unit": "percent", "default": 18.0}
+  ],
+  "revenue_streams": [
+    {"id": "cosmetics", "label": "Cosmetics", "risk": "low", "notes": "Visual-only supporter items."},
+    {"id": "membership", "label": "Membership", "risk": "medium", "notes": "Server supporter status with non-pay-to-win perks."},
+    {"id": "events", "label": "Events", "risk": "low", "notes": "Seasonal passes or community events with transparent rewards."},
+    {"id": "services", "label": "Services", "risk": "medium", "notes": "Name changes, account services, or convenience that does not distort power."}
+  ],
+  "scenarios": [
+    {"id": "downside", "active_players_multiplier": 0.65, "conversion_multiplier": 0.75, "arppu_multiplier": 0.85, "cost_multiplier": 1.1},
+    {"id": "base", "active_players_multiplier": 1.0, "conversion_multiplier": 1.0, "arppu_multiplier": 1.0, "cost_multiplier": 1.0},
+    {"id": "upside", "active_players_multiplier": 1.45, "conversion_multiplier": 1.25, "arppu_multiplier": 1.12, "cost_multiplier": 1.18}
+  ],
+  "release_gates": ["economy_balance", "security_anti_abuse", "qa_automation", "executive_production"]
+}

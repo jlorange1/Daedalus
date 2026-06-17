@@ -107,6 +107,7 @@ function renderAgents(agents) {
       <div class="agent-plate" aria-hidden="true">
         <h3>${escapeHtml(agent.role)}</h3>
         <p>${escapeHtml(agent.name)}</p>
+        <span class="model-chip ${agent.configured ? "configured" : "missing"}">${escapeHtml(agent.provider || "openrouter")}</span>
         <span class="agent-taskline">${escapeHtml(agent.task)}</span>
         <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
       </div>
@@ -182,12 +183,17 @@ function renderActivityLog(status, selectedAgent) {
       text: `${rsps.branch || "main"} ${rsps.clean ? "is clean" : "has local changes"}`,
     },
   ];
-  $("#activityLog").innerHTML = entries.map((entry) => `
+  const signalRows = entries.map((entry) => `
     <p class="log-row ${entry.tone}">
       <span>${escapeHtml(entry.label)}</span>
       <b>${escapeHtml(entry.text)}</b>
     </p>
   `).join("");
+  const logRows = (status.logs || []).slice().reverse().slice(0, 3).map((entry) => {
+    const tail = String(entry.tail || "").trim().split("\n").filter(Boolean).slice(-1)[0] || "No recent output";
+    return `<p class="log-row artifact"><span>${escapeHtml(entry.name)}</span><b>${escapeHtml(tail)}</b></p>`;
+  }).join("");
+  $("#activityLog").innerHTML = signalRows + logRows;
 }
 
 function setInspectorClosed(closed) {
@@ -238,6 +244,35 @@ function renderAgency(status) {
   `;
 }
 
+function renderIntelligence(status) {
+  const intelligence = status.intelligence;
+  if (!intelligence) return;
+  const scenarios = intelligence.profitability?.scenarios || [];
+  $("#profitEngine").innerHTML = `
+    <div class="profit-strip">
+      ${scenarios.map((item) => `
+        <article class="profit-card ${item.net >= 0 ? "good" : "warn"}">
+          <strong>${escapeHtml(item.id)}</strong>
+          <span>${item.players} players / ${item.paying_users} payers</span>
+          <b>${item.net >= 0 ? "+" : ""}$${item.net}</b>
+        </article>
+      `).join("")}
+    </div>
+    <p>${escapeHtml(intelligence.profitability?.ethics_policy?.[0] || "Ethical monetization gates active.")}</p>
+  `;
+  $("#governanceLayer").innerHTML = `
+    <div class="governance-grid">
+      <div><strong>${intelligence.source_count}</strong><span>Source Patterns</span></div>
+      <div><strong>${intelligence.specs.artifact_type_count}</strong><span>Spec Artifacts</span></div>
+      <div><strong>${intelligence.prompts.pattern_count}</strong><span>Prompt Patterns</span></div>
+      <div><strong>${intelligence.skills.skill_count}</strong><span>Local Skills</span></div>
+    </div>
+    <div class="gate-list">
+      ${intelligence.specs.approval_gates.slice(0, 6).map((gate) => `<span>${escapeHtml(gate.replaceAll("_", " "))}</span>`).join("")}
+    </div>
+  `;
+}
+
 async function refresh() {
   const response = await fetch("/api/status");
   const status = await response.json();
@@ -246,6 +281,7 @@ async function refresh() {
   renderAgents(status.agents);
   renderReadiness(status);
   renderAgency(status);
+  renderIntelligence(status);
 }
 
 async function post(path, payload) {
