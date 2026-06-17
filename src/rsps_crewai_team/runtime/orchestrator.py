@@ -109,6 +109,79 @@ def enqueue_ready_steps(run_id: str) -> dict[str, Any]:
     return manifest
 
 
+def _refresh_ready_steps(manifest: dict[str, Any]) -> None:
+    steps = manifest.get("steps", {})
+    for step in steps.values():
+        if step.get("status") != "pending":
+            continue
+        dependencies = step.get("depends_on", [])
+        if all(steps.get(dep, {}).get("status") == "done" for dep in dependencies):
+            if step.get("writes_code") and step.get("approval_status") != "approved":
+                step["status"] = "awaiting_review"
+            else:
+                step["status"] = "ready"
+
+
+def update_step_status(
+    run_id: str,
+    step_id: str,
+    status: str,
+    *,
+    detail: str | None = None,
+    worker_run_id: str | None = None,
+) -> dict[str, Any]:
+    if status not in STEP_STATUSES:
+        raise ValueError(f"Unknown workflow step status: {status}")
+    manifest = read_manifest(run_id)
+    steps = manifest.get("steps", {})
+    if step_id not in steps:
+        raise ValueError(f"Unknown workflow step for {run_id}: {step_id}")
+    step = steps[step_id]
+    step["status"] = status
+    step["updated_at"] = _now()
+    if detail:
+        step["detail"] = detail[-1000:]
+    if worker_run_id:
+        step["worker_run_id"] = worker_run_id
+    if status == "done":
+        _refresh_ready_steps(manifest)
+    if any(item.get("status") in {"failed", "blocked"} for item in steps.values()):
+        manifest["status"] = "blocked"
+    elif all(item.get("status") == "done" for item in steps.values()):
+        manifest["status"] = "done"
+    else:
+        manifest["status"] = "active"
+    manifest["updated_at"] = _now()
+    write_manifest(manifest)
+    return enqueue_ready_steps(run_id)
+
+
+def approve_step(run_id: str, step_id: str) -> dict[str, Any]:
+    manifest = read_manifest(run_id)
+    steps = manifest.get("steps", {})
+    if step_id not in steps:
+        raise ValueError(f"Unknown workflow step for {run_id}: {step_id}")
+    step = steps[step_id]
+    step["approval_status"] = "approved"
+    if step.get("status") == "awaiting_review":
+        step["status"] = "ready"
+    step["updated_at"] = _now()
+    manifest["updated_at"] = _now()
+    write_manifest(manifest)
+    return enqueue_ready_steps(run_id)
+
+
+def advance_from_work_order(metadata: dict[str, Any] | None, final_status: str, *, detail: str | None = None, worker_run_id: str | None = None) -> dict[str, Any] | None:
+    if not metadata:
+        return None
+    run_id = metadata.get("run_id")
+    step_id = metadata.get("step_id") or metadata.get("workflow_step_id")
+    if not run_id or not step_id:
+        return None
+    status = "done" if final_status == "done" else "failed"
+    return update_step_status(str(run_id), str(step_id), status, detail=detail, worker_run_id=worker_run_id)
+
+
 def list_workflow_runs(limit: int = 5) -> list[dict[str, Any]]:
     if not AGENCY_RUNS_DIR.exists():
         return []

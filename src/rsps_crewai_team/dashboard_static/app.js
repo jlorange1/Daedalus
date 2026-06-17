@@ -254,9 +254,23 @@ function renderAgency(status) {
       <article class="workflow-run">
         <strong>${escapeHtml(run.workflow_name || run.workflow_id)}</strong>
         <span>${escapeHtml(run.status)} / ${run.done || 0}/${run.step_count || 0} done / ${run.queued || 0} queued</span>
+        ${(run.steps || []).filter((step) => step.status === "awaiting_review").slice(0, 2).map((step) => `
+          <button class="approve-step mini-command" data-run="${escapeHtml(run.run_id)}" data-step="${escapeHtml(step.id)}">Approve ${escapeHtml(step.id)}</button>
+        `).join("")}
       </article>
     `).join("")
     : `<article class="workflow-run empty"><strong>No active runs</strong><span>Start a workflow to create a manifest and queue its first steps.</span></article>`;
+  document.querySelectorAll(".approve-step").forEach((button) => {
+    button.addEventListener("click", async () => {
+      try {
+        await post("/api/workflow/approve", { run_id: button.dataset.run, step_id: button.dataset.step });
+        toast(`Approved workflow step ${button.dataset.step}.`);
+        refresh();
+      } catch (error) {
+        toast(error.message);
+      }
+    });
+  });
 }
 
 function renderIntelligence(status) {

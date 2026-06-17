@@ -66,3 +66,10 @@
 - Alternatives considered: Execute full DAGs immediately; embed metadata in Markdown frontmatter; leave workflows read-only.
 - Risk: Workflow advancement is still first-level only until dependent-step completion/review gates are implemented.
 - Rollback plan: Remove `runtime/orchestrator.py`, `runtime/run_manifests.py`, sidecar metadata changes in `runtime/work_orders.py`, dashboard workflow-run controls, and related tests.
+
+- Date: 2026-06-17
+- Decision: Implement workflow advancement and dashboard approval for review-gated code steps.
+- Why: Workflow configs needed to move beyond first-level queue creation into dependency-aware execution.
+- Alternatives considered: Let cron blindly queue every workflow step; require all step state changes manually; make code-writing steps auto-approved.
+- Risk: Step advancement is based on work-order completion status, not yet on rich artifact review quality.
+- Rollback plan: Revert `update_step_status`, `approve_step`, and worker calls to `advance_from_work_order`.

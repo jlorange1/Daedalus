@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from rsps_crewai_team.runtime.coding_worker import run_coding_worker
 from rsps_crewai_team.runtime.git_sync import create_agent_worktree, has_changes, remove_agent_worktree, sync_changes
+from rsps_crewai_team.runtime.orchestrator import advance_from_work_order
 from rsps_crewai_team.runtime.ponytail import ponytail_policy
 from rsps_crewai_team.runtime.run_manifests import create_run_manifest, update_run_manifest
 from rsps_crewai_team.runtime.settings import PROJECT_ROOT, bool_env, require_autonomy_enabled, rsps_repo_path
@@ -63,10 +64,8 @@ def run_once(_: argparse.Namespace) -> None:
         move_work_order(failed_order, "failed")
         raise SystemExit(str(exc)) from exc
     finished_order = type(order)(path=running_path, title=order.title, body=order.body)
-    if result.exit_code == 0:
-        move_work_order(finished_order, "done")
-    else:
-        move_work_order(finished_order, "failed")
+    final_status = "done" if result.exit_code == 0 else "failed"
+    move_work_order(finished_order, final_status)
     update_run_manifest(
         run_id,
         status="done" if result.exit_code == 0 else "failed",
@@ -76,6 +75,7 @@ def run_once(_: argparse.Namespace) -> None:
         repo_path=str(result.repo_path),
         exit_code=result.exit_code,
     )
+    advance_from_work_order(metadata, final_status, detail=str(result.log_path), worker_run_id=run_id)
     print(f"exit_code={result.exit_code}")
     print(f"log={result.log_path}")
 
@@ -161,8 +161,10 @@ def _run_reserved_order_with_agent(agent_id: str, role: str, running_path, title
             and os.getenv("RSPS_DUO_KEEP_WORKTREES", "false").strip().lower() not in {"1", "true", "yes", "on"}
         ):
             remove_agent_worktree(worktree)
-    move_work_order(finished_order, "done" if exit_code == 0 else "failed")
-    update_run_manifest(run_id, status="done" if exit_code == 0 else "failed", ended_at=datetime.now(timezone.utc).isoformat(), exit_code=exit_code)
+    final_status = "done" if exit_code == 0 else "failed"
+    move_work_order(finished_order, final_status)
+    update_run_manifest(run_id, status=final_status, ended_at=datetime.now(timezone.utc).isoformat(), exit_code=exit_code)
+    advance_from_work_order(metadata, final_status, detail=detail, worker_run_id=run_id)
     return agent_id, exit_code, detail
 
 

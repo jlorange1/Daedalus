@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 
 from rsps_crewai_team.runtime.agency import agency_status
 from rsps_crewai_team.runtime.intelligence import intelligence_status
-from rsps_crewai_team.runtime.orchestrator import create_workflow_run, list_workflow_runs
+from rsps_crewai_team.runtime.orchestrator import approve_step, create_workflow_run, list_workflow_runs
 from rsps_crewai_team.runtime.run_manifests import recent_run_manifests
 from rsps_crewai_team.runtime.settings import PROJECT_ROOT, WORK_ORDERS_DIR, bool_env
 from rsps_crewai_team.runtime.work_orders import STATUS_DIRS, create_work_order, ensure_work_order_dirs, read_work_order_metadata, validate_workflow_metadata
@@ -288,6 +288,20 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 _json_response(self, 400, {"ok": False, "error": str(exc)})
                 return
             _json_response(self, 201, {"ok": True, "run": manifest})
+            return
+
+        if path == "/api/workflow/approve":
+            run_id = str(payload.get("run_id", "")).strip()
+            step_id = str(payload.get("step_id", "")).strip()
+            if not run_id or not step_id:
+                _json_response(self, 400, {"ok": False, "error": "run_id and step_id are required"})
+                return
+            try:
+                manifest = approve_step(run_id, step_id)
+            except ValueError as exc:
+                _json_response(self, 400, {"ok": False, "error": str(exc)})
+                return
+            _json_response(self, 200, {"ok": True, "run": manifest})
             return
 
         _json_response(self, 404, {"ok": False, "error": "not found"})

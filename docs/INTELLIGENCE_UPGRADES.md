@@ -59,5 +59,8 @@ The first durable orchestrator run-state model is now present:
 3. Work-order sidecars connect `workflow_id`, `run_id`, `step_id`, department, code-write status, and approval status.
 4. Worker runs create bounded JSON evidence under `logs/runs/`.
 5. The dashboard shows workflow runs and recent worker manifests.
+6. Completed or failed work orders advance their workflow step.
+7. Completed dependencies unblock downstream steps.
+8. Code-writing steps pause at `awaiting_review` until approved from the dashboard.
 
-The next durable upgrade is workflow advancement: mark completed work-order steps as done, unblock dependent steps, and require review before code-writing steps become worker-approved.
+The next durable upgrade is richer artifact review: attach summaries, changed files, and validation evidence to each workflow step before approval.

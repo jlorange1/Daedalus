@@ -42,6 +42,31 @@ class OrchestratorTests(unittest.TestCase):
         self.assertEqual(runs[0]["workflow_id"], "incident_recovery")
         self.assertGreaterEqual(runs[0]["queued"], 1)
 
+    def test_advancing_first_step_queues_parallel_dependents(self) -> None:
+        manifest = orchestrator.create_workflow_run("profitability_review")
+        run_id = manifest["run_id"]
+
+        advanced = orchestrator.update_step_status(run_id, "business_scope", "done")
+
+        self.assertEqual(advanced["steps"]["business_scope"]["status"], "done")
+        self.assertEqual(advanced["steps"]["economy_analysis"]["status"], "queued")
+        self.assertEqual(advanced["steps"]["player_experience"]["status"], "queued")
+        self.assertEqual(advanced["steps"]["security_abuse"]["status"], "queued")
+
+    def test_code_step_waits_for_review_before_queueing(self) -> None:
+        manifest = orchestrator.create_workflow_run("visual_product_pass")
+        run_id = manifest["run_id"]
+        manifest = orchestrator.update_step_status(run_id, "creative_direction", "done")
+        manifest = orchestrator.update_step_status(run_id, "art_audio_review", "done")
+        manifest = orchestrator.update_step_status(run_id, "client_plan", "done")
+
+        self.assertEqual(manifest["steps"]["implementation"]["status"], "awaiting_review")
+        self.assertIsNone(manifest["steps"]["implementation"]["work_order"])
+
+        approved = orchestrator.approve_step(run_id, "implementation")
+        self.assertEqual(approved["steps"]["implementation"]["status"], "queued")
+        self.assertIsNotNone(approved["steps"]["implementation"]["work_order"])
+
 
 if __name__ == "__main__":
     unittest.main()
