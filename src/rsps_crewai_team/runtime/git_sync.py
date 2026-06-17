@@ -83,10 +83,10 @@ def sync_changes(message: str, path: Path | None = None) -> GitResult:
 def create_agent_worktree(agent_id: str, label: str) -> Path:
     repo = rsps_repo_path()
     ensure_git_repo(repo)
-    root = Path(os.getenv("RSPS_AGENT_WORKTREE_ROOT", str(repo.parent / ".rsps-agent-worktrees")))
+    root = Path(os.getenv("RSPS_AGENT_WORKTREE_ROOT", str(repo.parent / ".rsps-agent-worktrees"))).expanduser().resolve()
     root.mkdir(parents=True, exist_ok=True)
     branch = f"agent/{slugify_branch(agent_id)}/{slugify_branch(label)}"
-    worktree = root / slugify_branch(f"{agent_id}-{label}")
+    worktree = (root / slugify_branch(f"{agent_id}-{label}")).resolve()
     if worktree.exists():
         shutil.rmtree(worktree)
     result = _run_git(["worktree", "add", "-B", branch, str(worktree), "HEAD"], repo)
