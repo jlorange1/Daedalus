@@ -14,8 +14,10 @@ from dotenv import load_dotenv
 
 from rsps_crewai_team.runtime.agency import agency_status
 from rsps_crewai_team.runtime.intelligence import intelligence_status
+from rsps_crewai_team.runtime.orchestrator import create_workflow_run, list_workflow_runs
+from rsps_crewai_team.runtime.run_manifests import recent_run_manifests
 from rsps_crewai_team.runtime.settings import PROJECT_ROOT, WORK_ORDERS_DIR, bool_env
-from rsps_crewai_team.runtime.work_orders import STATUS_DIRS, create_work_order, ensure_work_order_dirs
+from rsps_crewai_team.runtime.work_orders import STATUS_DIRS, create_work_order, ensure_work_order_dirs, read_work_order_metadata, validate_workflow_metadata
 
 
 STATIC_DIR = Path(__file__).resolve().parent / "dashboard_static"
@@ -90,6 +92,7 @@ def _queue() -> dict[str, object]:
                 {
                     "title": _work_order_title(path),
                     "file": path.name,
+                    "metadata": read_work_order_metadata(path),
                     "updated": int(path.stat().st_mtime),
                 }
                 for path in files[-8:]
@@ -191,6 +194,8 @@ def _status() -> dict[str, object]:
         "agents": _agents(queue),
         "agency": agency_status(),
         "intelligence": intelligence_status(),
+        "workflow_runs": list_workflow_runs(),
+        "runs": recent_run_manifests(),
         "git": {
             "daedalus": _git_summary(PROJECT_ROOT),
             "rsps": _git_summary(repo_path) if repo_path else {"available": False, "branch": "none", "clean": False},
@@ -255,13 +260,34 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             if not title or not body:
                 _json_response(self, 400, {"ok": False, "error": "title and body are required"})
                 return
-            created = create_work_order(title, body)
+            try:
+                metadata = validate_workflow_metadata(
+                    str(payload.get("workflow_id", "")).strip() or None,
+                    str(payload.get("workflow_step_id", "")).strip() or None,
+                )
+            except ValueError as exc:
+                _json_response(self, 400, {"ok": False, "error": str(exc)})
+                return
+            created = create_work_order(title, body, metadata=metadata or None)
             _json_response(self, 201, {"ok": True, "path": str(created)})
             return
 
         if path == "/api/action":
             result = _spawn_action(str(payload.get("action", "")))
             _json_response(self, 200 if result.get("ok") else 400, result)
+            return
+
+        if path == "/api/workflow/start":
+            workflow_id = str(payload.get("workflow_id", "")).strip()
+            if not workflow_id:
+                _json_response(self, 400, {"ok": False, "error": "workflow_id is required"})
+                return
+            try:
+                manifest = create_workflow_run(workflow_id, title=str(payload.get("title", "")).strip() or None)
+            except ValueError as exc:
+                _json_response(self, 400, {"ok": False, "error": str(exc)})
+                return
+            _json_response(self, 201, {"ok": True, "run": manifest})
             return
 
         _json_response(self, 404, {"ok": False, "error": "not found"})

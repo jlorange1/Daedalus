@@ -39,12 +39,37 @@ class WorkOrderSmokeTests(unittest.TestCase):
         self.assertTrue(done.exists())
         self.assertFalse(created.exists())
 
+    def test_metadata_sidecar_moves_with_work_order(self) -> None:
+        created = work_orders.create_work_order(
+            "Workflow Order",
+            "Check metadata.",
+            metadata={"workflow_id": "profitability_review", "workflow_step_id": "business_scope"},
+        )
+
+        self.assertEqual(created.read_text(encoding="utf-8"), "# Workflow Order\n\nCheck metadata.\n")
+        self.assertEqual(
+            work_orders.read_work_order_metadata(created),
+            {"workflow_id": "profitability_review", "workflow_step_id": "business_scope"},
+        )
+        order = work_orders.next_work_order()
+        self.assertIsNotNone(order)
+        assert order is not None
+        self.assertEqual(order.metadata["workflow_id"], "profitability_review")
+
+        done = work_orders.move_work_order(order, "done")
+        self.assertTrue(work_orders.metadata_path(done).exists())
+        self.assertFalse(work_orders.metadata_path(created).exists())
+
     def test_move_rejects_unknown_status(self) -> None:
         created = work_orders.create_work_order("Bad Status", "Should not move.")
         order = work_orders.WorkOrder(path=created, title="Bad Status", body="")
 
         with self.assertRaises(ValueError):
             work_orders.move_work_order(order, "archived")
+
+    def test_validate_workflow_metadata_rejects_unknown_step(self) -> None:
+        with self.assertRaises(ValueError):
+            work_orders.validate_workflow_metadata("profitability_review", "not-a-step")
 
 
 if __name__ == "__main__":

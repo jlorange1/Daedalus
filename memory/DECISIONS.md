@@ -59,3 +59,10 @@
 - Alternatives considered: Install all upstream tools; vendor selected repositories; only write documentation.
 - Risk: These configs are currently governance and visibility layers, not a full executable orchestrator.
 - Rollback plan: Remove `src/rsps_crewai_team/config/inspiration_sources.json`, `spec_contracts.json`, `prompt_patterns.json`, `skill_catalog.json`, `profitability_model.json`, `runtime/intelligence.py`, dashboard panels, and related tests/docs.
+
+- Date: 2026-06-17
+- Decision: Add workflow-run manifests, sidecar work-order metadata, and bounded worker run manifests.
+- Why: The user asked for the upgraded workflows and agents to be nearly tied together and functional, not merely visible as configs.
+- Alternatives considered: Execute full DAGs immediately; embed metadata in Markdown frontmatter; leave workflows read-only.
+- Risk: Workflow advancement is still first-level only until dependent-step completion/review gates are implemented.
+- Rollback plan: Remove `runtime/orchestrator.py`, `runtime/run_manifests.py`, sidecar metadata changes in `runtime/work_orders.py`, dashboard workflow-run controls, and related tests.

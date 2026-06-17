@@ -62,6 +62,8 @@ def check_required_paths() -> tuple[bool, str]:
         "src/rsps_crewai_team/config/agency_workflows.json",
         "docs/AGENCY_AGENTS_INTEGRATION.md",
         "src/rsps_crewai_team/runtime/intelligence.py",
+        "src/rsps_crewai_team/runtime/orchestrator.py",
+        "src/rsps_crewai_team/runtime/run_manifests.py",
         "src/rsps_crewai_team/config/inspiration_sources.json",
         "src/rsps_crewai_team/config/spec_contracts.json",
         "src/rsps_crewai_team/config/prompt_patterns.json",

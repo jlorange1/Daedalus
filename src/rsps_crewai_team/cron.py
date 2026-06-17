@@ -8,6 +8,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from rsps_crewai_team.runtime.settings import LOGS_DIR, PROJECT_ROOT, bool_env
+from rsps_crewai_team.runtime.orchestrator import list_workflow_runs
 from rsps_crewai_team.worker import run_duo, run_once
 
 
@@ -29,6 +30,8 @@ def tick(_: argparse.Namespace) -> None:
     load_dotenv(PROJECT_ROOT / ".env")
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
     print(f"[{datetime.now(timezone.utc).isoformat()}] rsps-cron tick")
+    runs = list_workflow_runs(limit=3)
+    print(f"workflow_runs={len(runs)}")
     if not bool_env("RSPS_ALLOW_AUTONOMOUS", False):
         print("Autonomous execution disabled. Set RSPS_ALLOW_AUTONOMOUS=true to run workers.")
         return

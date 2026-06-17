@@ -52,10 +52,12 @@ Blocked direction:
 
 ## Next Engineering Step
 
-The next durable upgrade is an orchestrator run-state model:
+The first durable orchestrator run-state model is now present:
 
-1. Create `logs/agency-runs/<run-id>/manifest.json`.
-2. Track workflow steps as `pending`, `ready`, `running`, `awaiting_review`, `done`, `blocked`, or `failed`.
-3. Attach work orders to workflow step IDs.
-4. Dispatch OpenClaw only for approved code-writing steps.
-5. Surface step state and artifacts in the dashboard.
+1. Workflow starts create `logs/agency-runs/<run-id>/manifest.json`.
+2. First ready steps are queued as work orders with sidecar metadata.
+3. Work-order sidecars connect `workflow_id`, `run_id`, `step_id`, department, code-write status, and approval status.
+4. Worker runs create bounded JSON evidence under `logs/runs/`.
+5. The dashboard shows workflow runs and recent worker manifests.
+
+The next durable upgrade is workflow advancement: mark completed work-order steps as done, unblock dependent steps, and require review before code-writing steps become worker-approved.

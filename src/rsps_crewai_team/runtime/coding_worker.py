@@ -4,6 +4,7 @@ import os
 import shlex
 import subprocess
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 
 from rsps_crewai_team.runtime.settings import LOGS_DIR, require_autonomy_enabled, rsps_repo_path
@@ -14,6 +15,11 @@ class WorkerResult:
     command: list[str]
     exit_code: int
     log_path: Path
+    prompt_path: Path
+    repo_path: Path
+    agent_id: str
+    started_at: str
+    ended_at: str
 
 
 def _shared_env(repo: Path) -> dict[str, str]:
@@ -91,6 +97,7 @@ def run_coding_worker(message: str, label: str, agent_id: str = "rsps-builder", 
     log_path = LOGS_DIR / f"{label}.worker.log"
     message_file.write_text(message, encoding="utf-8")
     command = build_worker_command(message_file, agent_id, repo=repo)
+    started_at = datetime.now(timezone.utc).isoformat()
     with log_path.open("w", encoding="utf-8") as log:
         log.write("$ " + " ".join(shlex.quote(part) for part in command) + "\n\n")
         result = subprocess.run(
@@ -103,4 +110,14 @@ def run_coding_worker(message: str, label: str, agent_id: str = "rsps-builder", 
             check=False,
             timeout=int(os.getenv("RSPS_WORKER_TIMEOUT_SECONDS", "900")),
         )
-    return WorkerResult(command=command, exit_code=result.returncode, log_path=log_path)
+    ended_at = datetime.now(timezone.utc).isoformat()
+    return WorkerResult(
+        command=command,
+        exit_code=result.returncode,
+        log_path=log_path,
+        prompt_path=message_file,
+        repo_path=repo,
+        agent_id=agent_id,
+        started_at=started_at,
+        ended_at=ended_at,
+    )

@@ -6,6 +6,8 @@ The studio also includes a Daedalus-native Agency layer inspired by the public `
 
 Additional integration patterns from spec-kit, UI/UX Pro Max, LobeHub, OpenHands, Prompt Engineering Guide, DeerFlow, OpenBB, MetaGPT, and awesome-claude-skills are captured as validated Daedalus-native configs. See [docs/INTELLIGENCE_UPGRADES.md](docs/INTELLIGENCE_UPGRADES.md).
 
+Workflow runs can now be started from the dashboard Agency Layer. A run creates a manifest under `logs/agency-runs/`, queues first-level work orders with sidecar metadata, and records bounded worker evidence under `logs/runs/` when workers execute.
+
 ## One-Click Launcher
 
 Use the desktop launcher:

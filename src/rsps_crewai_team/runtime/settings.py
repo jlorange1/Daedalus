@@ -7,6 +7,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 WORK_ORDERS_DIR = PROJECT_ROOT / "work_orders"
 LOGS_DIR = PROJECT_ROOT / "logs"
+AGENCY_RUNS_DIR = LOGS_DIR / "agency-runs"
 
 
 def bool_env(name: str, default: bool = False) -> bool:

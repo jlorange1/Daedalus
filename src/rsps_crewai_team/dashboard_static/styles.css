@@ -4464,6 +4464,10 @@ button:focus-visible,
   border-left-color: rgba(159, 124, 255, .55);
 }
 
+.log-row.run-manifest {
+  border-left-color: rgba(102, 255, 194, .55);
+}
+
 .agent-taskline::before {
   content: "✓ ";
   color: var(--mythos-green);
@@ -5134,6 +5138,48 @@ h2,
   min-width: 28px;
   margin-right: 6px;
   color: var(--mythos-green);
+}
+
+.workflow-runs {
+  display: grid;
+  gap: 6px;
+}
+
+.workflow-run {
+  padding: 7px 8px;
+  border: 1px solid rgba(122, 213, 255, .2);
+  border-radius: 6px;
+  background: rgba(5, 10, 18, .52);
+}
+
+.workflow-run strong,
+.workflow-run span {
+  display: block;
+}
+
+.workflow-run strong {
+  color: var(--mythos-text);
+  font-size: 12px;
+}
+
+.workflow-run span {
+  color: var(--mythos-muted);
+  font-size: 11px;
+}
+
+.mini-command {
+  min-height: 34px;
+  border: 1px solid rgba(102, 255, 194, .34);
+  border-radius: 6px;
+  color: var(--mythos-green);
+  background: rgba(102, 255, 194, .065);
+  font: inherit;
+  cursor: pointer;
+}
+
+.mini-command:hover {
+  border-color: rgba(102, 255, 194, .62);
+  box-shadow: 0 0 18px rgba(102, 255, 194, .14);
 }
 
 .profit-engine,

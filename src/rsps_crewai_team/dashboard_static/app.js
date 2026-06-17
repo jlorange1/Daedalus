@@ -193,7 +193,13 @@ function renderActivityLog(status, selectedAgent) {
     const tail = String(entry.tail || "").trim().split("\n").filter(Boolean).slice(-1)[0] || "No recent output";
     return `<p class="log-row artifact"><span>${escapeHtml(entry.name)}</span><b>${escapeHtml(tail)}</b></p>`;
   }).join("");
-  $("#activityLog").innerHTML = signalRows + logRows;
+  const runRows = (status.runs || []).slice(0, 3).map((run) => `
+    <p class="log-row run-manifest">
+      <span>${escapeHtml(run.agent_id || run.mode || "worker")}</span>
+      <b>${escapeHtml(run.status || "unknown")} / ${escapeHtml(run.workflow_id || "manual")} / ${escapeHtml(run.workflow_step_id || run.work_order_file || "no step")}</b>
+    </p>
+  `).join("");
+  $("#activityLog").innerHTML = signalRows + runRows + logRows;
 }
 
 function setInspectorClosed(closed) {
@@ -242,6 +248,15 @@ function renderAgency(status) {
       ${levelText}
     </div>
   `;
+  const runs = status.workflow_runs || [];
+  $("#workflowRuns").innerHTML = runs.length
+    ? runs.slice(0, 3).map((run) => `
+      <article class="workflow-run">
+        <strong>${escapeHtml(run.workflow_name || run.workflow_id)}</strong>
+        <span>${escapeHtml(run.status)} / ${run.done || 0}/${run.step_count || 0} done / ${run.queued || 0} queued</span>
+      </article>
+    `).join("")
+    : `<article class="workflow-run empty"><strong>No active runs</strong><span>Start a workflow to create a manifest and queue its first steps.</span></article>`;
 }
 
 function renderIntelligence(status) {
@@ -339,6 +354,15 @@ function wireControls() {
     try {
       const result = await post("/api/action", { action: "cron-tick" });
       toast(`Cron tick started. PID ${result.pid}.`);
+    } catch (error) {
+      toast(error.message);
+    }
+  });
+  $("#startProfitWorkflow").addEventListener("click", async () => {
+    try {
+      const result = await post("/api/workflow/start", { workflow_id: "profitability_review" });
+      toast(`Workflow started: ${result.run.run_id}`);
+      refresh();
     } catch (error) {
       toast(error.message);
     }
