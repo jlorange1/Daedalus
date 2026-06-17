@@ -16,13 +16,14 @@ class WorkerResult:
     log_path: Path
 
 
-def _shared_env() -> dict[str, str]:
+def _shared_env(repo: Path) -> dict[str, str]:
     env = os.environ.copy()
     key = os.getenv("OPENROUTER_API_KEY", "")
     if key:
         env["OPENROUTER_API_KEY"] = key
         env["OPENAI_API_KEY"] = key
     env["OPENROUTER_BASE_URL"] = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+    env["RSPS_REPO_PATH"] = str(repo)
     return env
 
 
@@ -60,11 +61,10 @@ def _openclaw_command(message_file: Path, agent_id: str) -> list[str]:
     return command
 
 
-def _custom_command(message_file: Path) -> list[str]:
+def _custom_command(message_file: Path, repo: Path) -> list[str]:
     template = os.getenv("OPENCLAW_CLI_CMD") or os.getenv("RSPS_CODING_CLI_CMD")
     if not template:
         raise RuntimeError("RSPS_CODING_CLI=custom requires OPENCLAW_CLI_CMD or RSPS_CODING_CLI_CMD.")
-    repo = rsps_repo_path()
     replacements = {
         "message_file": str(message_file),
         "repo": str(repo),
@@ -74,12 +74,12 @@ def _custom_command(message_file: Path) -> list[str]:
     return shlex.split(template.format(**replacements))
 
 
-def build_worker_command(message_file: Path, agent_id: str = "rsps-builder") -> list[str]:
+def build_worker_command(message_file: Path, agent_id: str = "rsps-builder", repo: Path | None = None) -> list[str]:
     cli = os.getenv("RSPS_CODING_CLI", "openclaw").strip().lower()
     if cli == "openclaw":
         return _openclaw_command(message_file, agent_id)
     if cli == "custom":
-        return _custom_command(message_file)
+        return _custom_command(message_file, repo or rsps_repo_path())
     raise RuntimeError(f"Unsupported RSPS_CODING_CLI: {cli}")
 
 
@@ -90,13 +90,13 @@ def run_coding_worker(message: str, label: str, agent_id: str = "rsps-builder", 
     message_file = LOGS_DIR / f"{label}.prompt.md"
     log_path = LOGS_DIR / f"{label}.worker.log"
     message_file.write_text(message, encoding="utf-8")
-    command = build_worker_command(message_file, agent_id)
+    command = build_worker_command(message_file, agent_id, repo=repo)
     with log_path.open("w", encoding="utf-8") as log:
         log.write("$ " + " ".join(shlex.quote(part) for part in command) + "\n\n")
         result = subprocess.run(
             command,
             cwd=repo,
-            env=_shared_env(),
+            env=_shared_env(repo),
             stdout=log,
             stderr=subprocess.STDOUT,
             text=True,

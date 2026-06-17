@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 import re
-import shutil
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
@@ -41,8 +40,22 @@ def ensure_git_repo(path: Path | None = None) -> None:
 
 def has_remote(path: Path | None = None) -> bool:
     repo = path or rsps_repo_path()
-    result = _run_git(["remote", "get-url", "origin"], repo)
+    result = _run_git(["remote", "get-url", git_remote_name()], repo)
     return result.exit_code == 0 and bool(result.output)
+
+
+def git_remote_name() -> str:
+    return os.getenv("RSPS_GIT_REMOTE", "origin").strip() or "origin"
+
+
+def remote_url(path: Path | None = None, remote: str | None = None) -> GitResult:
+    repo = path or rsps_repo_path()
+    return _run_git(["remote", "get-url", remote or git_remote_name()], repo)
+
+
+def _is_protected_upstream(url: str) -> bool:
+    normalized = url.lower().removesuffix(".git")
+    return "gitlab.com/2009scape/2009scape" in normalized
 
 
 def has_changes(path: Path | None = None) -> bool:
@@ -62,7 +75,16 @@ def push_current_branch(path: Path | None = None) -> GitResult:
     branch = _run_git(["branch", "--show-current"], repo).output.strip()
     if not branch:
         return GitResult(1, "Could not determine current branch.")
-    return _run_git(["push", "-u", "origin", branch], repo)
+    remote = git_remote_name()
+    url = remote_url(repo, remote)
+    if url.exit_code != 0:
+        return GitResult(1, f"Remote {remote!r} is not configured.")
+    if _is_protected_upstream(url.output):
+        return GitResult(
+            1,
+            f"Refusing to push autonomous work to protected upstream remote {remote!r}: {url.output}",
+        )
+    return _run_git(["push", "-u", remote, branch], repo)
 
 
 def sync_changes(message: str, path: Path | None = None) -> GitResult:
@@ -75,7 +97,7 @@ def sync_changes(message: str, path: Path | None = None) -> GitResult:
         return commit
     if bool_env("RSPS_GIT_PUSH_AFTER_WORK", False):
         if not has_remote(repo):
-            return GitResult(1, "Committed locally, but no origin remote is configured.")
+            return GitResult(1, f"Committed locally, but remote {git_remote_name()!r} is not configured.")
         return push_current_branch(repo)
     return GitResult(0, "Committed locally. Push disabled by RSPS_GIT_PUSH_AFTER_WORK=false.")
 
@@ -89,7 +111,7 @@ def create_agent_worktree(agent_id: str, label: str) -> Path:
     branch = f"agent/{slugify_branch(agent_id)}/{slugify_branch(label)}"
     worktree = (root / slugify_branch(f"{agent_id}-{label}")).resolve()
     if worktree.exists():
-        shutil.rmtree(worktree)
+        raise RuntimeError(f"Agent worktree already exists, refusing to delete it: {worktree}")
     result = _run_git(["worktree", "add", "-B", branch, str(worktree), "HEAD"], repo)
     if result.exit_code != 0:
         raise RuntimeError(result.output)

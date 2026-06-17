@@ -54,12 +54,15 @@ def _git_summary(repo: Path) -> dict[str, str | bool]:
         return {"available": False, "branch": "missing", "clean": False, "detail": str(repo)}
     branch = _run(["git", "branch", "--show-current"], repo)
     status = _run(["git", "status", "--short"], repo)
-    remote = _run(["git", "remote", "get-url", "origin"], repo)
+    env = _read_env_file()
+    remote_name = env.get("RSPS_GIT_REMOTE", "origin") or "origin"
+    remote = _run(["git", "remote", "get-url", remote_name], repo)
     return {
         "available": True,
         "branch": str(branch["output"] or "unknown"),
         "clean": not bool(status["output"]),
         "detail": str(status["output"] or "clean"),
+        "remote_name": remote_name,
         "remote": str(remote["output"] or "none"),
     }
 

@@ -27,3 +27,11 @@
 - Attempt: Ran focused RSPS work orders in isolated git worktrees while the prompt still included absolute paths to the main checkout.
 - Failure: An OpenClaw worker followed an absolute `/var/home/Scaar/Desktop/game project/2009scape/...` path and edited the main checkout instead of its assigned worktree.
 - Lesson: Duo prompts must identify the assigned repository root and instruct workers to translate main-checkout absolute paths to the same relative path inside their worktree.
+
+- Attempt: First supervised worktree proof after adding the path guard.
+- Failure: The agent stayed out of the main checkout, but created `2009scape/docs/...` inside the worktree instead of removing the main-checkout prefix entirely.
+- Lesson: Prompt examples must show both the correct and incorrect mapped path.
+
+- Attempt: Second supervised worktree proof after adding an exact path example.
+- Failure: The agent reported success without creating a git-visible file.
+- Lesson: Worker success must optionally require git-visible changes; enable `RSPS_REQUIRE_WORKER_CHANGES=true` for coding/proof runs.

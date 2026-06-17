@@ -73,14 +73,18 @@ Daedalus is an autonomous coding and operations scaffold for an AI-assisted RSPS
 - Project skills are source-controlled under `/skills` and symlinked into `~/.codex/skills` for local Codex discovery.
 - Autonomous RSPS worker routing uses OpenClaw through `openrouter/free`; the special OpenRouter free-router alias must be passed to OpenClaw as `free`.
 - The first useful RSPS source commit created by this workflow is local commit `b3ea455` in `/var/home/Scaar/Desktop/game project/2009scape`, fixing desert quest NPC constants after `timeout 240 ./mvnw -q -DskipTests compile` passed.
-- Duo agents must be treated as supervised until another run proves the worktree guard prevents absolute-path edits to the main checkout.
+- Duo agents now receive the assigned worktree as both cwd and `RSPS_REPO_PATH`; custom CLI templates also use the assigned repo for `{repo}`.
+- RSPS git sync uses `RSPS_GIT_REMOTE`, currently `github`, and refuses to push to the protected upstream `gitlab.com/2009scape/2009scape` remote.
+- The local RSPS checkout has `github` configured as `https://github.com/jlorange1/Daedalus-Server.git`; upstream GitLab remains `origin` for fetch but has push URL `DISABLED`.
+- The RSPS server repo was unshallowed, all upstream LFS objects were fetched, and `master` was pushed to private GitHub repo `jlorange1/Daedalus-Server`.
+- A supervised `run-duo` worktree proof passed after enabling `RSPS_REQUIRE_WORKER_CHANGES=true`: the main checkout stayed clean, the queue returned to `running=0`, and the proof file appeared only under the assigned worktree `docs/` path.
 
 ## Unfinished Tasks
 
 - Add orchestration service utilities for task graph, memory, role registry, and run manifests.
 - Harden dashboard action endpoints and prompt-injection boundaries.
 - Run full validation and push the Phase 0/1 foundation.
-- Decide where the 2009scape-derived server fork should be pushed; the current `origin` is upstream GitLab, not a user-owned GitHub remote.
+- Next autonomous coding runs can use `run-duo`, but should remain supervised until dashboard action gates and run manifests are added.
 
 ## Update Policy
 

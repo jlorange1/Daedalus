@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from dotenv import load_dotenv
 
 from rsps_crewai_team.runtime.coding_worker import run_coding_worker
-from rsps_crewai_team.runtime.git_sync import create_agent_worktree, remove_agent_worktree, sync_changes
+from rsps_crewai_team.runtime.git_sync import create_agent_worktree, has_changes, remove_agent_worktree, sync_changes
 from rsps_crewai_team.runtime.ponytail import ponytail_policy
 from rsps_crewai_team.runtime.settings import PROJECT_ROOT, require_autonomy_enabled, rsps_repo_path
 from rsps_crewai_team.runtime.work_orders import create_work_order, move_work_order, next_work_order
@@ -62,6 +62,7 @@ def _run_reserved_order_with_agent(agent_id: str, role: str, running_path, title
     from rsps_crewai_team.runtime.work_orders import WorkOrder
 
     finished_order = WorkOrder(path=running_path, title=title, body=body)
+    keep_worktree = False
     try:
         cwd = rsps_repo_path()
         if os.getenv("RSPS_DUO_USE_WORKTREES", "true").strip().lower() in {"1", "true", "yes", "on"}:
@@ -71,7 +72,9 @@ def _run_reserved_order_with_agent(agent_id: str, role: str, running_path, title
             f"Repository root for this run: {cwd}\n"
             "Only edit files under that repository root. If the work order mentions absolute "
             f"paths under {rsps_repo_path()}, translate them to the same relative path under "
-            "your repository root before reading or editing. Do not edit the main checkout "
+            "your repository root before reading or editing. Remove the main-checkout prefix "
+            f"entirely; for example, {rsps_repo_path()}/docs/file.md maps to {cwd}/docs/file.md, "
+            f"not {cwd}/{rsps_repo_path().name}/docs/file.md. Do not edit the main checkout "
             "when a worktree root is assigned.\n"
         )
         prompt = (
@@ -85,16 +88,30 @@ def _run_reserved_order_with_agent(agent_id: str, role: str, running_path, title
         result = run_coding_worker(prompt, _label(label), agent_id=agent_id, cwd=cwd)
         exit_code = result.exit_code
         detail = str(result.log_path)
+        if (
+            exit_code == 0
+            and os.getenv("RSPS_REQUIRE_WORKER_CHANGES", "false").strip().lower() in {"1", "true", "yes", "on"}
+            and not has_changes(cwd)
+        ):
+            exit_code = 1
+            detail = f"Worker completed without git-visible changes in assigned repository: {cwd}"
+            keep_worktree = True
         if exit_code == 0 and os.getenv("RSPS_GIT_COMMIT_AFTER_WORK", "true").strip().lower() in {"1", "true", "yes", "on"}:
             git_result = sync_changes(f"{agent_id}: {title}", cwd)
             if git_result.exit_code != 0:
                 exit_code = git_result.exit_code
                 detail = git_result.output
+                keep_worktree = True
     except Exception as exc:
+        keep_worktree = True
         move_work_order(finished_order, "failed")
         return agent_id, 1, str(exc)
     finally:
-        if worktree is not None and os.getenv("RSPS_DUO_KEEP_WORKTREES", "false").strip().lower() not in {"1", "true", "yes", "on"}:
+        if (
+            worktree is not None
+            and not keep_worktree
+            and os.getenv("RSPS_DUO_KEEP_WORKTREES", "false").strip().lower() not in {"1", "true", "yes", "on"}
+        ):
             remove_agent_worktree(worktree)
     move_work_order(finished_order, "done" if exit_code == 0 else "failed")
     return agent_id, exit_code, detail

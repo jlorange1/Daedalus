@@ -123,7 +123,7 @@ Each implementation task should declare before coding:
 
 ## Current Next Actions
 
-1. Add a supervised docs-only work order that proves duo agents stay inside assigned worktrees after the prompt guard.
-2. Decide and configure the user-owned remote for the 2009scape-derived server fork; do not push to upstream GitLab by default.
-3. Harden dashboard mutating endpoints before enabling unattended autonomous runs from the UI.
-4. Add service-level run manifests before deeper worker automation.
+1. Harden dashboard mutating endpoints before enabling unattended autonomous runs from the UI.
+2. Add service-level run manifests before deeper worker automation.
+3. Add automatic post-run artifact checks per work order so success requires expected files, tests, or declared no-op rationale.
+4. Clean up or archive retained proof/failed worktrees once no longer needed for inspection.
