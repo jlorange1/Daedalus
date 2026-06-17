@@ -30,6 +30,21 @@ design_task:
     A game design specification suitable for implementation in an RSPS codebase.
   agent: lead_designer
 
+server_planning_task:
+  description: >
+    Convert the milestone brief and design specification into a server development roadmap.
+    Ponytail policy:
+    {ponytail_policy}
+
+    Repository context:
+    {repo_context}
+
+    Include implementation slices, dependencies, work-order sequence, risk gates, and what
+    should be delegated to coding workers versus reviewed by the human operator.
+  expected_output: >
+    A staged server planning packet with dependencies, suggested work orders, and validation gates.
+  agent: server_planner
+
 implementation_task:
   description: >
     Inspect the repository summary and design specification. Produce a server/content/client
@@ -76,7 +91,7 @@ security_task:
 
 documentation_task:
   description: >
-    Combine the milestone, design, implementation, QA, and security outputs into a final
+    Combine the milestone, design, server planning, implementation, QA, and security outputs into a final
     development packet that a human developer can execute or hand to a coding agent.
     Ponytail policy:
     {ponytail_policy}

@@ -63,7 +63,9 @@ Daedalus is an autonomous coding and operations scaffold for an AI-assisted RSPS
 
 ## Validated Facts
 
-- Dashboard browser smoke checks have rendered 6 agents and 4 module grips.
+- Dashboard API status checks now report 14 sci-fi studio departments and 4 module grips.
+- Dashboard department roster now represents a sci-fi AI game studio with 14 departments: executive production, server planning, design, backend, gameplay content, client UX, world/quest, economy, QA, security, build/release, DevOps/GitHub, art/audio direction, and documentation.
+- One-click launcher exists at `/var/home/Scaar/Desktop/Daedalus Studio.desktop` and starts the local dashboard without Codex.
 - Asset and JSON validation commands pass as of the last dashboard cleanup.
 - Existing persistent memory files were present before the memory-system design: `DECISIONS.md`, `OPEN_QUESTIONS.md`, `FAILED_ATTEMPTS.md`, and `TASK_GRAPH.md`.
 - Phase 1 specialist agents completed and wrote `docs/REPO_MAP.md`, `docs/TARGET_ARCHITECTURE.md`, `docs/IMPLEMENTATION_PLAN.md`, `docs/MEMORY_SYSTEM.md`, `docs/EVALS.md`, `docs/DEFENSIVE_SECURITY_REVIEW.md`, `docs/TEST_PLAN.md`, and `docs/OPERATOR_GUIDE.md`.

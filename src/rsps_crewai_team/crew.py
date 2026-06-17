@@ -27,6 +27,11 @@ AGENT_MODEL_DEFAULTS = {
         "fallbacks": "qwen/qwen3-next-80b-a3b-instruct:free,nousresearch/hermes-3-llama-3.1-405b:free,google/gemma-4-31b-it:free",
         "temperature": 0.35,
     },
+    "server_planner": {
+        "model": "openrouter/openai/gpt-oss-120b:free",
+        "fallbacks": "openai/gpt-oss-120b:free,qwen/qwen3-next-80b-a3b-instruct:free,nex-agi/nex-n2-pro:free",
+        "temperature": 0.16,
+    },
     "backend_developer": {
         "model": "openrouter/qwen/qwen3-coder:free",
         "fallbacks": "qwen/qwen3-coder:free,openai/gpt-oss-120b:free,poolside/laguna-m.1:free",
@@ -56,6 +61,31 @@ AGENT_MODEL_DEFAULTS = {
         "model": "openrouter/google/gemma-4-31b-it:free",
         "fallbacks": "google/gemma-4-31b-it:free,openai/gpt-oss-20b:free,meta-llama/llama-3.3-70b-instruct:free",
         "temperature": 0.2,
+    },
+    "world_designer": {
+        "model": "openrouter/nousresearch/hermes-3-llama-3.1-405b:free",
+        "fallbacks": "nousresearch/hermes-3-llama-3.1-405b:free,google/gemma-4-31b-it:free,meta-llama/llama-3.3-70b-instruct:free",
+        "temperature": 0.34,
+    },
+    "economy_designer": {
+        "model": "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+        "fallbacks": "nvidia/nemotron-3-super-120b-a12b:free,openai/gpt-oss-120b:free,qwen/qwen3-next-80b-a3b-instruct:free",
+        "temperature": 0.12,
+    },
+    "build_release_engineer": {
+        "model": "openrouter/openai/gpt-oss-20b:free",
+        "fallbacks": "openai/gpt-oss-20b:free,qwen/qwen3-coder:free,poolside/laguna-xs.2:free",
+        "temperature": 0.08,
+    },
+    "devops_engineer": {
+        "model": "openrouter/qwen/qwen3-coder:free",
+        "fallbacks": "qwen/qwen3-coder:free,openai/gpt-oss-20b:free,poolside/laguna-m.1:free",
+        "temperature": 0.08,
+    },
+    "art_audio_director": {
+        "model": "openrouter/google/gemma-4-31b-it:free",
+        "fallbacks": "google/gemma-4-31b-it:free,meta-llama/llama-3.3-70b-instruct:free,openai/gpt-oss-20b:free",
+        "temperature": 0.28,
     },
 }
 
@@ -140,6 +170,10 @@ class RspsCrew:
         return Agent(config=self.agents_config["lead_designer"], llm=openrouter_llm("lead_designer"), tools=repo_tools())
 
     @agent
+    def server_planner(self) -> Agent:
+        return Agent(config=self.agents_config["server_planner"], llm=openrouter_llm("server_planner"), tools=repo_tools())
+
+    @agent
     def backend_developer(self) -> Agent:
         return Agent(config=self.agents_config["backend_developer"], llm=openrouter_llm("backend_developer"), tools=repo_tools())
 
@@ -164,6 +198,26 @@ class RspsCrew:
     def documentation_writer(self) -> Agent:
         return Agent(config=self.agents_config["documentation_writer"], llm=openrouter_llm("documentation_writer"))
 
+    @agent
+    def world_designer(self) -> Agent:
+        return Agent(config=self.agents_config["world_designer"], llm=openrouter_llm("world_designer"), tools=repo_tools())
+
+    @agent
+    def economy_designer(self) -> Agent:
+        return Agent(config=self.agents_config["economy_designer"], llm=openrouter_llm("economy_designer"), tools=repo_tools())
+
+    @agent
+    def build_release_engineer(self) -> Agent:
+        return Agent(config=self.agents_config["build_release_engineer"], llm=openrouter_llm("build_release_engineer"))
+
+    @agent
+    def devops_engineer(self) -> Agent:
+        return Agent(config=self.agents_config["devops_engineer"], llm=openrouter_llm("devops_engineer"))
+
+    @agent
+    def art_audio_director(self) -> Agent:
+        return Agent(config=self.agents_config["art_audio_director"], llm=openrouter_llm("art_audio_director"))
+
     @task
     def scope_task(self) -> Task:
         return Task(config=self.tasks_config["scope_task"])
@@ -171,6 +225,10 @@ class RspsCrew:
     @task
     def design_task(self) -> Task:
         return Task(config=self.tasks_config["design_task"])
+
+    @task
+    def server_planning_task(self) -> Task:
+        return Task(config=self.tasks_config["server_planning_task"])
 
     @task
     def implementation_task(self) -> Task:

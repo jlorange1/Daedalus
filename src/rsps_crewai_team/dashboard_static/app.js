@@ -96,9 +96,7 @@ function renderQueue(queue) {
 }
 
 function renderAgents(agents) {
-  const departments = ["Command", "Server", "Content", "QA", "Security", "Docs"];
-  const coreTypes = ["neural", "tesseract", "liquid", "reactor", "lattice", "prism"];
-  const specializations = ["Planner", "Runtime", "Systems", "Validation", "Threat Model", "Release Notes"];
+  const coreTypes = ["neural", "tesseract", "liquid", "reactor", "lattice", "prism", "helix", "singularity", "sentinel", "quantum", "forge", "orbital", "spectrum", "archive"];
   const grid = $("#agentGrid");
   grid.innerHTML = agents.map((agent, index) => `
     <article class="agent-desk role-${index} core-${coreTypes[index] || "neural"} ${index === state.selectedAgent ? "selected" : ""}" data-agent="${index}" data-state="${escapeHtml(agent.status)}" title="${escapeHtml(agent.role)}: ${escapeHtml(agent.task)}">
@@ -107,8 +105,8 @@ function renderAgents(agents) {
         <i></i><i></i><i></i><i></i>
       </span>
       <div class="agent-plate" aria-hidden="true">
-        <h3>${escapeHtml(departments[index] || agent.role)}</h3>
-        <p>${escapeHtml(agent.name)} / ${escapeHtml(specializations[index] || agent.status)}</p>
+        <h3>${escapeHtml(agent.role)}</h3>
+        <p>${escapeHtml(agent.name)}</p>
         <span class="agent-taskline">${escapeHtml(agent.task)}</span>
         <div class="meter"><b style="--value: ${agent.progress}%"></b></div>
       </div>
@@ -127,7 +125,7 @@ function renderAgents(agents) {
 function renderInspector(status) {
   if (!status) return;
   const agent = status.agents[state.selectedAgent] || status.agents[0];
-  const coreTypes = ["neural", "tesseract", "liquid", "reactor", "lattice", "prism"];
+  const coreTypes = ["neural", "tesseract", "liquid", "reactor", "lattice", "prism", "helix", "singularity", "sentinel", "quantum", "forge", "orbital", "spectrum", "archive"];
   const coreType = coreTypes[state.selectedAgent] || "neural";
   $("#agentInspector").innerHTML = `
     <div class="agent-hero">
@@ -141,9 +139,13 @@ function renderInspector(status) {
       <span>Current Task</span>
       <p>${escapeHtml(agent.task)}</p>
     </div>
+    <div class="inspector-task">
+      <span>Department Focus</span>
+      <p>${escapeHtml(agent.focus || "Autonomous studio operations")}</p>
+    </div>
     <dl class="mini-stats">
       <div><dt>Progress</dt><dd>${agent.progress}%</dd></div>
-      <div><dt>Focus</dt><dd>${escapeHtml(agent.role.split(" ")[0])}</dd></div>
+      <div><dt>Focus</dt><dd>${escapeHtml((agent.focus || agent.role).split(",")[0])}</dd></div>
       <div><dt>Model</dt><dd>${escapeHtml(agent.model.replace(":free", ""))}</dd></div>
       <div><dt>ETA</dt><dd>${agent.status === "working" ? "1h 35m" : "queued"}</dd></div>
       <div><dt>Commit</dt><dd>${status.git.daedalus.clean ? "ready" : "local"}</dd></div>
@@ -203,7 +205,7 @@ function renderReadiness(status) {
   const buildReady = ready.java && ready.git_lfs && ready.rsps_repo;
   $("#autonomyState").innerHTML = `<span class="switch ${status.env.autonomy ? "on" : ""}"></span>${pill(status.env.autonomy)}`;
   $("#topAutonomyState").innerHTML = `<span class="switch ${status.env.autonomy ? "on" : ""}"></span>${pill(status.env.autonomy)}`;
-  $("#agentsOnline").textContent = `${status.agents.length} / 6`;
+  $("#agentsOnline").textContent = `${status.agents.length} / ${status.agents.length}`;
   $("#buildStatus").innerHTML = `<span class="state-chip ${buildReady ? "good" : "warn"}">${buildReady ? "ready" : "tools"}</span>`;
   $("#githubState").innerHTML = `<span class="state-chip ${status.git.daedalus.clean ? "good" : "warn"}">${status.git.daedalus.clean ? "main" : "local"}</span>`;
   $("#envState").innerHTML = `<span class="state-chip ${buildReady ? "good" : "warn"}">${buildReady ? "healthy" : "Java/LFS"}</span>`;

@@ -1,6 +1,22 @@
 # Daedalus Studio
 
-Autonomous fantasy software-studio dashboard and CrewAI workforce scaffold for open-source 2009-era MMORPG server development. It coordinates specialized agents for planning, implementation guidance, code review, content design, QA, and security analysis.
+Autonomous sci-fi software-studio dashboard and CrewAI/OpenClaw workforce scaffold for open-source 2009-era MMORPG server development. It coordinates specialized agents for planning, server direction, implementation guidance, code review, content design, QA, security, release, DevOps, art/audio direction, and documentation.
+
+## One-Click Launcher
+
+Use the desktop launcher:
+
+```text
+/var/home/Scaar/Desktop/Daedalus Studio.desktop
+```
+
+It starts the local dashboard server and opens:
+
+```text
+http://127.0.0.1:8765
+```
+
+The launcher does not require Codex. It starts the local dashboard process on this PC.
 
 ## Setup
 
@@ -24,6 +40,8 @@ If `uv sync` cannot download dependencies because network access is blocked, run
 6. `rsps-worker` can apply one approved work order directly to the configured RSPS repo.
 7. `rsps-cron` can run scheduled autonomous cycles when explicitly enabled.
 
+Codex is not required for scheduled autonomous runs after the local launcher/cron process is running. The PC must stay awake and online, `.env` must contain the OpenRouter key, OpenClaw must be configured, and `RSPS_ALLOW_AUTONOMOUS=true` must remain enabled.
+
 By default this scaffold is conservative: direct file modification is disabled until `RSPS_ALLOW_AUTONOMOUS=true` is set.
 
 ## Environment
@@ -33,7 +51,7 @@ By default this scaffold is conservative: direct file modification is disabled u
 - `OPENROUTER_FALLBACK_MODELS`: optional OpenRouter fallback model list. OpenRouter currently allows at most 3 IDs in one fallback request.
 - `OPENROUTER_TIMEOUT_SECONDS`: optional model timeout for slow free endpoints.
 - `OPENROUTER_MAX_TOKENS`: optional per-agent response cap for free endpoints.
-- `OPENROUTER_<AGENT>_MODEL`: optional per-agent primary model. The scaffold already assigns unique free models for `PRODUCER`, `LEAD_DESIGNER`, `BACKEND_DEVELOPER`, `CONTENT_DEVELOPER`, `CLIENT_DEVELOPER`, `QA_TESTER`, `SECURITY_REVIEWER`, and `DOCUMENTATION_WRITER`.
+- `OPENROUTER_<AGENT>_MODEL`: optional per-agent primary model. The scaffold already assigns unique free models for `PRODUCER`, `SERVER_PLANNER`, `LEAD_DESIGNER`, `BACKEND_DEVELOPER`, `CONTENT_DEVELOPER`, `CLIENT_DEVELOPER`, `WORLD_DESIGNER`, `ECONOMY_DESIGNER`, `QA_TESTER`, `SECURITY_REVIEWER`, `BUILD_RELEASE_ENGINEER`, `DEVOPS_ENGINEER`, `ART_AUDIO_DIRECTOR`, and `DOCUMENTATION_WRITER`.
 - `OPENROUTER_<AGENT>_FALLBACK_MODELS`: optional per-agent fallback list, capped to 3 IDs.
 - `OPENROUTER_<AGENT>_TEMPERATURE`: optional per-agent creativity/strictness setting.
 - `RSPS_REPO_PATH`: absolute path to your RSPS repository.
@@ -58,12 +76,18 @@ All agents use the same `OPENROUTER_API_KEY`. Each role has a distinct primary f
 | Agent | Primary model |
 |-------|---------------|
 | Producer | `openrouter/openai/gpt-oss-120b:free` |
+| Server planner | `openrouter/openai/gpt-oss-120b:free` |
 | Lead designer | `openrouter/qwen/qwen3-next-80b-a3b-instruct:free` |
 | Backend developer | `openrouter/qwen/qwen3-coder:free` |
 | Content developer | `openrouter/nousresearch/hermes-3-llama-3.1-405b:free` |
 | Client developer | `openrouter/poolside/laguna-m.1:free` |
+| World designer | `openrouter/nousresearch/hermes-3-llama-3.1-405b:free` |
+| Economy designer | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` |
 | QA tester | `openrouter/nvidia/nemotron-3-super-120b-a12b:free` |
 | Security reviewer | `openrouter/nvidia/nemotron-3-ultra-550b-a55b:free` |
+| Build/release engineer | `openrouter/openai/gpt-oss-20b:free` |
+| DevOps engineer | `openrouter/qwen/qwen3-coder:free` |
+| Art/audio director | `openrouter/google/gemma-4-31b-it:free` |
 | Documentation writer | `openrouter/google/gemma-4-31b-it:free` |
 
 ## Free Model Routing

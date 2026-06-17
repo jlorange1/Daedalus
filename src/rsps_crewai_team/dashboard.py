@@ -115,26 +115,35 @@ def _agents(queue: dict[str, object]) -> list[dict[str, object]]:
     running = int(queue["running"]["count"])  # type: ignore[index]
     inbox = int(queue["inbox"]["count"])  # type: ignore[index]
     roles = [
-        ("Producer", "Command Core", "OPENROUTER_PRODUCER_MODEL"),
-        ("Backend Developer", "Server Core", "OPENROUTER_BACKEND_DEVELOPER_MODEL"),
-        ("Content Developer", "Content Core", "OPENROUTER_CONTENT_DEVELOPER_MODEL"),
-        ("QA Tester", "QA Core", "OPENROUTER_QA_TESTER_MODEL"),
-        ("Security Reviewer", "Security Core", "OPENROUTER_SECURITY_REVIEWER_MODEL"),
-        ("Documentation Writer", "Docs Core", "OPENROUTER_DOCUMENTATION_WRITER_MODEL"),
+        ("Executive Producer", "Command Core", "OPENROUTER_PRODUCER_MODEL", "Scope, priority, acceptance gates"),
+        ("Server Planning Director", "Architecture Core", "OPENROUTER_SERVER_PLANNER_MODEL", "Roadmaps, dependencies, technical direction"),
+        ("Design Director", "Design Core", "OPENROUTER_LEAD_DESIGNER_MODEL", "Player loops, systems, experience goals"),
+        ("Backend Engineering", "Server Core", "OPENROUTER_BACKEND_DEVELOPER_MODEL", "Java/Kotlin server implementation"),
+        ("Gameplay Content", "Content Core", "OPENROUTER_CONTENT_DEVELOPER_MODEL", "NPCs, quests, drops, spawns"),
+        ("Client UX", "Interface Core", "OPENROUTER_CLIENT_DEVELOPER_MODEL", "Client, cache, interface impact"),
+        ("World & Quest Design", "World Core", "OPENROUTER_WORLD_DESIGNER_MODEL", "Zones, quest flow, encounter pacing"),
+        ("Economy & Balance", "Economy Core", "OPENROUTER_ECONOMY_DESIGNER_MODEL", "Rates, shops, sinks, rewards"),
+        ("QA Automation", "QA Core", "OPENROUTER_QA_TESTER_MODEL", "Regression, build and test gates"),
+        ("Security & Anti-Abuse", "Security Core", "OPENROUTER_SECURITY_REVIEWER_MODEL", "Dupes, permissions, packet trust"),
+        ("Build & Release", "Release Core", "OPENROUTER_BUILD_RELEASE_ENGINEER_MODEL", "Branches, packaging, release checks"),
+        ("DevOps & GitHub", "Ops Core", "OPENROUTER_DEVOPS_ENGINEER_MODEL", "GitHub sync, cron, tooling health"),
+        ("Art & Audio Direction", "Media Core", "OPENROUTER_ART_AUDIO_DIRECTOR_MODEL", "Visual/audio style and asset readiness"),
+        ("Documentation", "Docs Core", "OPENROUTER_DOCUMENTATION_WRITER_MODEL", "Handoffs, changelogs, operator guides"),
     ]
     env = _read_env_file()
     running_items = list(queue["running"]["items"])  # type: ignore[index]
     inbox_items = list(queue["inbox"]["items"])  # type: ignore[index]
     live_items = running_items + inbox_items
     agents = []
-    for index, (role, name, model_key) in enumerate(roles):
-        active = running > 0 or (inbox > 0 and index in {0, 1, 2})
+    for index, (role, name, model_key, focus) in enumerate(roles):
+        active = running > 0 or (inbox > 0 and index in {0, 1, 2, 3, 8, 10})
         assigned = live_items[index % len(live_items)] if active and live_items else None
         task = str(assigned["title"]) if assigned else "No live work assigned"
         agents.append(
             {
                 "role": role,
                 "name": name,
+                "focus": focus,
                 "task": task,
                 "model": env.get(model_key, "not configured").replace("openrouter/", ""),
                 "status": "working" if active else "ready",
@@ -162,6 +171,7 @@ def _status() -> dict[str, object]:
             "push_after_work": bool_env("RSPS_GIT_PUSH_AFTER_WORK", False),
             "ponytail": env.get("PONYTAIL_DEFAULT_MODE", "full"),
             "coding_cli": env.get("RSPS_CODING_CLI", "openclaw"),
+            "requires_launcher": "Dashboard launcher starts the UI. Cron or a running process is required for unattended work.",
             "build_command": env.get("RSPS_BUILD_COMMAND", ""),
             "test_command": env.get("RSPS_TEST_COMMAND", ""),
         },

@@ -81,7 +81,7 @@ Response shape:
 
 - `status` is currently `ready` or `working`.
 - `progress` is an integer percentage. Clamp client renderers to `0..100`.
-- The frontend assumes exactly six agents in this order: Producer, Backend Developer, Content Developer, QA Tester, Security Reviewer, Documentation Writer.
+- The frontend renders the live `agents` array from `/api/status`; it no longer assumes exactly six agents. The current dashboard department roster contains 14 AI studio departments.
 
 ## Git Summary
 
