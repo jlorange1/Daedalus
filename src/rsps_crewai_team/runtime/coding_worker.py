@@ -26,10 +26,21 @@ def _shared_env() -> dict[str, str]:
     return env
 
 
+def _openclaw_model_override(model: str) -> str:
+    normalized = model.strip()
+    if normalized.lower() == "openrouter/free":
+        return "free"
+    if normalized.lower().startswith("openrouter/openrouter/"):
+        return normalized[len("openrouter/") :]
+    return normalized
+
+
 def _openclaw_command(message_file: Path, agent_id: str) -> list[str]:
     message = message_file.read_text(encoding="utf-8")
     model_env = f"RSPS_OPENCLAW_{agent_id.upper().replace('-', '_')}_MODEL"
-    model = os.getenv(model_env, os.getenv("RSPS_CODING_MODEL", "openrouter/qwen/qwen3-coder:free"))
+    model = _openclaw_model_override(
+        os.getenv(model_env, os.getenv("RSPS_CODING_MODEL", "openrouter/qwen/qwen3-coder:free"))
+    )
     command = [
         os.getenv("RSPS_OPENCLAW_BIN", "/var/home/Scaar/.local/bin/openclaw"),
         "agent",

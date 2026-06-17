@@ -19,3 +19,7 @@
 - Attempt: Retried `rsps-worker run-duo` with persistent OpenClaw agent sessions and fixed free model IDs.
 - Failure: Builder hit OpenRouter rate limits on `qwen/qwen3-coder:free`; reviewer reused or entered an unhelpful session state and completed without changes.
 - Lesson: Use a unique OpenClaw `--session-key` per work order and route coding agents through `openrouter/free` unless a specific free model is proven available.
+
+- Attempt: Retried `rsps-worker run-duo` with `RSPS_CODING_MODEL=openrouter/free`.
+- Failure: OpenClaw rejected the model override as `openrouter/openrouter/free`; its CLI accepts the special OpenRouter free-router alias as `free`, while concrete OpenRouter models keep the `openrouter/` prefix.
+- Lesson: Normalize only the `openrouter/free` alias to `free` before passing `--model` to OpenClaw, and allow-list `openrouter/free` in the local OpenClaw config.
