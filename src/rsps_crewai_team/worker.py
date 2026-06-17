@@ -59,13 +59,6 @@ def run_once(_: argparse.Namespace) -> None:
 def _run_reserved_order_with_agent(agent_id: str, role: str, running_path, title: str, body: str) -> tuple[str, int, str]:
     label = f"{agent_id}-{running_path.stem}"
     worktree = None
-    prompt = (
-        f"You are {role} in an RSPS coding duo. Modify the repository directly to complete "
-        "this queued work order. Keep changes focused, avoid unrelated refactors, and do not "
-        "touch secrets. If the task is review-oriented, make concrete fixes when appropriate.\n\n"
-        f"{ponytail_policy()}\n\n"
-        f"Work order file: {running_path.name}\n\n{body}"
-    )
     from rsps_crewai_team.runtime.work_orders import WorkOrder
 
     finished_order = WorkOrder(path=running_path, title=title, body=body)
@@ -74,6 +67,21 @@ def _run_reserved_order_with_agent(agent_id: str, role: str, running_path, title
         if os.getenv("RSPS_DUO_USE_WORKTREES", "true").strip().lower() in {"1", "true", "yes", "on"}:
             worktree = create_agent_worktree(agent_id, label)
             cwd = worktree
+        workspace_note = (
+            f"Repository root for this run: {cwd}\n"
+            "Only edit files under that repository root. If the work order mentions absolute "
+            f"paths under {rsps_repo_path()}, translate them to the same relative path under "
+            "your repository root before reading or editing. Do not edit the main checkout "
+            "when a worktree root is assigned.\n"
+        )
+        prompt = (
+            f"You are {role} in an RSPS coding duo. Modify the repository directly to complete "
+            "this queued work order. Keep changes focused, avoid unrelated refactors, and do not "
+            "touch secrets. If the task is review-oriented, make concrete fixes when appropriate.\n\n"
+            f"{workspace_note}\n"
+            f"{ponytail_policy()}\n\n"
+            f"Work order file: {running_path.name}\n\n{body}"
+        )
         result = run_coding_worker(prompt, _label(label), agent_id=agent_id, cwd=cwd)
         exit_code = result.exit_code
         detail = str(result.log_path)

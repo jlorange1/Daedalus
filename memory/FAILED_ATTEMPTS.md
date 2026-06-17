@@ -23,3 +23,7 @@
 - Attempt: Retried `rsps-worker run-duo` with `RSPS_CODING_MODEL=openrouter/free`.
 - Failure: OpenClaw rejected the model override as `openrouter/openrouter/free`; its CLI accepts the special OpenRouter free-router alias as `free`, while concrete OpenRouter models keep the `openrouter/` prefix.
 - Lesson: Normalize only the `openrouter/free` alias to `free` before passing `--model` to OpenClaw, and allow-list `openrouter/free` in the local OpenClaw config.
+
+- Attempt: Ran focused RSPS work orders in isolated git worktrees while the prompt still included absolute paths to the main checkout.
+- Failure: An OpenClaw worker followed an absolute `/var/home/Scaar/Desktop/game project/2009scape/...` path and edited the main checkout instead of its assigned worktree.
+- Lesson: Duo prompts must identify the assigned repository root and instruct workers to translate main-checkout absolute paths to the same relative path inside their worktree.
