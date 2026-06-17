@@ -87,6 +87,8 @@ Daedalus is an autonomous coding and operations scaffold for an AI-assisted RSPS
 - The local RSPS checkout has `github` configured as `https://github.com/jlorange1/Daedalus-Server.git`; upstream GitLab remains `origin` for fetch but has push URL `DISABLED`.
 - The RSPS server repo was unshallowed, all upstream LFS objects were fetched, and `master` was pushed to private GitHub repo `jlorange1/Daedalus-Server`.
 - A supervised `run-duo` worktree proof passed after enabling `RSPS_REQUIRE_WORKER_CHANGES=true`: the main checkout stayed clean, the queue returned to `running=0`, and the proof file appeared only under the assigned worktree `docs/` path.
+- The dashboard was reskinned to the Ancient Starforge sci-fi control-room direction on 2026-06-17, keeping live `/api/status` data, draggable module windows, queue controls, and the 14-department agent mesh.
+- A manual `rsps-cron tick` on 2026-06-17 created `20260617T195046Z-profitability_review`; the OpenClaw builder failed because OpenRouter DNS returned `EAI_AGAIN openrouter.ai`, not because the scheduler failed.
 
 ## Unfinished Tasks
 

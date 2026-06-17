@@ -227,6 +227,15 @@ function renderReadiness(status) {
     ["OpenClaw", ready.openclaw],
     ["Server source", ready.rsps_repo],
   ].map(([label, ok]) => `<p><span class="state-dot ${ok ? "good" : "warn"}"></span>${label}<b>${ok ? "ready" : "needed"}</b></p>`).join("");
+  renderLiveSignals(status, buildReady);
+}
+
+function renderLiveSignals(status, buildReady) {
+  const activeRuns = (status.workflow_runs || []).filter((run) => run.status === "active");
+  const queued = status.queue.inbox.count + status.queue.running.count;
+  $("#eventBuild").innerHTML = `<span class="state-dot ${buildReady ? "good" : "warn"}"></span>${buildReady ? "Build/test gate ready" : "Build/test gate waiting on tools"}`;
+  $("#eventCron").innerHTML = `<span class="state-dot ${status.env.autonomy ? "good" : "warn"}"></span>${status.env.autonomy ? "Autonomous timer armed" : "Autonomous execution disabled"}`;
+  $("#eventWorkflow").innerHTML = `<span class="state-dot ${activeRuns.length || queued ? "good" : "warn"}"></span>${activeRuns.length ? `${activeRuns.length} active workflow run${activeRuns.length === 1 ? "" : "s"}` : `${queued} queued/running work order${queued === 1 ? "" : "s"}`}`;
 }
 
 function renderAgency(status) {
@@ -370,7 +379,7 @@ function wireControls() {
   });
   $("#pushBranch").addEventListener("click", () => {
     const clean = state.lastStatus?.git?.daedalus?.clean;
-    toast(clean ? "GitHub is clean. New code is pushed after successful reviewed worker runs." : "Local changes detected. Review and commit before pushing.");
+    toast(clean ? "GitHub is clean. New code can push after successful autonomous worker runs." : "Local changes detected. Review and commit before pushing.");
   });
   $("#cronTick").addEventListener("click", async () => {
     try {

@@ -5274,3 +5274,881 @@ h2,
     grid-template-columns: repeat(4, minmax(130px, 1fr));
   }
 }
+
+/* Ancient Starforge reskin: one decisive sci-fi civilization layer. */
+:root {
+  --sf-bg: #03070d;
+  --sf-void: #050a12;
+  --sf-panel: rgba(7, 15, 27, .88);
+  --sf-panel-2: rgba(12, 24, 39, .82);
+  --sf-line: rgba(103, 222, 255, .32);
+  --sf-line-strong: rgba(125, 243, 255, .62);
+  --sf-cyan: #67e5ff;
+  --sf-green: #7dffc7;
+  --sf-violet: #a890ff;
+  --sf-gold: #d8b05f;
+  --sf-amber: #ffcf7a;
+  --sf-red: #ff5f8a;
+  --sf-text: #eefaff;
+  --sf-muted: #8ca9b8;
+  --sf-dim: #405b6b;
+}
+
+html {
+  background: var(--sf-bg);
+}
+
+body {
+  min-width: 1220px;
+  color: var(--sf-text);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(103, 229, 255, .16), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgba(168, 144, 255, .14), transparent 30%),
+    radial-gradient(circle at 52% 82%, rgba(216, 176, 95, .09), transparent 34%),
+    linear-gradient(90deg, rgba(103, 229, 255, .045) 1px, transparent 1px),
+    linear-gradient(rgba(103, 229, 255, .04) 1px, transparent 1px),
+    #03070d !important;
+  background-size: auto, auto, auto, 42px 42px, 42px 42px, auto !important;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif !important;
+  image-rendering: auto !important;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 0 14%, rgba(216, 176, 95, .045) 14% 14.35%, transparent 14.35% 34%, rgba(103, 229, 255, .04) 34% 34.25%, transparent 34.25%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 4px);
+  mix-blend-mode: screen;
+  opacity: .55;
+  z-index: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  image-rendering: auto !important;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  width: min(1880px, calc(100vw - 20px));
+  max-width: none !important;
+  min-height: calc(100vh - 20px);
+  height: auto;
+  margin: 10px auto;
+  padding: 10px;
+  gap: 10px;
+  grid-template-columns: 226px minmax(760px, 1fr) 360px;
+  grid-template-rows: 118px 355px minmax(310px, 1fr) 238px 34px;
+  background:
+    linear-gradient(140deg, rgba(4, 12, 24, .92), rgba(6, 9, 17, .84)),
+    url("/assets/daedalus-neural-field.png") center top / cover no-repeat !important;
+  border: 1px solid rgba(103, 229, 255, .18);
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(216, 176, 95, .10),
+    0 0 80px rgba(103, 229, 255, .12),
+    inset 0 0 80px rgba(3, 7, 13, .72);
+  overflow: hidden;
+}
+
+.shell::before,
+.shell::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.shell::before {
+  inset: 12px;
+  border: 1px solid rgba(216, 176, 95, .18);
+  clip-path: polygon(0 0, 18% 0, 20% 4px, 80% 4px, 82% 0, 100% 0, 100% 100%, 82% 100%, 80% calc(100% - 4px), 20% calc(100% - 4px), 18% 100%, 0 100%);
+}
+
+.shell::after {
+  left: 35%;
+  right: 35%;
+  top: -180px;
+  height: 260px;
+  background: radial-gradient(ellipse, rgba(103, 229, 255, .22), transparent 68%);
+  filter: blur(18px);
+}
+
+.sidebar,
+.topbar,
+.board,
+.studio-floor,
+.schedule,
+.inspector .panel,
+.footer-hud,
+dialog {
+  border: 1px solid var(--sf-line) !important;
+  border-radius: 8px !important;
+  color: var(--sf-text) !important;
+  background:
+    linear-gradient(180deg, rgba(15, 31, 51, .88), rgba(5, 11, 20, .92)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .06),
+    inset 0 0 34px rgba(103, 229, 255, .055),
+    0 18px 36px rgba(0, 0, 0, .24) !important;
+}
+
+.sidebar {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.banner {
+  min-height: 122px;
+  padding: 16px 14px;
+  border: 1px solid rgba(216, 176, 95, .38) !important;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 18% 0, rgba(216, 176, 95, .18), transparent 38%),
+    linear-gradient(160deg, rgba(12, 32, 48, .94), rgba(5, 12, 22, .98)) !important;
+  overflow: hidden;
+}
+
+.banner::before {
+  content: "";
+  position: absolute;
+  right: -18px;
+  bottom: -28px;
+  width: 118px;
+  height: 118px;
+  background:
+    conic-gradient(from 45deg, transparent, rgba(103, 229, 255, .42), transparent 34%, rgba(216, 176, 95, .42), transparent 70%),
+    radial-gradient(circle, transparent 0 42%, rgba(103, 229, 255, .22) 43% 45%, transparent 46%);
+  border-radius: 50%;
+  animation: slowSpin 16s linear infinite;
+  opacity: .75;
+}
+
+.banner img {
+  display: none;
+}
+
+.banner span {
+  color: var(--sf-gold);
+  font-size: 11px;
+  letter-spacing: .24em;
+}
+
+.banner strong {
+  max-width: 150px;
+  margin-top: 9px;
+  color: #f7fbff;
+  font-size: 25px;
+  letter-spacing: .02em;
+  text-shadow: 0 0 18px rgba(103, 229, 255, .28);
+}
+
+.nav {
+  margin: 0;
+  border: 1px solid rgba(103, 229, 255, .18) !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.nav-item {
+  min-height: 48px;
+  padding: 0 12px 0 44px;
+  border-bottom: 1px solid rgba(103, 229, 255, .12) !important;
+  color: var(--sf-muted);
+  background: rgba(3, 8, 15, .46) !important;
+  letter-spacing: .02em;
+}
+
+.nav-item::before {
+  left: 14px;
+  width: 16px;
+  height: 16px;
+  background:
+    linear-gradient(45deg, transparent 40%, rgba(103, 229, 255, .7) 41% 58%, transparent 59%),
+    radial-gradient(circle, rgba(125, 255, 199, .7), transparent 62%) !important;
+  border: 1px solid rgba(103, 229, 255, .34);
+  border-radius: 4px;
+  transform: rotate(45deg);
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: var(--sf-text);
+  background:
+    linear-gradient(90deg, rgba(103, 229, 255, .16), rgba(216, 176, 95, .06)) !important;
+}
+
+.nav-item span,
+.state-chip,
+.switch,
+.tag {
+  border: 1px solid rgba(103, 229, 255, .26) !important;
+  border-radius: 999px !important;
+  background: rgba(103, 229, 255, .08) !important;
+  color: var(--sf-cyan) !important;
+}
+
+.status-card,
+.version {
+  position: static !important;
+  width: auto !important;
+  margin: 0 !important;
+  border: 1px solid rgba(103, 229, 255, .18) !important;
+  border-radius: 8px;
+  background: rgba(3, 8, 15, .5) !important;
+}
+
+.status-card {
+  padding: 12px;
+}
+
+.status-card div {
+  border-bottom: 1px solid rgba(103, 229, 255, .10);
+  color: var(--sf-muted);
+}
+
+.status-card dd {
+  color: var(--sf-green);
+}
+
+.version {
+  min-height: 64px;
+  margin-top: auto !important;
+  color: var(--sf-gold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.topbar {
+  grid-template-columns: 200px minmax(280px, 1fr) repeat(4, minmax(112px, 132px));
+  gap: 10px;
+  padding: 48px 12px 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.topbar::before {
+  content: "ANCIENT STARFORGE COMMAND" !important;
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  right: auto;
+  max-width: 42%;
+  color: var(--sf-cyan);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .28em;
+  white-space: nowrap;
+}
+
+.topbar::after {
+  content: "Autonomous development civilization / local RSPS operations mesh" !important;
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  left: auto;
+  max-width: 46%;
+  color: var(--sf-muted);
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sprint-flag,
+.sprint-goal,
+.command,
+.top-module,
+.duo-tile,
+input,
+textarea,
+menu button {
+  border: 1px solid rgba(103, 229, 255, .24) !important;
+  border-radius: 7px !important;
+  background:
+    linear-gradient(180deg, rgba(13, 29, 47, .96), rgba(4, 9, 17, .96)) !important;
+  color: var(--sf-text) !important;
+}
+
+.sprint-flag small,
+.sprint-goal span,
+h2 {
+  color: var(--sf-cyan) !important;
+  letter-spacing: .12em;
+  text-shadow: 0 0 18px rgba(103, 229, 255, .22);
+}
+
+.sprint-flag strong {
+  color: var(--sf-gold);
+  font-size: 18px;
+}
+
+.sprint-goal p,
+.events p,
+.track span,
+.workflow-run span,
+.profit-card span,
+.governance-grid span,
+.profit-engine p {
+  color: var(--sf-muted) !important;
+}
+
+.command {
+  height: 56px;
+  padding: 0 10px 0 42px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  box-shadow: inset 0 0 20px rgba(103, 229, 255, .055) !important;
+}
+
+.command::before {
+  left: 14px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%) rotate(45deg);
+  background-image: none !important;
+  background:
+    linear-gradient(90deg, transparent 42%, rgba(103, 229, 255, .8) 43% 57%, transparent 58%),
+    linear-gradient(0deg, transparent 42%, rgba(216, 176, 95, .75) 43% 57%, transparent 58%);
+  border: 1px solid rgba(103, 229, 255, .34);
+  border-radius: 3px;
+}
+
+.command:hover,
+.mini-command:hover,
+menu button:hover {
+  border-color: var(--sf-line-strong) !important;
+  box-shadow:
+    inset 0 0 28px rgba(103, 229, 255, .12),
+    0 0 28px rgba(103, 229, 255, .13) !important;
+}
+
+.command.primary {
+  color: var(--sf-green) !important;
+  background:
+    radial-gradient(circle at 50% 25%, rgba(125, 255, 199, .16), transparent 54%),
+    linear-gradient(180deg, rgba(15, 50, 57, .95), rgba(4, 15, 21, .98)) !important;
+}
+
+.board {
+  height: auto !important;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 42px 12px 12px !important;
+}
+
+.studio-floor,
+.board,
+.schedule {
+  position: relative;
+  overflow: hidden;
+}
+
+.studio-floor::before,
+.board::before,
+.schedule::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  display: block !important;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 0 16%, rgba(216, 176, 95, .06) 16% 16.5%, transparent 16.5% 52%, rgba(103, 229, 255, .05) 52% 52.35%, transparent 52.35%),
+    radial-gradient(circle at 50% 0, rgba(103, 229, 255, .10), transparent 45%);
+  opacity: .8;
+}
+
+.lane {
+  min-height: 0;
+  padding: 10px;
+  border: 1px solid rgba(103, 229, 255, .18) !important;
+  border-radius: 8px !important;
+  background:
+    linear-gradient(180deg, rgba(8, 20, 34, .74), rgba(3, 8, 15, .76)) !important;
+}
+
+.lane h2 {
+  width: auto;
+  margin: 0 0 10px;
+  padding: 0 0 8px;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(103, 229, 255, .16) !important;
+  color: var(--sf-gold) !important;
+  background: transparent !important;
+}
+
+.cards {
+  max-height: 250px;
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.work-card,
+.empty-card,
+.profit-card,
+.governance-grid div,
+.workflow-run,
+.agency-metrics div {
+  border: 1px solid rgba(103, 229, 255, .18) !important;
+  border-radius: 7px !important;
+  background:
+    radial-gradient(circle at 0 0, rgba(216, 176, 95, .10), transparent 36%),
+    linear-gradient(180deg, rgba(11, 24, 39, .88), rgba(3, 8, 15, .92)) !important;
+  color: var(--sf-text) !important;
+}
+
+.work-card strong,
+.empty-card strong,
+.workflow-run strong,
+.profit-card strong,
+.governance-grid strong,
+.agency-flow strong {
+  color: var(--sf-text) !important;
+}
+
+.work-card span,
+.empty-card span,
+.card-foot em {
+  color: var(--sf-muted) !important;
+}
+
+.studio-floor {
+  min-height: 390px !important;
+  padding: 44px 14px 14px !important;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(103, 229, 255, .17), transparent 36%),
+    linear-gradient(180deg, rgba(8, 23, 39, .86), rgba(2, 6, 12, .92)),
+    url("/assets/daedalus-neural-field.png") center / cover no-repeat !important;
+}
+
+.studio-floor .hearth,
+.studio-floor .room-prop {
+  display: none !important;
+}
+
+.agent-grid {
+  position: relative !important;
+  z-index: 2;
+  height: 100%;
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(112px, 1fr));
+  align-content: start;
+  grid-auto-rows: 154px;
+  gap: 10px;
+  padding: 0;
+  overflow: auto;
+}
+
+.agent-desk,
+.agent-desk:nth-child(n) {
+  position: relative !important;
+  inset: auto !important;
+  width: auto !important;
+  min-height: 154px !important;
+  height: 154px !important;
+  max-height: 154px !important;
+  padding: 12px 9px 10px !important;
+  border: 1px solid rgba(103, 229, 255, .22) !important;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 50% 32%, rgba(103, 229, 255, .16), transparent 42%),
+    linear-gradient(180deg, rgba(8, 19, 33, .72), rgba(2, 6, 12, .86)) !important;
+  transform: none !important;
+  overflow: hidden;
+}
+
+.agent-desk::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(216, 176, 95, .12);
+  clip-path: polygon(50% 0, 100% 28%, 100% 72%, 50% 100%, 0 72%, 0 28%);
+  pointer-events: none;
+}
+
+.agent-desk::after {
+  display: none !important;
+}
+
+.agent-desk.selected,
+.agent-desk:hover {
+  border-color: rgba(125, 255, 199, .58) !important;
+  box-shadow:
+    inset 0 0 30px rgba(125, 255, 199, .09),
+    0 0 28px rgba(103, 229, 255, .15) !important;
+}
+
+.agent-link-field {
+  inset: 16px 14px auto;
+  height: 70px;
+  opacity: .8;
+}
+
+.agent-link-field span {
+  background: linear-gradient(90deg, transparent, rgba(103, 229, 255, .46), transparent) !important;
+}
+
+.agent-hitbox,
+.agent-hitbox.working {
+  position: relative;
+  display: block;
+  width: 58px !important;
+  height: 58px !important;
+  margin: 2px auto 8px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  background:
+    radial-gradient(circle at 40% 30%, rgba(255,255,255,.95), rgba(125,255,199,.84) 18%, rgba(103,229,255,.38) 44%, transparent 70%) !important;
+  box-shadow:
+    0 0 28px rgba(103, 229, 255, .28),
+    inset 0 0 18px rgba(255,255,255,.18);
+  animation: starPulse 2.6s ease-in-out infinite;
+}
+
+.agent-hitbox::before,
+.agent-hitbox::after {
+  border-color: rgba(216, 176, 95, .42) !important;
+}
+
+.agent-hitbox i {
+  background: #f8ffff !important;
+  box-shadow: 0 0 10px rgba(125, 255, 199, .85);
+}
+
+.core-tesseract .agent-hitbox,
+.core-quantum .agent-hitbox {
+  border-radius: 13px !important;
+  transform: rotate(45deg) !important;
+}
+
+.core-liquid .agent-hitbox,
+.core-spectrum .agent-hitbox {
+  border-radius: 42% 58% 49% 51% !important;
+  animation: liquidCore 4s ease-in-out infinite;
+}
+
+.core-reactor .agent-hitbox,
+.core-forge .agent-hitbox {
+  background:
+    radial-gradient(circle, rgba(255,255,255,.95), rgba(255,207,122,.85) 20%, rgba(255,95,138,.36) 48%, transparent 70%) !important;
+}
+
+.core-prism .agent-hitbox,
+.core-lattice .agent-hitbox {
+  background:
+    conic-gradient(from 90deg, rgba(103,229,255,.76), rgba(168,144,255,.78), rgba(125,255,199,.72), rgba(103,229,255,.76)) !important;
+}
+
+.agent-plate {
+  position: absolute !important;
+  left: 9px !important;
+  right: 9px !important;
+  bottom: 9px !important;
+  display: grid !important;
+  gap: 3px;
+  min-height: 66px !important;
+  max-height: 74px !important;
+  margin: 0 !important;
+  padding: 7px !important;
+  border: 1px solid rgba(103, 229, 255, .14) !important;
+  border-radius: 7px;
+  background: rgba(2, 7, 14, .54) !important;
+  text-align: left;
+  overflow: hidden;
+}
+
+.agent-plate h3 {
+  color: var(--sf-text) !important;
+  font-size: 10px !important;
+  letter-spacing: .08em;
+}
+
+.agent-plate p,
+.agent-taskline,
+.model-chip {
+  color: var(--sf-muted) !important;
+  font-size: 10px !important;
+}
+
+.model-chip {
+  justify-self: start;
+  max-width: 100%;
+  padding: 2px 6px;
+  border: 1px solid rgba(103, 229, 255, .16);
+  border-radius: 999px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.model-chip.configured {
+  color: var(--sf-green) !important;
+}
+
+.meter {
+  height: 7px !important;
+  border: 0 !important;
+  border-radius: 999px;
+  background: rgba(103, 229, 255, .10) !important;
+  overflow: hidden;
+}
+
+.meter b,
+.track b {
+  border: 0 !important;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sf-cyan), var(--sf-green), var(--sf-gold)) !important;
+  box-shadow: 0 0 18px rgba(103, 229, 255, .24);
+}
+
+.schedule {
+  grid-template-columns: 150px 1fr 210px;
+  padding: 42px 12px 12px !important;
+}
+
+.day-cycle,
+.events,
+.timeline,
+.panel,
+pre {
+  border: 1px solid rgba(103, 229, 255, .18) !important;
+  border-radius: 8px !important;
+  background:
+    linear-gradient(180deg, rgba(7, 17, 29, .76), rgba(2, 7, 14, .84)) !important;
+}
+
+.window {
+  width: 94px;
+  height: 94px;
+  border: 1px solid rgba(216, 176, 95, .42) !important;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(125, 255, 199, .95), rgba(103, 229, 255, .34) 34%, transparent 35%),
+    conic-gradient(from 45deg, rgba(216,176,95,.6), transparent, rgba(103,229,255,.5), transparent, rgba(216,176,95,.6)) !important;
+  animation: slowSpin 12s linear infinite;
+}
+
+.track {
+  height: 37px;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(103, 229, 255, .10) !important;
+  background: transparent !important;
+}
+
+.track b {
+  height: 12px;
+  top: 12px;
+}
+
+.inspector {
+  gap: 10px;
+  grid-template-rows: minmax(258px, auto) minmax(210px, 1fr) auto auto auto auto auto;
+}
+
+.inspector .panel {
+  padding: 40px 12px 12px;
+}
+
+.panel-head button,
+.day-cycle button,
+.events button,
+.mini-command,
+menu button {
+  min-height: 32px;
+  border: 1px solid rgba(103, 229, 255, .26) !important;
+  border-radius: 6px;
+  color: var(--sf-cyan) !important;
+  background: rgba(103, 229, 255, .07) !important;
+  cursor: pointer;
+}
+
+.agent-medallion,
+.neural-core {
+  width: 70px !important;
+  height: 70px !important;
+  border: 1px solid rgba(103, 229, 255, .36) !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.9), rgba(103,229,255,.45) 28%, rgba(5,10,18,.5) 64%) !important;
+  box-shadow: 0 0 24px rgba(103, 229, 255, .22) !important;
+}
+
+.agent-hero {
+  align-items: stretch;
+}
+
+.inspector-task,
+.mini-stats div {
+  border: 1px solid rgba(103, 229, 255, .14) !important;
+  border-radius: 7px;
+  background: rgba(3, 8, 15, .46) !important;
+}
+
+.mini-stats dt,
+.inspector-task span {
+  color: var(--sf-gold);
+}
+
+.mini-stats dd,
+#agentInspector strong,
+.agency-metrics strong,
+.profit-card b {
+  color: var(--sf-green) !important;
+}
+
+pre {
+  color: var(--sf-green);
+  font-family: "JetBrains Mono", "Cascadia Code", monospace;
+}
+
+dialog {
+  color: var(--sf-text);
+  width: min(620px, 92vw);
+}
+
+input,
+textarea {
+  color: var(--sf-text) !important;
+}
+
+#toast {
+  border: 1px solid rgba(103, 229, 255, .34) !important;
+  border-radius: 8px;
+  color: var(--sf-text);
+  background: rgba(5, 12, 22, .94) !important;
+  box-shadow: 0 0 32px rgba(103, 229, 255, .18);
+}
+
+.window-grip {
+  height: 28px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(103, 229, 255, .12) !important;
+  color: var(--sf-muted) !important;
+  background:
+    linear-gradient(90deg, rgba(103,229,255,.10), rgba(216,176,95,.055), transparent) !important;
+}
+
+.window-grip span {
+  color: var(--sf-cyan) !important;
+  letter-spacing: .12em;
+}
+
+.window-grip b {
+  border-color: rgba(103, 229, 255, .22) !important;
+}
+
+.footer-hud {
+  grid-column: 1 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 34px;
+  padding: 0 14px;
+  color: var(--sf-muted) !important;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.footer-hud span:first-child {
+  color: var(--sf-gold);
+}
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.07); filter: brightness(1.22); }
+}
+
+@keyframes liquidCore {
+  0%, 100% { border-radius: 42% 58% 49% 51%; transform: scale(1); }
+  50% { border-radius: 57% 43% 61% 39%; transform: scale(1.06); }
+}
+
+@keyframes slowSpin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1320px) {
+  body {
+    min-width: 1270px;
+  }
+
+  .shell {
+    display: grid;
+    grid-template-columns: 202px minmax(640px, 1fr) 326px;
+    grid-template-rows: 146px 350px minmax(300px, 1fr) 238px 34px;
+    width: 1270px;
+    margin: 6px auto;
+  }
+
+  .sidebar { grid-column: 1; grid-row: 1 / 5; }
+  .topbar { grid-column: 2 / 4; grid-row: 1; }
+  .board { grid-column: 2; grid-row: 2; }
+  .studio-floor { grid-column: 2; grid-row: 3; }
+  .schedule { grid-column: 2; grid-row: 4; }
+  .inspector { grid-column: 3; grid-row: 2 / 5; }
+  .footer-hud { grid-column: 1 / 4; grid-row: 5; }
+
+  .topbar {
+    grid-template-columns: 160px minmax(220px, 1fr) repeat(4, minmax(94px, 1fr));
+    padding-top: 48px;
+  }
+
+  .sprint-flag,
+  .sprint-goal,
+  .command,
+  .top-module,
+  .duo-tile {
+    min-height: 70px;
+  }
+
+  .sprint-flag small {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .sprint-flag strong {
+    font-size: 14px;
+    line-height: 1.05;
+  }
+
+  .sprint-flag {
+    padding: 10px 12px;
+  }
+
+  .sprint-goal {
+    overflow: hidden;
+  }
+
+  .sprint-goal p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .topbar::after {
+    max-width: 430px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .agent-grid {
+    grid-template-columns: repeat(4, minmax(118px, 1fr));
+    grid-auto-rows: 154px;
+  }
+}

@@ -87,3 +87,10 @@
 - Alternatives considered: Keep review gates; keep planning defaults; display estimated values with warnings.
 - Risk: Auto-approved code steps increase autonomous-change risk; profitability will show unavailable until a real metrics source exists.
 - Rollback plan: Restore review-required workflow code steps and profitability defaults if the operator wants a conservative/demo mode again.
+
+- Date: 2026-06-17
+- Decision: Reskin the dashboard as an Ancient Starforge sci-fi control room.
+- Why: The user explicitly scrapped the Stardew-style direction and requested glowing neural/tesseract/liquid agents with a modular sci-fi control-panel layout.
+- Alternatives considered: Keep polishing the previous pixel-fantasy style; generate a separate prototype; rebuild the dashboard with a new frontend stack.
+- Risk: This is a CSS/DOM reskin over the existing dashboard rather than a full component rewrite, so deeper workflow UX can still be improved in later passes.
+- Rollback plan: Revert `dashboard_static/index.html`, `app.js`, and `styles.css` to the previous sci-fi/fantasy mixed dashboard skin.
