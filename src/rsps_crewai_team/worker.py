@@ -75,18 +75,21 @@ def _run_reserved_order_with_agent(agent_id: str, role: str, running_path, title
             worktree = create_agent_worktree(agent_id, label)
             cwd = worktree
         result = run_coding_worker(prompt, _label(label), agent_id=agent_id, cwd=cwd)
-        if result.exit_code == 0 and os.getenv("RSPS_GIT_COMMIT_AFTER_WORK", "true").strip().lower() in {"1", "true", "yes", "on"}:
+        exit_code = result.exit_code
+        detail = str(result.log_path)
+        if exit_code == 0 and os.getenv("RSPS_GIT_COMMIT_AFTER_WORK", "true").strip().lower() in {"1", "true", "yes", "on"}:
             git_result = sync_changes(f"{agent_id}: {title}", cwd)
             if git_result.exit_code != 0:
-                return agent_id, git_result.exit_code, git_result.output
+                exit_code = git_result.exit_code
+                detail = git_result.output
     except Exception as exc:
         move_work_order(finished_order, "failed")
         return agent_id, 1, str(exc)
     finally:
         if worktree is not None and os.getenv("RSPS_DUO_KEEP_WORKTREES", "false").strip().lower() not in {"1", "true", "yes", "on"}:
             remove_agent_worktree(worktree)
-    move_work_order(finished_order, "done" if result.exit_code == 0 else "failed")
-    return agent_id, result.exit_code, str(result.log_path)
+    move_work_order(finished_order, "done" if exit_code == 0 else "failed")
+    return agent_id, exit_code, detail
 
 
 def run_duo(_: argparse.Namespace) -> None:
