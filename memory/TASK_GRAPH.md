@@ -123,7 +123,7 @@ Each implementation task should declare before coding:
 
 ## Current Next Actions
 
-1. Start B1 with a fixture-based task graph parser/writer.
-2. Prepare C1 API schema tests and D1/D2 low-risk dashboard reliability fixes in parallel.
-3. Harden dashboard mutating endpoints before enabling remote access or autonomous runs.
+1. Add a supervised docs-only work order that proves duo agents stay inside assigned worktrees after the prompt guard.
+2. Decide and configure the user-owned remote for the 2009scape-derived server fork; do not push to upstream GitLab by default.
+3. Harden dashboard mutating endpoints before enabling unattended autonomous runs from the UI.
 4. Add service-level run manifests before deeper worker automation.

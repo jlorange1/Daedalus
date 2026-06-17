@@ -71,12 +71,16 @@ Daedalus is an autonomous coding and operations scaffold for an AI-assisted RSPS
 - `git lfs pull` completed in the configured 2009scape repository.
 - Unused dashboard mock JSON fixtures and `mock-data-manifest.json` were removed; live queue lanes now render explicit empty states when no work exists.
 - Project skills are source-controlled under `/skills` and symlinked into `~/.codex/skills` for local Codex discovery.
+- Autonomous RSPS worker routing uses OpenClaw through `openrouter/free`; the special OpenRouter free-router alias must be passed to OpenClaw as `free`.
+- The first useful RSPS source commit created by this workflow is local commit `b3ea455` in `/var/home/Scaar/Desktop/game project/2009scape`, fixing desert quest NPC constants after `timeout 240 ./mvnw -q -DskipTests compile` passed.
+- Duo agents must be treated as supervised until another run proves the worktree guard prevents absolute-path edits to the main checkout.
 
 ## Unfinished Tasks
 
 - Add orchestration service utilities for task graph, memory, role registry, and run manifests.
 - Harden dashboard action endpoints and prompt-injection boundaries.
 - Run full validation and push the Phase 0/1 foundation.
+- Decide where the 2009scape-derived server fork should be pushed; the current `origin` is upstream GitLab, not a user-owned GitHub remote.
 
 ## Update Policy
 
