@@ -4,6 +4,7 @@ Daedalus now includes a native agency layer inspired by:
 
 - `msitarzewski/agency-agents` (`MIT`)
 - `jnMetaCode/agency-orchestrator` (`Apache-2.0`)
+- Vercel Eve public ecosystem patterns, including `browser-use/eve` cloud-browser tool scoping and `Floe-Labs/eve-floe` budget-aware unattended agent controls.
 
 The integration adapts public operating patterns rather than copying the general-purpose agency wholesale. Daedalus remains an RSPS game-development studio with defensive safety gates, OpenRouter model routing, CrewAI planning, OpenClaw coding workers, GitHub sync, and local memory.
 
@@ -14,6 +15,8 @@ The integration adapts public operating patterns rather than copying the general
 - Parallel execution levels derived from DAG dependencies.
 - Clear separation between planning, implementation, QA, security, release, operations, and documentation.
 - Source attribution for the upstream public projects.
+- Eve-style separation between watcher, thinker, orchestrator, and reporter roles for unattended work.
+- Tool-scoped autonomy: agents get narrow responsibilities and bounded evidence instead of broad ambient authority.
 
 ## Native Files
 
@@ -24,22 +27,26 @@ The integration adapts public operating patterns rather than copying the general
 
 ## Department Model
 
-The catalog currently covers 14 departments:
+The catalog currently covers 18 departments:
 
-1. Executive Production
-2. Server Planning
-3. Design Direction
-4. Backend Engineering
-5. Gameplay Content
-6. Client UX
-7. World & Quest Design
-8. Economy & Balance
-9. QA Automation
-10. Security & Anti-Abuse
-11. Build & Release
-12. DevOps & GitHub
-13. Art & Audio Direction
-14. Documentation
+1. Watcher
+2. Thinker
+3. Orchestrator
+4. Reporter
+5. Executive Production
+6. Server Planning
+7. Design Direction
+8. Backend Engineering
+9. Gameplay Content
+10. Client UX
+11. World & Quest Design
+12. Economy & Balance
+13. QA Automation
+14. Security & Anti-Abuse
+15. Build & Release
+16. DevOps & GitHub
+17. Art & Audio Direction
+18. Documentation
 
 Each department has:
 
@@ -74,6 +81,8 @@ Each step has:
 - `task`
 
 The runtime builds execution levels from dependencies. Steps in the same level can run in parallel once earlier dependencies complete.
+
+The one-minute autonomous watchdog defaults to `server_building_watchdog`, which starts with Watcher, moves through Thinker and Orchestrator, then routes implementation, QA, security, and Reporter follow-up.
 
 ## Safety Rules
 

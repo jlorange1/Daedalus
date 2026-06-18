@@ -37,5 +37,5 @@
     "economy_required",
     "release_required"
   ],
-  "workflow_links": ["feature_delivery_mesh", "visual_product_pass", "incident_recovery", "profitability_review"]
+  "workflow_links": ["server_building_watchdog", "feature_delivery_mesh", "visual_product_pass", "incident_recovery", "profitability_review"]
 }

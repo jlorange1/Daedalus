@@ -8,7 +8,7 @@ Additional integration patterns from spec-kit, UI/UX Pro Max, LobeHub, OpenHands
 
 Workflow runs can now be started from the dashboard Agency Layer. A run creates a manifest under `logs/agency-runs/`, queues first-level work orders with sidecar metadata, and records bounded worker evidence under `logs/runs/` when workers execute.
 
-Cron is self-filling: each tick creates a new `profitability_review` workflow when there are no active workflow runs and no queued/running work orders. Code-writing workflow steps are auto-approved; autonomous repository writes still require `RSPS_ALLOW_AUTONOMOUS=true`.
+Cron is self-filling: each watchdog tick creates a new `server_building_watchdog` workflow when there is no queued/running work. Code-writing workflow steps are auto-approved; autonomous repository writes still require `RSPS_ALLOW_AUTONOMOUS=true`.
 
 Profitability does not use mock defaults. Put live metrics at `RSPS_PROFITABILITY_METRICS_PATH` or `data/profitability_metrics.json`; otherwise the dashboard reports profitability as unavailable.
 
@@ -236,7 +236,7 @@ Install it as the local scheduler:
 uv run rsps-cron install
 ```
 
-If `crontab` is installed, this writes the user crontab. If `crontab` is unavailable, it installs and enables the user systemd timer `daedalus-rsps-cron.timer`. The one-minute watchdog self-fills an idle queue with a `profitability_review` workflow, skips when `work_orders/running` already has active work, and runs the OpenClaw duo when `RSPS_DUO_MODE=true` and `RSPS_ALLOW_AUTONOMOUS=true`.
+If `crontab` is installed, this writes the user crontab. If `crontab` is unavailable, it installs and enables the user systemd timer `daedalus-rsps-cron.timer`. The one-minute watchdog self-fills an idle queue with `server_building_watchdog`, skips when `work_orders/running` already has active work, and runs the OpenClaw duo when `RSPS_DUO_MODE=true` and `RSPS_ALLOW_AUTONOMOUS=true`.
 
 ## Studio Dashboard
 

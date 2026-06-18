@@ -7,6 +7,63 @@
   },
   "workflows": [
     {
+      "id": "server_building_watchdog",
+      "name": "Server Building Watchdog",
+      "description": "Autonomously inspect, plan, implement, validate, and report the next safe server-building slice.",
+      "concurrency": 4,
+      "entrypoint": "watcher",
+      "steps": [
+        {
+          "id": "watch",
+          "department": "watcher",
+          "output": "server_state_report",
+          "task": "Inspect the configured RSPS source, queued and running work, recent logs, failed attempts, git state, and current server-building blockers. Identify whether the server is actively being worked on and name the best candidate build target."
+        },
+        {
+          "id": "think",
+          "department": "thinker",
+          "depends_on": ["watch"],
+          "output": "server_build_plan",
+          "task": "Choose the smallest safe server-building slice that moves the playable server forward. Include target files, acceptance criteria, validation commands, dependencies, and reasons this slice should be next."
+        },
+        {
+          "id": "orchestrate",
+          "department": "orchestrator",
+          "depends_on": ["think"],
+          "output": "execution_packet",
+          "task": "Route the build slice to the correct specialist departments, split it into non-overlapping work, and prepare the implementation handoff."
+        },
+        {
+          "id": "implementation",
+          "department": "backend_engineering",
+          "depends_on": ["orchestrate"],
+          "output": "server_build_patch",
+          "task": "Implement the selected server-building slice through the guarded coding worker. Keep the patch small, reversible, legal-safe, and focused on the configured open-source server."
+        },
+        {
+          "id": "qa",
+          "department": "qa_automation",
+          "depends_on": ["implementation"],
+          "output": "server_validation",
+          "task": "Run available build, test, or smoke checks for the server-building patch and record exact evidence."
+        },
+        {
+          "id": "security",
+          "department": "security_anti_abuse",
+          "depends_on": ["implementation"],
+          "output": "server_safety_review",
+          "task": "Perform defensive review for dupes, permissions, packet trust, unsafe persistence, and economy abuse introduced by the patch."
+        },
+        {
+          "id": "report",
+          "department": "reporter",
+          "depends_on": ["qa", "security"],
+          "output": "server_build_report",
+          "task": "Summarize what changed, validation evidence, blockers, failed assumptions, and the next recommended autonomous work order without exposing secrets."
+        }
+      ]
+    },
+    {
       "id": "feature_delivery_mesh",
       "name": "Feature Delivery Mesh",
       "description": "Plan, implement, validate, and release a scoped server feature.",

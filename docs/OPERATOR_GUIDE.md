@@ -103,7 +103,7 @@ Inspect `cron/rsps-crewai.cron`, then install when the autonomous schedule is ac
 uv run rsps-cron install
 ```
 
-The installer uses `crontab` when available. On systems without `crontab`, it installs `~/.config/systemd/user/daedalus-rsps-cron.timer` and enables it with `systemctl --user`. The one-minute watchdog self-fills an idle queue with a `profitability_review` workflow, skips if `work_orders/running` already has active work, then checks `RSPS_ALLOW_AUTONOMOUS`; if autonomy is disabled, it logs and exits without running workers.
+The installer uses `crontab` when available. On systems without `crontab`, it installs `~/.config/systemd/user/daedalus-rsps-cron.timer` and enables it with `systemctl --user`. The one-minute watchdog self-fills an idle queue with `server_building_watchdog`, skips if `work_orders/running` already has active work, then checks `RSPS_ALLOW_AUTONOMOUS`; if autonomy is disabled, it logs and exits without running workers.
 
 ## Dashboard
 

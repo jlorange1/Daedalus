@@ -62,6 +62,20 @@
       "repository": "https://github.com/ComposioHQ/awesome-claude-skills",
       "license": "Unknown",
       "adaptation": "Reference-only inspiration for curated skill catalogs and installable capability metadata."
+    },
+    {
+      "id": "browser_use_eve",
+      "name": "browser-use/eve",
+      "repository": "https://github.com/browser-use/eve",
+      "license": "Unknown",
+      "adaptation": "Reference-only Vercel Eve ecosystem pattern for scoped tool integration, sandbox handoff, and browser-capable unattended agents."
+    },
+    {
+      "id": "eve_floe",
+      "name": "eve-floe",
+      "repository": "https://github.com/Floe-Labs/eve-floe",
+      "license": "MIT",
+      "adaptation": "Reference-only Eve ecosystem pattern for budget-aware unattended agents, hard caps, and tapering behavior near resource limits."
     }
   ]
 }

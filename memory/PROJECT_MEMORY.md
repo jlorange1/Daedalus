@@ -71,7 +71,7 @@ Daedalus is an autonomous coding and operations scaffold for an AI-assisted RSPS
 - Workflow runs now create manifests in `logs/agency-runs/`, queue sidecar-tagged work orders, and worker executions create bounded run manifests in `logs/runs/`.
 - Workflow advancement now marks completed/failed steps, unblocks dependent non-code steps, and holds code-writing steps at `awaiting_review` until approved from the dashboard.
 - Worker completion now attaches bounded artifact evidence to workflow steps and run manifests, including changed files and validation exit code.
-- Cron now self-fills an empty system by starting a `profitability_review` workflow, workflow code steps auto-approve, and profitability uses live metrics only instead of baked-in defaults.
+- Cron now self-fills an empty system by starting `server_building_watchdog`, workflow code steps auto-approve, and profitability uses live metrics only instead of baked-in defaults.
 - The local machine does not have `crontab`; `rsps-cron install` falls back to the enabled user systemd timer `daedalus-rsps-cron.timer`.
 - Asset and JSON validation commands pass as of the last dashboard cleanup.
 - Existing persistent memory files were present before the memory-system design: `DECISIONS.md`, `OPEN_QUESTIONS.md`, `FAILED_ATTEMPTS.md`, and `TASK_GRAPH.md`.
@@ -90,6 +90,7 @@ Daedalus is an autonomous coding and operations scaffold for an AI-assisted RSPS
 - The dashboard was reskinned to the Ancient Starforge sci-fi control-room direction on 2026-06-17, keeping live `/api/status` data, draggable module windows, queue controls, and the 14-department agent mesh.
 - A manual `rsps-cron tick` on 2026-06-17 created `20260617T195046Z-profitability_review`; the OpenClaw builder failed because OpenRouter DNS returned `EAI_AGAIN openrouter.ai`, not because the scheduler failed.
 - On 2026-06-18, `rsps-cron` was changed into a one-minute autonomous watchdog. It holds a nonblocking lock for the full tick, skips when `work_orders/running/*.md` exists, self-fills when inbox/running are empty, and the installed user systemd timer uses `OnUnitActiveSec=1min`.
+- Also on 2026-06-18, the autonomy default changed from profitability review to `server_building_watchdog`, with Eve-style Watcher, Thinker, Orchestrator, Reporter, implementation, QA, and security stages aimed at building the configured RSPS server.
 
 ## Unfinished Tasks
 

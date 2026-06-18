@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from contextlib import contextmanager
 import fcntl
+import os
 import shutil
 import subprocess
 from datetime import datetime, timezone
@@ -11,6 +12,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from rsps_crewai_team.runtime.settings import LOGS_DIR, PROJECT_ROOT, bool_env
+from rsps_crewai_team.runtime.agency import load_agency_workflows
 from rsps_crewai_team.runtime.orchestrator import create_workflow_run, list_workflow_runs
 from rsps_crewai_team.runtime.work_orders import ensure_work_order_dirs
 from rsps_crewai_team.worker import run_duo, run_once
@@ -103,7 +105,7 @@ def is_rsps_work_active() -> bool:
 
 
 def ensure_self_fulfilling_backlog() -> None:
-    workflow_id = "profitability_review"
+    workflow_id = autonomy_workflow_id()
     ensure_work_order_dirs()
     queued = list((PROJECT_ROOT / "work_orders" / "inbox").glob("*.md"))
     running = list((PROJECT_ROOT / "work_orders" / "running").glob("*.md"))
@@ -111,6 +113,16 @@ def ensure_self_fulfilling_backlog() -> None:
         return
     created = create_workflow_run(workflow_id, title="Self-filling autonomous studio cycle")
     print(f"created_workflow_run={created['run_id']}")
+
+
+def autonomy_workflow_id() -> str:
+    fallback = "server_building_watchdog"
+    configured = os.getenv("RSPS_AUTONOMY_WORKFLOW_ID", fallback).strip() or fallback
+    known = {str(item.get("id")) for item in load_agency_workflows().get("workflows", [])}
+    if configured in known:
+        return configured
+    print(f"Unknown RSPS_AUTONOMY_WORKFLOW_ID={configured}; using {fallback}.")
+    return fallback
 
 
 def render(_: argparse.Namespace) -> None:

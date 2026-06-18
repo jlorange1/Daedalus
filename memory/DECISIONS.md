@@ -101,3 +101,10 @@
 - Alternatives considered: Keep the 30-minute timer; launch manual ticks repeatedly; run overlapping worker processes.
 - Risk: Frequent attempts can generate many failed work orders if OpenRouter or the model responds without git-visible changes.
 - Rollback plan: Change `CRON_TEMPLATE` and `SYSTEMD_TIMER_TEMPLATE` back to a slower cadence and reinstall the timer.
+
+- Date: 2026-06-18
+- Decision: Make `server_building_watchdog` the default autonomous workflow.
+- Why: The user wants agents to automatically build the configured RSPS server, with separate watching, reporting, thinking, and orchestration responsibilities.
+- Alternatives considered: Continue profitability review as the self-fill workflow; repurpose `feature_delivery_mesh`; create only documentation without changing the scheduler default.
+- Risk: The new workflow can still fail if the coding model produces no git-visible changes or external model/network access fails.
+- Rollback plan: Set `RSPS_AUTONOMY_WORKFLOW_ID` to another validated workflow or change `autonomy_workflow_id()` fallback.

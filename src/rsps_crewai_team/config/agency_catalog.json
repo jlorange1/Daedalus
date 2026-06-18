@@ -10,9 +10,58 @@
     "Give each agent explicit mission, inputs, outputs, tools, and safety limits.",
     "Route work through dependency-aware workflows before executing code.",
     "Use defensive review and validation gates before write, build, push, or release actions.",
-    "Keep protected branding out of UI, docs, and generated content."
+    "Keep protected branding out of UI, docs, and generated content.",
+    "Adapt Eve-style unattended agents as durable, tool-scoped workers with separate watcher, thinker, reporter, and orchestrator responsibilities."
   ],
   "departments": [
+    {
+      "id": "watcher",
+      "display_name": "Watcher",
+      "agent_key": "watcher",
+      "model_env": "OPENROUTER_WATCHER_MODEL",
+      "mission": "Continuously inspect whether the RSPS source is actively being improved, identify idle or stuck states, and feed the next actionable signal.",
+      "deliverables": ["live server status", "idle/stuck signal", "repo health observation", "next trigger"],
+      "tools": ["cron", "logs", "git_status", "work_orders"],
+      "permissions": ["read_repo", "read_logs", "summarize"],
+      "handoff_to": ["thinker", "orchestrator", "reporter"],
+      "safety_limits": ["No direct code writes", "Do not start duplicate workers"]
+    },
+    {
+      "id": "thinker",
+      "display_name": "Thinker",
+      "agent_key": "thinker",
+      "model_env": "OPENROUTER_THINKER_MODEL",
+      "mission": "Reason over current server state, failed attempts, operator goals, and codebase constraints to choose the best next build slice.",
+      "deliverables": ["next-build hypothesis", "constraint summary", "risk-aware plan", "success criteria"],
+      "tools": ["memory", "repo_summary", "failed_attempts", "task_graph"],
+      "permissions": ["read_repo", "update_task_graph", "create_work_order"],
+      "handoff_to": ["orchestrator", "server_planning", "design_direction"],
+      "safety_limits": ["Separate facts from assumptions", "Do not invent server status"]
+    },
+    {
+      "id": "orchestrator",
+      "display_name": "Orchestrator",
+      "agent_key": "orchestrator",
+      "model_env": "OPENROUTER_ORCHESTRATOR_MODEL",
+      "mission": "Convert the chosen build slice into ordered, parallelizable work orders and keep specialist departments coordinated.",
+      "deliverables": ["execution DAG", "agent routing", "dependency map", "handoff packet"],
+      "tools": ["agency_workflows", "work_orders", "memory", "cron"],
+      "permissions": ["create_work_order", "update_memory", "summarize"],
+      "handoff_to": ["backend_engineering", "gameplay_content", "qa_automation", "security_anti_abuse", "reporter"],
+      "safety_limits": ["No overlapping writes to the same target", "Route unsafe work to defensive review"]
+    },
+    {
+      "id": "reporter",
+      "display_name": "Reporter",
+      "agent_key": "reporter",
+      "model_env": "OPENROUTER_REPORTER_MODEL",
+      "mission": "Summarize what changed, what failed, what is running, and what should happen next for the operator and future agents.",
+      "deliverables": ["operator report", "run summary", "blocked-risk note", "next-action list"],
+      "tools": ["logs", "run_manifests", "memory", "dashboard_status"],
+      "permissions": ["read_logs", "write_docs", "update_memory"],
+      "handoff_to": ["executive_production", "thinker", "documentation"],
+      "safety_limits": ["No secrets in reports", "Do not claim success without evidence"]
+    },
     {
       "id": "executive_production",
       "display_name": "Executive Production",

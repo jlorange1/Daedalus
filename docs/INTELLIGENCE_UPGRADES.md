@@ -13,6 +13,8 @@ Daedalus adapts public project patterns into native, validated configuration. Th
 - `OpenBB-finance/OpenBB`: reference-only analyst workflow patterns for the profitability engine.
 - `FoundationAgents/MetaGPT`: software-company role decomposition and SOP handoffs.
 - `ComposioHQ/awesome-claude-skills`: reference-only curated skill registry pattern.
+- `browser-use/eve`: Vercel Eve integration pattern for scoped browser/tool access and sandbox handoffs.
+- `Floe-Labs/eve-floe`: Eve spend-control pattern adapted conceptually into bounded unattended watchdog behavior.
 
 ## Native Files
 
@@ -63,6 +65,7 @@ The first durable orchestrator run-state model is now present:
 7. Completed dependencies unblock downstream steps.
 8. Code-writing steps are auto-approved and queue without a manual review gate.
 9. Worker runs attach bounded artifact evidence to workflow steps: changed file count, changed file paths, worker exit code, log path, and repo/worktree path.
+10. The autonomy default is now `server_building_watchdog`, using Watcher, Thinker, Orchestrator, implementation, QA, security, and Reporter stages to build the configured server rather than cycling on profitability review.
 
 Profitability is live-data only. If `RSPS_PROFITABILITY_METRICS_PATH` or `data/profitability_metrics.json` is missing, the dashboard reports profitability as unavailable instead of estimating from mock/default values.
 
