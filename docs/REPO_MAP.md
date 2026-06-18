@@ -76,7 +76,7 @@ Console scripts from `pyproject.toml`:
 - `.env`: local secret/config file exists and is gitignored; do not read into docs or expose via dashboard/logs. [.gitignore:1](../.gitignore#L1) [docs/BUILD_PLAN.md:11](BUILD_PLAN.md#L11)
 - `src/rsps_crewai_team/config/agents.yaml`: role prompts/goals/backstories. [src/rsps_crewai_team/config/agents.yaml:1](../src/rsps_crewai_team/config/agents.yaml#L1)
 - `src/rsps_crewai_team/config/tasks.yaml`: sequential task descriptions and expected outputs. [src/rsps_crewai_team/config/tasks.yaml:1](../src/rsps_crewai_team/config/tasks.yaml#L1)
-- `cron/rsps-crewai.cron`: rendered scheduler file with 30-minute worker ticks and daily planning. [cron/rsps-crewai.cron:1](../cron/rsps-crewai.cron#L1)
+- `cron/rsps-crewai.cron`: rendered scheduler file with one-minute autonomous watchdog ticks and daily planning. [cron/rsps-crewai.cron:1](../cron/rsps-crewai.cron#L1)
 - `.gitignore`: excludes `.env`, `.venv`, caches, logs, completed/failed/running work orders, worker logs/prompts, cron logs, and generated `rsps_development_packet.md`. [.gitignore:1](../.gitignore#L1) [.gitignore:8](../.gitignore#L8) [.gitignore:16](../.gitignore#L16)
 
 ## Core Architecture And Symbols

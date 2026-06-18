@@ -5,7 +5,7 @@ Daedalus can run without Codex after it is launched, but it is still a local aut
 ## What Runs Without Codex
 
 - The dashboard runs as a local Python HTTP server.
-- `rsps-cron tick` can run scheduled worker cycles from cron.
+- `rsps-cron tick` can run one-minute autonomous watchdog cycles from cron or the user systemd timer.
 - OpenClaw workers can call OpenRouter and edit the configured RSPS repository when `RSPS_ALLOW_AUTONOMOUS=true`.
 - Successful worker runs can commit and push to the configured `RSPS_GIT_REMOTE`.
 
@@ -41,7 +41,7 @@ http://127.0.0.1:8765
 
 The launcher starts the dashboard UI. It does not install cron by itself.
 
-## Unattended Scheduled Runs
+## One-Minute Autonomous Watchdog
 
 Install the user cron only after you are comfortable with supervised `run-duo` behavior:
 
@@ -50,4 +50,4 @@ cd "/var/home/Scaar/Desktop/game project/Daedalus"
 PYTHONPATH=src python3 -m rsps_crewai_team.cron install
 ```
 
-Cron will only modify the server when `RSPS_ALLOW_AUTONOMOUS=true`.
+The watchdog checks every minute. It starts work only when `RSPS_ALLOW_AUTONOMOUS=true` and no work order is currently in `work_orders/running`.

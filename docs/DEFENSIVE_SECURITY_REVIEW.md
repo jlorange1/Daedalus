@@ -177,7 +177,7 @@ Evidence:
 - `src/rsps_crewai_team/cron.py` and `cron/rsps-crewai.cron` set a fixed PATH and run scheduled tasks from the user account.
 
 Risk:
-- Absolute paths reduce ambiguity, but the cron environment is still capable of starting autonomous work every 30 minutes if `.env` enables it.
+- Absolute paths reduce ambiguity, but the cron environment is still capable of starting autonomous work every minute if `.env` enables it.
 
 Mitigations:
 - Keep cron installation manual.

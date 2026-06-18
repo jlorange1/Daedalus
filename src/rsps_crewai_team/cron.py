@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
+import fcntl
 import shutil
 import subprocess
 from datetime import datetime, timezone
@@ -19,9 +21,9 @@ CRON_TEMPLATE = """# RSPS CrewAI autonomous development scheduler
 SHELL=/bin/bash
 PATH=/var/home/Scaar/.local/bin:/usr/local/bin:/usr/bin:/bin
 
-# Runs the OpenClaw coding duo every 30 minutes. It will only modify the RSPS
+# Runs the OpenClaw coding duo every minute. It will only modify the RSPS
 # repo when RSPS_ALLOW_AUTONOMOUS=true is set in /var/home/Scaar/Desktop/game project/Daedalus/.env.
-*/30 * * * * cd '/var/home/Scaar/Desktop/game project/Daedalus' && /var/home/Scaar/.local/bin/uv run rsps-cron tick >> '/var/home/Scaar/Desktop/game project/Daedalus/logs/cron.log' 2>&1
+* * * * * cd '/var/home/Scaar/Desktop/game project/Daedalus' && /var/home/Scaar/.local/bin/uv run rsps-cron tick >> '/var/home/Scaar/Desktop/game project/Daedalus/logs/cron.log' 2>&1
 
 # Daily planning packet refresh. This is read-only unless the worker is invoked separately.
 15 3 * * * cd '/var/home/Scaar/Desktop/game project/Daedalus' && /var/home/Scaar/.local/bin/uv run rsps-team "Review current RSPS development status and propose the next 3 work orders." >> '/var/home/Scaar/Desktop/game project/Daedalus/logs/daily-planning.log' 2>&1
@@ -40,12 +42,12 @@ StandardError=append:/var/home/Scaar/Desktop/game project/Daedalus/logs/cron.log
 """
 
 SYSTEMD_TIMER_TEMPLATE = """[Unit]
-Description=Run Daedalus autonomous development tick every 30 minutes
+Description=Run Daedalus autonomous development watchdog every minute
 
 [Timer]
-OnBootSec=5min
-OnUnitActiveSec=30min
-AccuracySec=1min
+OnBootSec=1min
+OnUnitActiveSec=1min
+AccuracySec=15s
 Persistent=true
 
 [Install]
@@ -56,26 +58,56 @@ WantedBy=timers.target
 def tick(_: argparse.Namespace) -> None:
     load_dotenv(PROJECT_ROOT / ".env")
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"[{datetime.now(timezone.utc).isoformat()}] rsps-cron tick")
-    runs = list_workflow_runs(limit=3)
-    print(f"workflow_runs={len(runs)}")
-    ensure_self_fulfilling_backlog()
-    if not bool_env("RSPS_ALLOW_AUTONOMOUS", False):
-        print("Autonomous execution disabled. Set RSPS_ALLOW_AUTONOMOUS=true to run workers.")
+    with tick_lock() as acquired:
+        if not acquired:
+            print(f"[{datetime.now(timezone.utc).isoformat()}] rsps-cron tick skipped: previous tick still running")
+            return
+        print(f"[{datetime.now(timezone.utc).isoformat()}] rsps-cron watchdog tick")
+        runs = list_workflow_runs(limit=3)
+        print(f"workflow_runs={len(runs)}")
+        ensure_self_fulfilling_backlog()
+        if not bool_env("RSPS_ALLOW_AUTONOMOUS", False):
+            print("Autonomous execution disabled. Set RSPS_ALLOW_AUTONOMOUS=true to run workers.")
+            return
+        if is_rsps_work_active():
+            print("RSPS work is already active. Watchdog will not start another worker.")
+            return
+        if bool_env("RSPS_DUO_MODE", True):
+            run_duo(argparse.Namespace())
+        else:
+            run_once(argparse.Namespace())
+
+
+@contextmanager
+def tick_lock():
+    path = LOGS_DIR / "rsps-cron.tick.lock"
+    handle = path.open("w", encoding="utf-8")
+    try:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        handle.close()
+        yield False
         return
-    if bool_env("RSPS_DUO_MODE", True):
-        run_duo(argparse.Namespace())
-    else:
-        run_once(argparse.Namespace())
+    try:
+        handle.write(datetime.now(timezone.utc).isoformat())
+        handle.flush()
+        yield True
+    finally:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        handle.close()
+
+
+def is_rsps_work_active() -> bool:
+    ensure_work_order_dirs()
+    return any((PROJECT_ROOT / "work_orders" / "running").glob("*.md"))
 
 
 def ensure_self_fulfilling_backlog() -> None:
     workflow_id = "profitability_review"
-    active = [run for run in list_workflow_runs(limit=10) if run.get("status") == "active"]
     ensure_work_order_dirs()
     queued = list((PROJECT_ROOT / "work_orders" / "inbox").glob("*.md"))
     running = list((PROJECT_ROOT / "work_orders" / "running").glob("*.md"))
-    if active or queued or running:
+    if queued or running:
         return
     created = create_workflow_run(workflow_id, title="Self-filling autonomous studio cycle")
     print(f"created_workflow_run={created['run_id']}")

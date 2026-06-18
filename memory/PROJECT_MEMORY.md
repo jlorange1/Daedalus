@@ -89,13 +89,13 @@ Daedalus is an autonomous coding and operations scaffold for an AI-assisted RSPS
 - A supervised `run-duo` worktree proof passed after enabling `RSPS_REQUIRE_WORKER_CHANGES=true`: the main checkout stayed clean, the queue returned to `running=0`, and the proof file appeared only under the assigned worktree `docs/` path.
 - The dashboard was reskinned to the Ancient Starforge sci-fi control-room direction on 2026-06-17, keeping live `/api/status` data, draggable module windows, queue controls, and the 14-department agent mesh.
 - A manual `rsps-cron tick` on 2026-06-17 created `20260617T195046Z-profitability_review`; the OpenClaw builder failed because OpenRouter DNS returned `EAI_AGAIN openrouter.ai`, not because the scheduler failed.
+- On 2026-06-18, `rsps-cron` was changed into a one-minute autonomous watchdog. It holds a nonblocking lock for the full tick, skips when `work_orders/running/*.md` exists, self-fills when inbox/running are empty, and the installed user systemd timer uses `OnUnitActiveSec=1min`.
 
 ## Unfinished Tasks
 
 - Add orchestration service utilities for task graph, memory, role registry, and run manifests.
 - Harden dashboard action endpoints and prompt-injection boundaries.
-- Run full validation and push the Phase 0/1 foundation.
-- Next autonomous coding runs can use `run-duo`, but should remain supervised until dashboard action gates and run manifests are added.
+- Continue improving dashboard action hardening and prompt-injection boundaries while the one-minute watchdog performs unattended coding runs.
 
 ## Update Policy
 

@@ -94,3 +94,10 @@
 - Alternatives considered: Keep polishing the previous pixel-fantasy style; generate a separate prototype; rebuild the dashboard with a new frontend stack.
 - Risk: This is a CSS/DOM reskin over the existing dashboard rather than a full component rewrite, so deeper workflow UX can still be improved in later passes.
 - Rollback plan: Revert `dashboard_static/index.html`, `app.js`, and `styles.css` to the previous sci-fi/fantasy mixed dashboard skin.
+
+- Date: 2026-06-18
+- Decision: Convert `rsps-cron` into a one-minute autonomous watchdog.
+- Why: The user wanted Daedalus to check continuously while away and start work whenever the RSPS is not already being worked on.
+- Alternatives considered: Keep the 30-minute timer; launch manual ticks repeatedly; run overlapping worker processes.
+- Risk: Frequent attempts can generate many failed work orders if OpenRouter or the model responds without git-visible changes.
+- Rollback plan: Change `CRON_TEMPLATE` and `SYSTEMD_TIMER_TEMPLATE` back to a slower cadence and reinstall the timer.

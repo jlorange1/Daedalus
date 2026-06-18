@@ -236,7 +236,7 @@ Install it as the local scheduler:
 uv run rsps-cron install
 ```
 
-If `crontab` is installed, this writes the user crontab. If `crontab` is unavailable, it installs and enables the user systemd timer `daedalus-rsps-cron.timer`. The tick self-fills an idle queue with a `profitability_review` workflow, then runs the OpenClaw duo every 30 minutes when `RSPS_DUO_MODE=true` and `RSPS_ALLOW_AUTONOMOUS=true`.
+If `crontab` is installed, this writes the user crontab. If `crontab` is unavailable, it installs and enables the user systemd timer `daedalus-rsps-cron.timer`. The one-minute watchdog self-fills an idle queue with a `profitability_review` workflow, skips when `work_orders/running` already has active work, and runs the OpenClaw duo when `RSPS_DUO_MODE=true` and `RSPS_ALLOW_AUTONOMOUS=true`.
 
 ## Studio Dashboard
 
